@@ -17,13 +17,8 @@ Passo 6 > Instalar Gulp e os plugins necessários pela Linha de Comando:
 			1. npm install --save-dev gulp gulp-sass gulp-watch gulp-rename gulp-typescript
 
 Passo 7 > Instalar Gulp e os plugins necessários pela Linha de Comando:
-			# Install
-			1. cd public
-			2. git clone https://github.com/zurb/foundation-sites
-			3. cd foundation-sites
-			4. npm install
-			# Start the documentation
-			5. npm start
+			1. Baixar https://zurb.com/playground/uploads/upload/upload/288/foundation-icons.zip
+			2. Extrair no diretorio public
 
 Passo 8 > Editar host;
 
