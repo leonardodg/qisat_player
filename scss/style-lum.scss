@@ -1,0 +1,13 @@
+/* PALETA DE CORES PLAYER */
+$color-bar: #828282; /* BAR (progress:background-color) */
+$color-top: #ECC52A; /* TOPO DO PLAYER (#video-top:background) */
+$color-border: #F0E4B2; /* BORDAS (#video-components:border) */
+$color-painel: #ECC52A; /* PAINEL DE CONTROLE (#video-controls:background) */
+
+@import "default/qisat-player-v2.1.0.scss";
+
+#video-top > .top {
+    background-image: url(../imagens/cabecalho_lum.png);
+    width: 160px; /* 178px */
+    margin-right: 48px;
+}

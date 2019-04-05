@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="height=device-height, initial-scale=1">
+    <link rel="stylesheet" href="../public/css/lightbox.css">
+    <link rel="stylesheet" href="../public/components/foundation-icons/foundation-icons.css">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <title>Curso Software Eberick 2019</title>
+</head>
+<body>
+
+    <div id="video-components">
+        <!-- <div id="loading"> 
+            <span> CARREGANDO INTERFACE... <br/> ESTE PROCEDIMENTO PODE LEVAR ALGUNS SEGUNDOS!  </span>
+            <progress max="100" value="27"> </progress>
+            <div class="loading_status"></div>
+        </div> -->
+        <div id="video-top">
+            <div class="top"></div>  
+            <div class="logo"></div>         
+            <span class="title-curso">Curso Software Eberick</span>
+            <span class="title-aula">AULA 1 – LANÇANDO O PROJETO</span>
+        </div>
+        
+        <div id="video-menu"> 
+            <div class="menu-action"> 
+                <img class="menu-icon" />
+                <span>MENU</span>
+            </div>
+            
+            <div class='menu-list hide'> 
+                <!-- MENU DA AULA -->
+            </div>
+        </div>
+
+        <div id="video-tag">
+            <div class="bt-close"> 
+                Fechar <div class="fi-x"> </div> 
+            </div> 
+        </div>
+
+        <div id="video-controls">
+            <!-- <div id="legenda"> <p> LEGENDA </p> <span id="seta" class="seta-esquerda"> </span> </div> -->
+
+            <progress id="progress" max="1" value="0" > </progress>
+
+            <!-- 
+                -=-=- [IE9] -=-=-
+                <div class="progress">
+                  <div class="progress-bar" value="10"></div>
+                </div>
+                -=-=-=-=-=-=-=-=-
+            -->
+
+            <div id="legenda-text" class="hide"> </div>
+
+            <div class="space">&nbsp</div>
+            <div class="fi-previous-disable"></div>
+            <div class="fi-pause"></div>
+            <div class="fi-next-disable"></div>
+            <div class="fi-volume"></div>
+             
+            <input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1" >
+            
+            <!-- 
+                -=-=- [IE9] -=-=-
+                <div class="volume-bar">
+                      <div class="volume-track" value="41">
+                          <div class="volume-thumb"> </div>
+                      </div>
+                </div>
+            -->
+
+            <div id="slides">
+                <!-- SLIDES-PARTES V-VIDEOS DO ARQUIVO AULA  time-now  time-total -->
+                <p> SUBVIDEOS:</p>
+                <p class="subvideo"> 1 </p>/<p class="total-subvideo"> 2 </p>
+            </div>
+
+            <div id="subVideos-List"> <p> VIDEO:</p><p class="subvideo"> 1 </p>/<p class="total-subvideo"> 2 </p></div>
+            <div id="video-time"> <span id="curtimetext"> 00:00 </span> <p>/</p> <span id="durtimetext"> 00:00 </span> </div>  
+
+            <div class="fi-widget"></div>
+        </div>
+    </div>
+
+    <!-- 
+         PRODUÇÃO   
+         <script type="text/javascript" src="/lib/QiSatPlayer/js/QiSatPlayer-v1.0.js"> </script> 
+         <script src="js/jquery-1.12.1.min.js"></script>
+    -->
+    <!--[if IE 9]>
+        <script src="js/classList.min.js"></script>
+    <![endif]-->
+
+	<script src="../public/js/QiSatPlayer-v2.1.0.js"> </script>
+	<!--script src="/lib/jquery/jquery-1.11.2.min.js"></script--> 
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script> 
+	<script src="../public/js/lightbox.js"> </script>
+ 	<!--script src="https://io.qisat.com.br/socket.io/socket.io.js"></script--> 
+ 	<!--script src="/course/format/topicstime/controle_acesso/controle_acesso_aula.js"></script--> 
+
+    <script>
+        (function() {
+            var player = new QiSatPlayer({'aula':1,'unid':'0'});
+        })();
+    </script>
+</body>
+</html>

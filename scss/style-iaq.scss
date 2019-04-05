@@ -1,0 +1,13 @@
+/* PALETA DE CORES PLAYER */
+$color-bar: #828282; /* BAR (progress:background-color) */
+$color-top: #7EC3F0; /* TOPO DO PLAYER (#video-top:background) */
+$color-border: #B2D8F0; /* BORDAS (#video-components:border) */
+$color-painel: #7EC3F0; /* PAINEL DE CONTROLE (#video-controls:background) */
+
+@import "default/qisat-player-v2.1.0.scss";
+
+#video-top > .top {
+    background-image: url(../imagens/cabecalho_iaq.png);
+    width: 148px; /* 178px */
+    margin-right: 30px;
+}

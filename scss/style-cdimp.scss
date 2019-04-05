@@ -1,0 +1,7 @@
+/* PALETA DE CORES PLAYER */
+$color-bar: #828282; /* BAR (progress:background-color) */
+$color-top: #1A435D; /* TOPO DO PLAYER (#video-top:background) */
+$color-border: #5D5D5D; /* BORDAS (#video-components:border) */
+$color-painel: #072133; /* PAINEL DE CONTROLE (#video-controls:background) */
+
+@import "default/qisat-player-v2.1.0.scss";
