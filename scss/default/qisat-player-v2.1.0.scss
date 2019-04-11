@@ -52,14 +52,8 @@ body {
 		z-index: 30;
 	}
 }
-/*
-@media (max-width: 320px) {
-	#video {
-		width: 1280px;
-		height: 720px;
-	}
-}
-*/
+
+
 #canvasMask {
 	position: absolute;
 	top: 0;
@@ -83,7 +77,7 @@ body {
 	height: 42px;
 	background: $color-top;
 
-	@media only screen and (max-height: 664px) and (max-aspect-ratio: 1280/720) {
+	@media only screen and (max-device-height: 664px) {
 		$red-top:   red($color-top);
 		$green-top: green($color-top);
 		$blue-top:  blue($color-top);
@@ -178,8 +172,8 @@ body {
 .bt-close {
 	/*@include icon-cdeb18-sprite(close);*/
 	position: absolute;
-	top: 10px;
-	right: 0;
+	top: 6px;
+	right: 3px;
 	cursor: pointer;
 	z-index: 200;
 	width: 60px;
@@ -226,7 +220,7 @@ body {
 	padding: 0;
 	background: $color-painel;
 
-	@media only screen and (max-height: 664px) and (max-aspect-ratio: 1280/720) {
+	@media only screen and (max-device-height: 664px) {
 		$red-painel:   red($color-painel);
 		$green-painel: green($color-painel);
 		$blue-painel:  blue($color-painel);
@@ -464,6 +458,8 @@ body {
 	display: block;
 	float: left;
 	margin-top: 20px;
+
+	background-color: $color-painel;
 
 	&:focus {
 		outline: none;
@@ -996,7 +992,7 @@ body {
 }
 
 
-@media only screen and (max-height: 664px) and (max-aspect-ratio: 1280/720) {
+@media only screen and (max-device-height: 664px) {
 	/*#video, #canvasMask {
 		width: 1280px !important;
 		height: 720px !important;
@@ -1044,3 +1040,4 @@ body {
 	}
 
 }
+

@@ -81,7 +81,7 @@ var PATHS = {
 	"qisat" :
 	{
 		'xml'       : '' ,
-		//'local'   : 'http://cursos.qisat.com.br' ,
+		//'local'   : 'https://cursos.qisat.com.br' ,
 		'local'     : 'http://' + window.location.hostname + ':90' ,
 		'imagens'   : '' ,
 		'imgMask'   : '',
@@ -89,8 +89,8 @@ var PATHS = {
 		'infouser'  : '/repository/user/getinfouser.php',
 		'geralog'   : '/course/format/topicstime/controle_acesso/geraLog.php',
 		'poster'    : '/lib/QiSatPlayer/public/imagens/poster.jpg',
-		'defaLocal' : '/lib/QiSatPlayer/public/',
-		'defaArq'   : 'getUrl.php',
+		'defaLocal' : '/lib/QiSatPlayer/public',
+		'defaArq'   : '/getUrl.php',
 		'data'      : ''
 	}
 };
@@ -570,18 +570,21 @@ QiSatPlayer.prototype.setVideoElements = function () {
 			result = false;
 		});
 		
-		//_self.loadVideo('http://mn54.mntec.com.br:90/repository/coursefilearea/file.php/185/Aula1/un0_0mc1.mp4', 'video/mp4');
+		//_self.loadVideo('http://mn54.mntec.com.br:90/repository/coursefilearea/file.php/185/Aula1/'+src[0], 'video/mp4');
 		//_self.loadVideo(result.pop(), type.pop());
 		
 		var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-		if(iOS){
+		var IE = /Trident/.test(navigator.userAgent) && window.MSStream;
+		if(iOS || IE){
 			_self.loadVideo(result.pop(), type.pop());
 		}else{
 			length = result.length;
 			while(length--){
 				$sourceElem = document.createElement("source");
 				$sourceElem.src = result[length];
+				//$sourceElem.src = 'http://mn54.mntec.com.br:90/repository/coursefilearea/file.php/185/Aula1/'+src[0];
 				$sourceElem.type = type[length];
+				//$sourceElem.type = 'video/mp4';
 				_self.$video.appendChild($sourceElem);
 			}
 		}
@@ -596,7 +599,9 @@ QiSatPlayer.prototype.loadVideo = function (result, type) {
 
 	_self.$video.setAttribute('poster', _self.options.video.poster);
 
-	xhr.responseType = 'blob';
+	xhr.onloadstart = function(ev) {
+		xhr.responseType = "blob";
+	}
 	xhr.onload = function() {
 		var reader = new FileReader();
 		reader.onloadend = function() {
@@ -623,16 +628,12 @@ QiSatPlayer.prototype.loadVideo = function (result, type) {
 	};
 	xhr.open('GET', result);
 
-	// Tentativa de progress 
-	/*xhr.addEventListener("progress", function(event){
-	  console.log(event);
+	xhr.addEventListener("progress", function(event){
 	  if (event.lengthComputable) {
-	    var percent = Math.round(event.loaded * 100 / event.total); //cálculo simples de porcentagem.
-	    //document.getElementById('progressbar').value = percent; //atualiza o valor da progress bar.
-	  } else {
-	    //não é possível computar o progresso =/
+	    var percent = Math.round(event.loaded / event.total) * 100;
+	    //console.log(percent);
 	  }
-	}, false);*/
+	}, false);
 
 	if(result.indexOf('defavid') !== -1)
 		xhr.setRequestHeader("Range", "bytes=0-");
@@ -935,8 +936,8 @@ QiSatPlayer.prototype.controlsBar = function() {
 			_self.$btMain.classList.remove(CLASS_REFRESH);
 			_self.$btMain.classList.add(CLASS_PAUSE);
 			self.classList.remove(CLASS_VISIBILY);
-			self.classList.remove(CLASS_NEXT);
-			self.classList.add(CLASS_NEXT_DISABLE);
+			//self.classList.remove(CLASS_NEXT);
+			//self.classList.add(CLASS_NEXT_DISABLE);
 			clearInterval(self.start);
 		};
 	};
@@ -1286,23 +1287,22 @@ QiSatPlayer.prototype.controlsBar = function() {
 			_self.$menuAction.show();
 
 			_self.start_graph();
-
 		};
 
 
 
 		_self.start_graph = function (){
-			var unidade = _self._slides.length - 1;
-            var nivel = _self._slides[unidade].length - 1;
-			var checkbox = document.getElementById('autoplay');
-			
-			/*console.log(_self._slide    +' : '+ unidade);
-			console.log(_self._subVideo +' : '+ nivel);
-			console.log(_self._slides);*/
+			var checkbox = document.getElementById('autoplay'), nivel = 0, parte = 0, video = 0;
 
+			if(_self._subIndex) nivel = _self._subIndex + 1;
+			parte = _self._slides.length - 1;
+			video = _self._slides[parte].length - 1;
+			
 			if(_self.$graph == undefined && checkbox.checked
 					&& _self.$video.classList.contains(CLASS_HIDE)
-					&& (_self._slide != unidade || _self._subVideo != nivel)){
+					&& (nivel != _self.listPlay[_self._index].subItens.length || 
+						parte != _self._slide || 
+						video != _self._subVideo)){
 				_self.$graph = document.createElement("div");
 				_self.$graph.id = 'graph';
 				_self.$videoTag.appendChild(_self.$graph);
@@ -1396,8 +1396,8 @@ QiSatPlayer.prototype.controlsBar = function() {
 			if( _self.$btNext){
 				if(_self.$btNext.classList.contains(CLASS_NEXT)){
 					_self.$btNext.stopAnimation();
-					_self.$btNext.classList.remove(CLASS_NEXT);
-					_self.$btNext.classList.add(CLASS_NEXT_DISABLE);
+					//_self.$btNext.classList.remove(CLASS_NEXT);
+					//_self.$btNext.classList.add(CLASS_NEXT_DISABLE);
 				}
 
 			}
@@ -1448,9 +1448,9 @@ QiSatPlayer.prototype.controlsBar = function() {
 					//document.location.reload(true);
 					console.log(error);
 					_self.touchstart();
-					var params = window.location.href.split('?');
+					/*var params = window.location.href.split('?');
 					if(!params[1] || params[1] != 'autoload')
-						window.location.href = params[0] + "?autoload";
+						window.location.href = params[0] + "?autoload";*/
 				});
 			}
 
@@ -2306,7 +2306,8 @@ QiSatPlayer.prototype.setListPlay = function(){
 						btnImg = videosElem[v].getAttribute("btnImagem");
 						btnImg = btnImg.split(",");
 						btnImg.map(function(el){
-							if(imagensElem = _self.btnImg.find(function(img){ return el == img.id }))
+							//if(imagensElem = _self.btnImg.find(function(img){ return el == img.id }))
+							if(imagensElem = _self.btnImg.filter(function(img){ return el == img.id })[0])
 								elem.btnImagens.push(imagensElem);
 						});
 					}
@@ -2346,7 +2347,8 @@ QiSatPlayer.prototype.setListPlay = function(){
 						btnImg = videosElem[v].getAttribute("btnImagem");
 						btnImg = btnImg.split(",");
 						btnImg.map(function(el){
-							if(imagensElem = _self.btnImg.find(function(img){ return el == img.id }))
+							//if(imagensElem = _self.btnImg.find(function(img){ return el == img.id }))
+							if(imagensElem = _self.btnImg.filter(function(img){ return el == img.id })[0])
 								elem.btnImagens.push(imagensElem);
 						});
 					}
@@ -2695,5 +2697,30 @@ QiSatPlayer.prototype.carregarContainerXML = function(){
 	if(_self.options.menu){
 		_self.printMenuXML();
 		_self.menuEvents();
+	}
+
+	/**
+	 * Inserindo capítulo dinamicamente
+	 */
+	if(_self.courses[0].getAttribute('titulo').toLowerCase().replace(/[é]/g,"e").indexOf('serie') !== -1 && 
+	_self.aulas[0].getAttribute('titulo').toLowerCase().replace(/[í]/g,"i").indexOf('capitulo') !== -1) {
+		var top = document.getElementsByClassName('top')[0];
+		top.style.backgroundImage = 'none';
+		top.style.backgroundColor = '#00445f';
+		top.style.fontSize = '16px';
+		top.style.paddingTop = '9px';
+		top.style.width = '100px';
+		top.style.height = '33px';
+
+		try{
+			document.styleSheets[0].insertRule('.top:before{content:attr(data-before);margin-left:10px;}');
+		}catch(e){
+			if (e.message === "IndexSizeError")
+				document.styleSheets[0].insertRule('.top:before{content:attr(data-before);margin-left:10px;}',0);
+		}
+		top.setAttribute('data-before', 'Capítulo - ' + _self.aulas[0].getAttribute('num'));
+		
+		document.getElementsByClassName('title-curso')[0].style.margin = '6px 0px 3px 16px';
+		document.getElementsByClassName('title-aula')[0].style.display = 'none';
 	}
 }
