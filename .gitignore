@@ -4,4 +4,6 @@ node_modules
 public/components
 public/css
 favicon.ico
-public/js/QiSatPlayer-v2.0.4.js
+public/js
+public/.htaccess
+desktop.ini

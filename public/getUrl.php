@@ -25,8 +25,6 @@ for ($i=0; $i < count($src); $i++) {
 	$duration[$i] = $info['playtime_seconds'];*/
 }
 
-//echo '<pre>';var_dump($output);die;
-
 if( (strpos($output,"<video") > -1 || strpos($output,"<audio") > -1  || strpos($output,"<source") > -1 )  && (strpos($output,"<safe") == FALSE) ){
 	function getURL($matches)
 	{
@@ -39,6 +37,7 @@ if( (strpos($output,"<video") > -1 || strpos($output,"<audio") > -1  || strpos($
 	$output = preg_replace_callback("/(<source[^>]*src *= *[\"']?)([^\"']*)/i", "getURL", $output);
 	$output = preg_replace_callback("/(<audio[^>]*src *= *[\"']?)([^\"']*)/i", "getURL", $output);
 }
+session_write_close();
 
 $output_array = explode("</source>", $output);
 $output = "";

@@ -1,0 +1,1158 @@
+class QiSatPlayer {
+	static ID = "#";
+	static CLASS = ".";
+	static CLASS_ICO = "ico";
+	static CLASS_BT  = "bt_ctrl";
+
+	static ID_VIDEO_CONTAINER = "video-components";
+	static ID_VIDEO_TOP  = "video-top";
+	static ID_VIDEO_MENU = "video-menu";
+	static ID_VIDEO_TAG  = "video-tag";
+	static ID_VIDEO_CONTROLS  = "video-controls";
+
+	static ID_ERROR  = "error";
+	static ID_VIDEO  = "video";
+	static ID_CANVAS = 'canvasMask';
+	static ID_VIDEO_LOAD = "loading";
+	static CLASS_BT_CLOSE = "bt-close";
+	static CLASS_BT_CLOSE_X   = "fi-x";
+
+	static ID_PREVIOUS  = "previous";
+	static ID_PLAY  = "play";
+	static ID_NEXT  = "next";
+	static CLASS_PREVIOUS = "fi-previous";
+	static CLASS_NEXT = "fi-next";
+	static CLASS_REFRESH = "fi-refresh";
+	static CLASS_PLAY  = "fi-play";
+	static CLASS_PAUSE = "fi-pause";
+	static CLASS_PREVIOUS_DISABLE = "fi-previous-disable";
+	static CLASS_NEXT_DISABLE = "fi-next-disable";
+	static CLASS_VOLUME = "fi-volume";
+	static CLASS_VOLUME_NONE   = "fi-volume-none";
+	static CLASS_WIDGET   = "fi-widget";
+
+	static CLASS_TOP = "top";
+	static CLASS_LOGO  = "logo";
+	static CLASS_AULA_TEXT  = "title-aula";
+	static CLASS_CURSO_TEXT = "title-curso";
+
+	static CLASS_MENU_IMG = "menu-icon";
+	static CLASS_MENU_LIST = "menu-list";
+	static CLASS_MENU_ACTION = "menu-action";
+	static CLASS_PARENT = "parent";
+	static CLASS_ACTION = "li_action";
+	static CLASS_VIEW = "li_view";
+	static CLASS_SPAN = "li_span";
+	static CLASS_LESS = "li_less";
+	static CLASS_ICON = "li_icon";
+	static CLASS_ICON_ACTIVE = "li_icon-active";
+	static CLASS_ICON_DESACTIVE = "li_icon-desactive";
+	static CLASS_PAGE = "fi-page";
+	static CLASS_SMALL = "small";
+	static CLASS_CLEAR = "clear";
+
+	static CLASS_ACTIVE = "active";
+	static CLASS_DISABLE = "disable";
+	static CLASS_HIDE = "hide";
+	static CLASS_VISIBILY = "show";
+
+	static ID_SEEK_BAR   = "track-bar";
+	static ID_VOLUME_BAR = "volume-bar";
+	static ID_PLAYBACK_RATE = "playback-rate";
+	static CLASS_VOLUME_TRACK = "volume-track";
+	static CLASS_VOLUME_THUMB = "volume-thumb";
+	//static ID_DIV_LEGENDA_SETA = "seta";
+	//static CLASS_LEGENDA_LEFT = "seta-esquerda";
+	//static CLASS_LEGENDA_RIGHT = "seta-direita";
+	static ID_DIV_VIDEO_TIME   = "video-time";
+	static ID_DIV_SLIDES   = "slides";
+	static ID_LEGENDA_TEXT = "legenda-text";
+	static ID_TIME_TEXT = "curtimetext";
+	static ID_DURATION_TEXT = "durtimetext";
+	static ID_PROGRESS = "progress";
+	static CLASS_PROGRESS_BAR = "progress-bar";
+
+	static ID_SUBVIDEO_LIST = 'subVideos-List';
+	static CLASS_N_SUBVIDEO = "subvideo";
+	static CLASS_TOTAL_SUBVIDEO = "total-subvideo";
+
+	static ID_SUBMENU = 'subMenu';
+	static ID_AUTOPLAY = 'autoplay';
+	static ID_GROUP_PLAYBACK = 'group-playback';
+	static ID_PLAYBACK = 'playback';
+	static CLASS_MINUS = "fi-minus";
+	static CLASS_PLUS = "fi-plus";
+
+	static ERROR_NOT_VIDEO_SUPPORT = " >> Navegador não tem suporte ao novo formato de video HTML5, FAVOR ACESSAR ATRAVÉS POR UM BROWSER ATUALIZADO!";
+	static ERROR_NOT_VIDEO_EXT = " >> Nenhuma extensão do video HTML5 é suportada!";
+	static ERROR_FILE_XML   = " >> FileName do video não configurado!";
+	static ERROR_TAG_CONTAINER = " >> Problemas para encontrar a tag ID " + QiSatPlayer.ID_VIDEO_CONTAINER + " de estrutura do Player no HTML";
+	static ERROR_NO_XML_DOC = " >> DOCUMENTO XML NÃO FOI CARREGADO!";
+	static ERROR_NO_XMLHTTPREQUEST = " >> BROWSER NO SUPORTE XML HTTP REQUEST!";
+	
+	static PATHS = {	
+		"local-player.qisat.com.br" :
+			{
+				'xml'       : '',
+				'local'     : 'http://' + window.location.hostname,
+				'imagens'   : '',
+				'imgMask'   : '',
+				'videos'    : '',
+				'infouser'  : '/test/getinfouser.php',
+				'geralog'   : '/test/geraLog.php',
+				'poster'    : '/public/imagens/poster.jpg',
+				'defaLocal' : '/public',
+				'defaArq'   : '/getUrl.php',
+				'data'      : ''
+			}/*,
+		"qisat" :
+			{
+				'xml'       : '',
+				//'local'   : 'https://cursos.qisat.com.br',
+				'local'     : 'http://' + window.location.hostname,
+				'imagens'   : '',
+				'imgMask'   : '',
+				'videos'    : '',
+				'infouser'  : '/repository/user/getinfouser.php',
+				'geralog'   : '/course/format/topicstime/controle_acesso/geraLog.php',
+				'poster'    : '/lib/QiSatPlayer/public/imagens/poster.jpg',
+				'defaLocal' : '/lib/QiSatPlayer/public',
+				'defaArq'   : '/getUrl.php',
+				'data'      : ''
+			}*/
+	};
+	
+	static VIDEOTYPES = {
+		'mp4' : 'video/mp4',
+		'mp4-codecs' : 'video/mp4; codecs="avc1.42E01E,mp4a.40.2"',
+		'webm': 'video/webm',
+		'webm-codecs': 'video/webm; codecs="vp8, vorbis"',
+		'ogg' : 'video/ogg',
+		'ogg-codecs' : 'video/ogg; codecs="theora, vorbis"'
+	};
+
+	private options = {
+		aula         : 1,
+		unid         : "0",
+		slide        : 0,
+		subVideo     : 0,
+		filename     : "menu_items.xml",
+		videoElem    : true,
+		canvasElem   : true,
+		load         : false,
+		top          : true,
+		menu         : true,
+		videoTag     : true,
+		controls     : true,
+		slides       : true,
+		legenda      : false,
+		chave        : "000000",
+		mascara      : true,
+		geraLog      : true,
+		autoplay     : true,
+		playbackRate : true,
+		video : {
+			controls : false,
+			autoplay : true,
+			paused   : true,
+			width    : 1010,
+			height   : 568,
+			id       : QiSatPlayer.ID_VIDEO,
+			poster   : '',
+			//types    : canPlayType('video'),
+			filename : null,
+			ext      : ['mp4']
+		},
+		canvas : {
+			id         : QiSatPlayer.ID_CANVAS,
+			canvasMask : null,
+			context    : null,
+			sentido    : true,
+			hue        : 0,
+			sat        : 0,
+			val        : 40,
+			val2       : 0.5,
+			height     : 568,
+			width      : 1010,
+			imgHeight  : 568,
+			imgWidth   : 935,
+			img        : null
+		},
+		path : {
+			xml       : '',
+			//local   : 'https://cursos.qisat.com.br',
+			local     : 'http://' + window.location.hostname,
+			imagens   : '',
+			imgMask   : '',
+			videos    : '',
+			infouser  : '/repository/user/getinfouser.php',
+			geralog   : '/course/format/topicstime/controle_acesso/geraLog.php',
+			poster    : '/lib/QiSatPlayer/public/imagens/poster.jpg',
+			defaLocal : '/lib/QiSatPlayer/public',
+			defaArq   : '/getUrl.php',
+			data      : ''
+		}
+	};
+	private listPlay;
+
+	constructor(...opDefault) {
+		opDefault = opDefault[0];
+		for (let option in opDefault) {
+			if (typeof opDefault[option] === 'object') {
+				for (let subOption in opDefault[option])
+					this.options[option][subOption] = opDefault[option][subOption];
+			} else {
+				this.options[option] = opDefault[option];
+			}
+		}
+		if(QiSatPlayer.PATHS[location.hostname]){
+			this.options.path = QiSatPlayer.PATHS[location.hostname];
+		/*}else{
+			this.options['path'] = QiSatPlayer.PATHS['qisat'];*/
+		}
+		this.options.video.poster = this.options['path']['poster'];
+
+		let videoPlayer = document.getElementById(QiSatPlayer.ID_VIDEO_CONTAINER);
+		videoPlayer.appendChild(this.createTop());
+		videoPlayer.appendChild(this.createMenu());
+		videoPlayer.appendChild(this.createVideoTag());
+		videoPlayer.appendChild(this.createControls());
+		this.carregarInfoUser();
+		this.carregarXML();
+	}
+
+	/**
+	 * Criando componentes do topo do player
+	 */
+	createTop(){
+		let videoTop = document.createElement("div");
+		videoTop.id = QiSatPlayer.ID_VIDEO_TOP;
+		videoTop.classList.add(QiSatPlayer.CLASS_VISIBILY);
+		videoTop.appendChild(this.setTop());
+		videoTop.appendChild(this.setLogo());
+		videoTop.appendChild(this.setTitleCurso());
+		videoTop.appendChild(this.setTitleAula());
+		return videoTop;
+	}
+	setTop(){
+		let top = document.createElement("div");
+		top.classList.add(QiSatPlayer.CLASS_TOP);
+		return top;
+	}
+	setLogo(){
+		let logo = document.createElement("div");
+		logo.classList.add(QiSatPlayer.CLASS_LOGO);
+		return logo;
+	}
+	setTitleCurso(){
+		let titleCurso = document.createElement("span");
+		titleCurso.classList.add(QiSatPlayer.CLASS_CURSO_TEXT);
+		titleCurso.innerHTML = 'Test Player';
+		return titleCurso;
+	}
+	setTitleAula(){
+		let titleAula = document.createElement("span");
+		titleAula.classList.add(QiSatPlayer.CLASS_AULA_TEXT);
+		titleAula.innerHTML = 'Demonstrativo';
+		return titleAula;
+	}
+
+	/**
+	 * Criando menu do player
+	 */
+	createMenu(){
+		let videoMenu = document.createElement("div");
+		videoMenu.id = QiSatPlayer.ID_VIDEO_MENU;
+		videoMenu.appendChild(this.setAction());
+		videoMenu.appendChild(this.setList());
+		return videoMenu;
+	}
+	setAction(){
+		let menuAction = document.createElement("div");
+		menuAction.classList.add(QiSatPlayer.CLASS_MENU_ACTION);
+		
+		let menuIcon = document.createElement("img");
+		menuIcon.classList.add(QiSatPlayer.CLASS_MENU_IMG);
+		menuAction.appendChild(menuIcon);
+		
+		let menuSpan = document.createElement("span");
+		menuSpan.innerHTML = 'MENU';
+		menuAction.appendChild(menuSpan);
+
+		menuAction.addEventListener('click', function () {
+			let menuList = document.getElementsByClassName(QiSatPlayer.CLASS_MENU_LIST)[0];
+			menuList.classList.toggle(QiSatPlayer.CLASS_HIDE);
+		});
+
+		return menuAction;
+	}
+	setList(){
+		let menuList = document.createElement("div");
+		menuList.classList.add(QiSatPlayer.CLASS_MENU_LIST, QiSatPlayer.CLASS_HIDE);
+		
+		let menuTitleAula = document.createElement("span");
+		menuTitleAula.classList.add(QiSatPlayer.CLASS_AULA_TEXT);
+		menuList.appendChild(menuTitleAula);
+		
+		let parent = document.createElement("ul");
+		parent.classList.add(QiSatPlayer.CLASS_PARENT);
+		menuList.appendChild(parent);
+
+		return menuList;
+	}
+
+	/**
+	 * Criando componentes de video do player
+	 */	
+	createVideoTag(){
+		let videoTag = document.createElement("div");
+		videoTag.id = QiSatPlayer.ID_VIDEO_TAG;
+		videoTag.appendChild(this.setBtClose());
+		videoTag.appendChild(this.setVideo());
+		videoTag.appendChild(this.setCanvas());
+		return videoTag;
+	}
+	endVideo () {
+		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+		video.classList.add(QiSatPlayer.CLASS_HIDE);
+		video.load();
+
+		let btPlay = <HTMLElement>document.getElementById(QiSatPlayer.ID_PLAY);
+		btPlay.classList.remove(QiSatPlayer.CLASS_PLAY);
+		btPlay.classList.remove(QiSatPlayer.CLASS_PAUSE);
+		btPlay.classList.add(QiSatPlayer.CLASS_REFRESH);
+
+		let btClose = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_BT_CLOSE)[0];
+		btClose.classList.add(QiSatPlayer.CLASS_HIDE);
+
+		let menuList = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_MENU_LIST)[0];
+		menuList.classList.remove(QiSatPlayer.CLASS_HIDE);
+	}
+	setBtClose(){
+		let btClose = document.createElement("div");
+		btClose.classList.add(QiSatPlayer.CLASS_BT_CLOSE);
+		btClose.innerHTML = ' Fechar ';
+		
+		let fiX = document.createElement("div");
+		fiX.classList.add(QiSatPlayer.CLASS_BT_CLOSE_X);
+		btClose.appendChild(fiX);
+		
+		btClose.addEventListener('click', this.endVideo);
+
+		return btClose;
+	}
+	setVideo(){
+		let video = document.createElement("video");
+		video.id = QiSatPlayer.ID_VIDEO;
+		video.width = 1010;
+		video.height = 568;
+		video.poster = this.options.path.poster;
+
+		video.addEventListener('playing', function () {
+			this.classList.remove(QiSatPlayer.CLASS_HIDE);
+		});
+		video.addEventListener('ended', this.endVideo);
+
+		return video;
+	}
+	setCanvas(){
+		let canvas = document.createElement("canvas");
+		canvas.id = QiSatPlayer.ID_CANVAS;
+		canvas.width = 1010;
+		canvas.height = 568;
+		canvas.addEventListener('click', function () {
+			let btPlay = <HTMLElement>document.getElementById(QiSatPlayer.ID_PLAY);
+			btPlay.click();
+		});
+
+		let _self = this;
+		setInterval(function(){
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			let context = canvas.getContext('2d');
+			context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+			if(video.classList.contains(QiSatPlayer.CLASS_HIDE)){
+				let img = document.createElement("img");
+				let [unidade,nivel] = _self.options.unid.split('.');
+				if(nivel){
+					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+				}else{
+					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+				}
+				context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
+			}
+			
+			/**
+			 * Barra diagonal com a chave
+			 */
+			if(_self.options.chave.length){
+				context.fillStyle = "rgba(120,120,120,0.1)";
+				context.beginPath();
+
+				let diferenca = 45;
+				if(_self.options.canvas.sentido){
+					context.moveTo(0,0);
+					context.lineTo(diferenca,0);
+					context.lineTo(canvas.width,canvas.height-diferenca);
+					context.lineTo(canvas.width,canvas.height);
+					context.lineTo(canvas.width-diferenca,canvas.height);
+					context.lineTo(0,diferenca);
+				} else {
+					context.moveTo(0,canvas.height);
+					context.lineTo(diferenca,canvas.height);
+					context.lineTo(canvas.width,diferenca);
+					context.lineTo(canvas.width,0);
+					context.lineTo(canvas.width-diferenca,0);
+					context.lineTo(0,canvas.height-diferenca);
+				}
+				context.fill();
+				context.font = "16px 'Arial'";
+				context.fillStyle = "hsla("+_self.options.canvas.hue+","+_self.options.canvas.sat+"%,"+_self.options.canvas.val+"%,0.5)";
+				context.textAlign = "center";
+
+				//Chave do aluno
+				let count = 0;
+				while (count<11) {
+					if(_self.options.canvas.sentido){
+						context.fillText(_self.options.chave, 960-90.5*count, 535-48.5*(count++));
+					} else {
+						context.fillText(_self.options.chave, 46+91*count, 535-48.5*(count++));
+					}
+				}
+			}
+			/**
+			 * Play do Canvas
+			 */
+			if (video.paused && !video.classList.contains(QiSatPlayer.CLASS_HIDE) && video.duration) {
+				var options_graph = {
+					size: 140,
+					lineWidth: 12
+				};
+				var radius = (options_graph.size - options_graph.lineWidth) / 2;
+				var drawCircle = function(color, lineWidth, percent) {
+					percent = Math.min(Math.max(0, percent || 1), 1);
+					context.beginPath();
+					context.arc(497, 285, radius, 0, Math.PI * 2 * percent, false);
+					context.strokeStyle = color;
+					context.lineCap = 'round';
+					context.lineWidth = lineWidth;
+					context.stroke();
+				};
+				drawCircle('rgba(180, 180, 180, 0.6)', options_graph.lineWidth, 1);
+
+				context.fillStyle = "rgba(180, 180, 180, 0.6)";
+				context.beginPath();
+				context.moveTo(475, 245);
+				context.lineTo(475, 325);
+				context.lineTo(540, 285);
+				context.fill();
+			}
+
+		}, 50);
+
+		return canvas;
+	}
+
+	/**
+	 * Criando componentes de controle do player
+	 */	
+	createControls(){
+		let videoControls = document.createElement("div");
+		videoControls.id = QiSatPlayer.ID_VIDEO_CONTROLS;
+		videoControls.classList.add(QiSatPlayer.CLASS_VISIBILY);
+		videoControls.appendChild(this.setBarraProgresso());
+		videoControls.appendChild(this.setBtPrevious());
+		videoControls.appendChild(this.setPlay());
+		videoControls.appendChild(this.setNext());
+		videoControls.appendChild(this.setVolume());
+		videoControls.appendChild(this.setVolumeBar());
+		videoControls.appendChild(this.setSlides());
+		videoControls.appendChild(this.setSubVideos());
+		videoControls.appendChild(this.setTime());
+		videoControls.appendChild(this.setMenuContexto());
+		videoControls.appendChild(this.setBtMenuContexto());
+		return videoControls;
+	}
+	setBarraProgresso(){
+		let progress = document.createElement("progress");
+		progress.id = QiSatPlayer.ID_PROGRESS;
+		progress.max = 1;
+		progress.value = 0;
+		progress.addEventListener('change', function () {
+			//
+		});
+		return progress;
+	}
+	setBtPrevious(){
+		let _self = this;
+		let btPrevious = document.createElement("div");
+		btPrevious.id = QiSatPlayer.ID_PREVIOUS;
+		btPrevious.classList.add(QiSatPlayer.CLASS_PREVIOUS);
+		btPrevious.addEventListener('click', function () {
+			if(this.classList.contains(QiSatPlayer.CLASS_PREVIOUS))
+				_self.setSource(false);
+		});
+		return btPrevious;
+	}
+	setPlay(){
+		let btPlay = document.createElement("div");
+		btPlay.id = QiSatPlayer.ID_PLAY;
+		btPlay.classList.add(QiSatPlayer.CLASS_PLAY);
+		btPlay.click = function () {
+			let menuList = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_MENU_LIST)[0];
+			menuList.classList.add(QiSatPlayer.CLASS_HIDE);
+			let btClose = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_BT_CLOSE)[0];
+			btClose.classList.remove(QiSatPlayer.CLASS_HIDE);
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			video.classList.remove(QiSatPlayer.CLASS_HIDE);
+			if(this.classList.contains(QiSatPlayer.CLASS_PAUSE)){
+				this.classList.remove(QiSatPlayer.CLASS_PAUSE);
+				this.classList.add(QiSatPlayer.CLASS_PLAY);
+				video.pause();
+			}else{
+				var promise = video.play();
+				if (promise !== undefined) {
+					promise.then(function() {
+						video.muted = false;
+					});
+				}
+				if(!video.paused){
+					this.classList.remove(QiSatPlayer.CLASS_REFRESH);
+					this.classList.remove(QiSatPlayer.CLASS_PLAY);
+					this.classList.add(QiSatPlayer.CLASS_PAUSE);
+				}
+			}
+		};
+		btPlay.addEventListener('click', btPlay.click);
+		return btPlay;
+	}
+	setNext(){
+		let _self = this;
+		let btNext = document.createElement("div");
+		btNext.id = QiSatPlayer.ID_NEXT;
+		btNext.classList.add(QiSatPlayer.CLASS_NEXT);
+		btNext.addEventListener('click', function () {
+			if(this.classList.contains(QiSatPlayer.CLASS_NEXT))
+				_self.setSource(true);
+		});
+		return btNext;
+	}
+	setVolume(){
+		let btVolume = document.createElement("div");
+		btVolume.classList.add(QiSatPlayer.CLASS_VOLUME);
+		btVolume.addEventListener('click', function () {
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			if(video.muted = this.classList.contains(QiSatPlayer.CLASS_VOLUME)){
+				this.classList.remove(QiSatPlayer.CLASS_VOLUME);
+				this.classList.add(QiSatPlayer.CLASS_VOLUME_NONE);
+			}else{
+				this.classList.remove(QiSatPlayer.CLASS_VOLUME_NONE);
+				this.classList.add(QiSatPlayer.CLASS_VOLUME);
+			}
+		});
+		return btVolume;
+	}
+	setVolumeBar(){
+		let btVolumeBar = document.createElement("input");
+		btVolumeBar.id = QiSatPlayer.ID_VOLUME_BAR;
+		btVolumeBar.type = 'range';
+		btVolumeBar.min = '0';
+		btVolumeBar.max = btVolumeBar.value = '1';
+		btVolumeBar.step = '0.1';
+		btVolumeBar.addEventListener('click', function () {
+			//
+		});
+		return btVolumeBar;
+	}
+	setSlides(){
+		let slides = document.createElement("div");
+		slides.id = QiSatPlayer.ID_DIV_SLIDES;
+		slides.innerHTML = 'PARTE: ';
+		slides.dataset['unid'] = '0';
+		
+		for (var i = 1; i <= 10; i++) {
+			let p = document.createElement("p");
+			p.innerHTML = i.toString();
+			if(i==1){
+				p.classList.add(QiSatPlayer.CLASS_ACTIVE);
+				p.dataset['slide'] = '0';
+			}else{
+				p.classList.add(QiSatPlayer.CLASS_DISABLE);
+			}
+			p.addEventListener('click', function () {
+				//
+			});
+			slides.appendChild(p);
+		}
+
+		return slides;
+	}
+	setSubVideos(){
+		let subVideosList = document.createElement("div");
+		subVideosList.id = 'subVideos-List';
+		
+		let p = document.createElement("p");
+		p.innerHTML = 'VIDEO: ';
+		subVideosList.appendChild(p);
+		
+		let subVideo = document.createElement("p");
+		subVideo.classList.add('subVideo');
+		subVideo.innerHTML = '1';
+		subVideosList.appendChild(subVideo);
+		
+		subVideosList.append('/');
+		
+		let totalSubVideo = document.createElement("p");
+		totalSubVideo.classList.add('total-subVideo');
+		totalSubVideo.innerHTML = '1';
+		subVideosList.appendChild(totalSubVideo);
+
+		return subVideosList;
+	}
+	setTime(){
+		let videoTime = document.createElement("div");
+		videoTime.id = QiSatPlayer.ID_DIV_VIDEO_TIME;
+		
+		let curtimetext = document.createElement("span");
+		curtimetext.id = QiSatPlayer.ID_TIME_TEXT;
+		curtimetext.innerHTML = '00:00';
+		videoTime.appendChild(curtimetext);
+		
+		let p = document.createElement("p");
+		p.innerHTML = ' / ';
+		videoTime.appendChild(p);
+		
+		let durtimetext = document.createElement("span");
+		durtimetext.id = QiSatPlayer.ID_DURATION_TEXT;
+		durtimetext.innerHTML = '00:00';
+		videoTime.appendChild(durtimetext);
+
+		return videoTime;
+	}
+	
+	setMenuContexto(){
+		let menu = new ModuleTable();
+		let subMenu = document.createElement("div");
+		subMenu.id = QiSatPlayer.ID_SUBMENU;
+		subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
+		subMenu.appendChild(menu.table);
+		return subMenu;
+	}
+	setBtMenuContexto(){
+		let btWidget = document.createElement("div");
+		btWidget.classList.add(QiSatPlayer.CLASS_WIDGET);
+		btWidget.addEventListener('click', function () {
+			let subMenu = document.getElementById(QiSatPlayer.ID_SUBMENU);
+			subMenu.classList.toggle(QiSatPlayer.CLASS_HIDE);
+			//
+		});
+		return btWidget;
+	}
+
+	/**
+	 * Requisições de dados externas
+	 */
+	XhrFactory(){
+		'use strict';
+		var config = {
+			contentType: 'text/xml',
+			responseType : 'xml'
+		};
+		var parse = function (req) {
+			var response;
+			try {
+				if(config.responseType == 'xml'){
+					response = req.responseXML;
+				}else if(config.responseType == 'text'){
+					response = req.responseText;
+				}
+			} catch (e) {
+				response = req.responseText;
+			}
+			return [response, req];
+		};
+		var xhr = function (type, url, data=null) {
+			var atomXHR, methods = {
+				success: function () {},
+				error: function () {},
+				always: function () {}
+			};
+			var XHR = XMLHttpRequest || ActiveXObject;
+			var request = new XHR('MSXML2.XMLHTTP.3.0');
+			request.open(type, url);
+			request.setRequestHeader('Content-type', config.contentType);
+			request.onreadystatechange = function () {
+				var req;
+				if (request.readyState === 4) {
+					req = parse(request);
+					if (request.status >= 200 && request.status < 300) {
+						methods.success.apply(methods, req);
+					} else {
+						methods.error.apply(methods, req);
+					}
+					methods.always.apply(methods, req);
+				}
+			};
+			request.send(data);
+			atomXHR = {
+				success: function (callprevious) {
+					methods.success = callprevious;
+					return atomXHR;
+				},
+				error: function (callprevious) {
+					methods.error = callprevious;
+					return atomXHR;
+				},
+				always: function (callprevious) {
+					methods.always = callprevious;
+					return atomXHR;
+				}
+			};
+			return atomXHR;
+		};
+	
+		var exports = {
+			get(src) {
+				return xhr('GET', src);
+			},
+			put(url, data) {
+				return xhr('PUT', url, data);
+			},
+			post(url, data) {
+				return xhr('POST', url, data);
+			},
+			delete(url) {
+				return xhr('DELETE', url);
+			},
+			setContentType(value) {
+				config.contentType = value;
+			},
+			setResponseType(value) {
+				config.responseType = value;
+			}
+		};
+		return exports;
+	}
+
+	carregarGeraLog(unid){
+		let idN = window.location.href.indexOf("?")!==-1 ? "&" : "?";
+		let nivel = this.options.unid.indexOf(".")>0 ? this.options.unid.substring(this.options.unid.indexOf(".")) : '0';
+		let payload:String = "conteudoAnterior=un" +
+			(this.options.unid.indexOf(".")>0 ? this.options.unid.replace(".","_") : this.options.unid+"_0") +
+			".html&conteudo=un" + (unid.indexOf(".")>0 ? unid.replace(".","_") : unid+"_0") +
+			".html&url=" + window.location.href + idN +
+			'idN=' + this.options.aula +
+			'&unidade=' + this.options.unid +
+			'&nivel=' + nivel +
+			'&aula=Aula%20' + this.options.aula;
+
+		let xhReq = this.XhrFactory();
+		xhReq.setContentType('application/x-www-form-urlencoded');
+		xhReq.setResponseType('text');
+		xhReq.post(this.options.path.local+this.options.path.geralog, payload);
+	}
+
+	carregarInfoUser(){
+		let _self = this;
+		let xhReq = this.XhrFactory();
+		xhReq.setContentType('text/plain');
+		xhReq.setResponseType('text');
+		xhReq.get(this.options.path.local+this.options.path.infouser).success(function(data){
+			_self.options.chave = data.split('<br>')[2].substr(8);
+		});
+	}
+
+	carregarXML(){
+		let _self = this;
+		let xhReq = this.XhrFactory();
+		xhReq.setContentType('text/xml');
+		xhReq.setResponseType('xml');
+		xhReq.get(this.options.path.xml+this.options.filename).success(function(data){
+			_self.listPlay = _self.listarXml(data.getElementsByTagName('curso'));
+			//console.log(_self.listPlay);
+			_self.createMenuList();
+			_self.setSource();
+		});
+	}
+
+	/**
+	 * Converte o XML em array
+	 * @param elem 
+	 * @param tag 
+	 */
+	listarXml(elem, tag = 'curso'){
+		let retorno = [];
+		let tagRelacionamento = {
+			'curso'     : ['aula'], 
+			'aula'      : ['item', 'btnImagem'],
+			'item'      : ['titulo', 'slides', 'subItem'],
+			'subItem'   : ['titulo', 'slides'],
+			'slides'    : ['video'],
+			'btnImagem' : ['img']
+		};
+		let nextTags = tagRelacionamento[tag];
+
+		for (let i = 0; i < elem.length; i++) { 
+			if(elem[i].nodeName == tag){
+				let index = i;
+				if(tag == 'aula' || tag == 'item' || tag == 'subItem'){
+					for (let j = 0; j < elem[i].attributes.length; j++) { 
+						let node = elem[i].attributes[j];
+						if(node.name == 'num'){
+							index = node.value.split('.').pop();
+						}
+					}
+				}
+	
+				retorno[index] = [];
+				for (let j = 0; j < elem[i].attributes.length; j++) { 
+					let node = elem[i].attributes[j];
+					retorno[index][node.name] = node.value;
+				}
+				if(nextTags == undefined){
+					if(tag == 'titulo')
+						return elem[i].textContent;
+
+					retorno[index][tag] = elem[i].textContent;
+				} else {
+					for (let j = 0; j < nextTags.length; j++){
+						let nextTag = nextTags[j];
+						retorno[index][nextTag] = this.listarXml(elem[i].children, nextTag);
+					}
+				}
+			}
+		}
+
+		if(tag == 'curso')
+			return retorno.pop();
+
+		if(tag == 'aula' || tag == 'item' || tag == 'subItem')
+			return retorno;
+			
+		return retorno.sort().filter(function (el) {
+			return el != null;
+		});
+	}
+
+	/**
+	 * Cria o menu lateral com todas as unidades e niveis
+	 */
+	createMenuList(){
+		let _self = this;
+		let parent = document.getElementsByClassName(QiSatPlayer.CLASS_PARENT)[0];
+		function setVideo(){
+			_self.options.unid = this.parentNode.dataset['unid'];
+			_self.setSource();
+		};
+		for (let i = 0; i < this.listPlay['aula'][this.options.aula]['item'].length; i++) { 
+			let unidade = this.listPlay['aula'][this.options.aula]['item'][i];
+
+			let liView = document.createElement("div");
+			liView.classList.add(QiSatPlayer.CLASS_ACTION);
+			liView.classList.add(QiSatPlayer.CLASS_VIEW);
+			liView.classList.add(unidade['subItem'].length ? QiSatPlayer.CLASS_LESS : QiSatPlayer.CLASS_SPAN);
+			liView.dataset['unid'] = i+'';
+			if(unidade['subItem'].length){
+				let plus = document.createElement("i");
+				plus.classList.add(QiSatPlayer.CLASS_PLUS);
+				plus.addEventListener('click', function () {
+					let elem, i:any;
+					for (i in this.parentNode.parentNode.childNodes) {
+						elem = <HTMLElement>this.parentNode.parentNode.childNodes[i];
+						if(elem == this.parentNode){
+							elem = <HTMLElement>this.parentNode.parentNode.childNodes[++i];
+							elem = <HTMLElement>elem.childNodes[3];
+							break;
+						}
+					}
+					if(this.classList.contains(QiSatPlayer.CLASS_PLUS)){
+						this.classList.remove(QiSatPlayer.CLASS_PLUS);
+						this.classList.add(QiSatPlayer.CLASS_MINUS);
+						elem.classList.remove(QiSatPlayer.CLASS_HIDE);
+					}else{
+						this.classList.remove(QiSatPlayer.CLASS_MINUS);
+						this.classList.add(QiSatPlayer.CLASS_PLUS);
+						elem.classList.add(QiSatPlayer.CLASS_HIDE);
+					}
+				});
+				liView.appendChild(plus);
+			}
+			parent.appendChild(liView);
+
+			let liAction = document.createElement("li");
+			liAction.classList.add(QiSatPlayer.CLASS_ACTION);
+			liAction.dataset['unid'] = i+'';
+
+			let liIcon = document.createElement("div");
+			liIcon.classList.add(QiSatPlayer.CLASS_ICON);
+			liIcon.addEventListener('click', setVideo);
+			liAction.appendChild(liIcon);
+
+			let plus = document.createElement("i");
+			plus.classList.add(QiSatPlayer.CLASS_PAGE);
+			liIcon.appendChild(plus);
+
+			let titulo = document.createElement("span");
+			titulo.textContent = unidade['titulo'];
+			titulo.addEventListener('click', setVideo);
+			liAction.appendChild(titulo);
+
+			let clear = document.createElement("div");
+			clear.classList.add(QiSatPlayer.CLASS_CLEAR);
+			liAction.appendChild(clear);
+			
+			if(unidade['subItem'].length){
+				let ulHide = document.createElement("ul");
+				ulHide.classList.add(QiSatPlayer.CLASS_HIDE);
+				for (let j = 0; j < unidade['subItem'].length; j++) { 
+					let nivel = unidade['subItem'][j];
+					if(nivel != undefined){
+						let liAction2 = document.createElement("li");
+						liAction2.classList.add(QiSatPlayer.CLASS_ACTION);
+						liAction2.dataset['unid'] = i+'.'+j;
+
+						let liIcon2 = document.createElement("div");
+						liIcon2.classList.add(QiSatPlayer.CLASS_ICON_DESACTIVE);
+						liIcon2.addEventListener('click', setVideo);
+
+						let pageSmall = document.createElement("i");
+						pageSmall.classList.add(QiSatPlayer.CLASS_PAGE, QiSatPlayer.CLASS_SMALL);
+						liIcon2.appendChild(pageSmall);
+						liAction2.appendChild(liIcon2);
+
+						let titulo = document.createElement("span");
+						titulo.textContent = nivel['titulo'];
+						titulo.addEventListener('click', setVideo);
+						liAction2.appendChild(titulo);
+
+						ulHide.appendChild(liAction2);
+						ulHide.appendChild(clear.cloneNode(true));
+					}
+				}
+				liAction.appendChild(ulHide);
+			}
+			parent.appendChild(liAction);
+
+			parent.appendChild(clear.cloneNode(true));
+		}
+	}
+
+	/**
+	 * Manipulação do video
+	 */
+	setSource(pos=null){
+		let src = this.getNextVideo(pos, true);
+
+		let btPrevious = <HTMLElement>document.getElementById(QiSatPlayer.ID_PREVIOUS);
+		if(this.getNextVideo(false) == undefined){
+			btPrevious.classList.remove(QiSatPlayer.CLASS_PREVIOUS);
+			btPrevious.classList.add(QiSatPlayer.CLASS_PREVIOUS_DISABLE);
+		}else{
+			btPrevious.classList.remove(QiSatPlayer.CLASS_PREVIOUS_DISABLE);
+			btPrevious.classList.add(QiSatPlayer.CLASS_PREVIOUS);
+		}
+
+		let btNext = <HTMLElement>document.getElementById(QiSatPlayer.ID_NEXT);
+		if(this.getNextVideo(true) == undefined){
+			btNext.classList.remove(QiSatPlayer.CLASS_NEXT);
+			btNext.classList.add(QiSatPlayer.CLASS_NEXT_DISABLE);
+		}else{
+			btNext.classList.remove(QiSatPlayer.CLASS_NEXT_DISABLE);
+			btNext.classList.add(QiSatPlayer.CLASS_NEXT);
+		}
+
+		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+		video.innerHTML = '';
+		for (let i = 0; i < this.options.video.ext.length; i++) {
+			let ext     = this.options.video.ext[i];
+			let source  = document.createElement("source");
+			source.src  = src+'.'+ext;
+			source.type = QiSatPlayer.VIDEOTYPES[ext+"-codecs"];
+			video.appendChild(source);
+		}
+		video.load();
+		let btPlay = <HTMLElement>document.getElementById(QiSatPlayer.ID_PLAY);
+		if(btPlay.classList.contains(QiSatPlayer.CLASS_PAUSE)){
+			video.play();
+		}else{
+			btPlay.click();
+		}
+	}
+
+	getNextVideo(pos=null, alterVideo=false){
+		let src,unidade,nivel,slides;
+		nivel = this.options.unid.split('.');
+		unidade = parseInt(nivel[0]);
+		slides = this.listPlay['aula'][this.options.aula]['item'][unidade];
+		if(nivel[1]){
+			nivel = parseInt(nivel[1]);
+			slides = slides['subItem'][nivel];
+		} else {
+			nivel = 0;
+		}
+
+		if(pos != null){
+			pos = pos ? 1 : -1;
+			src = slides['slides'][this.options.slide]['video'][this.options.subVideo+pos];
+			if(src != undefined){
+				src = src['video'];
+				if(alterVideo)
+					this.options.subVideo += pos;
+			}
+			
+			if(src == undefined){
+				src = slides['slides'][this.options.slide+pos];
+				if(src != undefined){
+					src = src['video'];
+					src = src[pos == 1 ? 0 : src.length-1];
+					if(src != undefined){
+						src = src['video'];
+						if(alterVideo){
+							this.options.slide += pos;
+							this.options.subVideo = pos == 1 ? 0 : src.length-1;
+						}
+					}
+				}
+			}
+
+			if(src == undefined){
+				if(nivel+pos){
+					slides = this.listPlay['aula'][this.options.aula]['item'][unidade]['subItem'][nivel+pos];
+					if(alterVideo)
+						this.options.unid = unidade+'.'+(nivel+pos);
+				} else {
+					slides = this.listPlay['aula'][this.options.aula]['item'][unidade];
+					if(alterVideo)
+						this.options.unid = unidade+'';
+				}
+				if(slides == undefined){
+					slides = this.listPlay['aula'][this.options.aula]['item'][unidade+pos];
+					if(alterVideo)
+						this.options.unid = (unidade+pos)+'';
+				}
+				if(slides != undefined){
+					src = slides['slides'];
+					if(alterVideo)
+						this.options.slide = pos == 1 ? 0 : src.length-1;
+
+					src = src[pos == 1 ? 0 : src.length-1]['video'];
+					if(alterVideo)
+						this.options.subVideo = pos == 1 ? 0 : src.length-1;
+
+					src = src[pos == 1 ? 0 : src.length-1]['video'];
+				}
+			}
+		} else {
+			src = slides['slides'][this.options.slide]['video'][this.options.subVideo]['video'];
+		}
+
+		if(alterVideo){
+			this.updateMenuList();
+		}
+
+		return src;
+	}
+
+	/**
+	 * Set Menu List
+	 */
+	updateMenuList(){
+		let menuList = document.getElementsByClassName('menu-list')[0];
+		let parent = menuList.getElementsByClassName('parent')[0];
+		let unidade = this.options.unid.split('.')[0];
+		for (let i in parent.childNodes) {
+			let elem = <HTMLElement>parent.childNodes[i];
+			if(elem.nodeName == 'DIV' && elem.dataset['unid'] != undefined){
+				let child;
+				if(child = <HTMLElement>elem.childNodes[0]){
+					if(elem.dataset['unid'] == unidade){
+						child.classList.remove(QiSatPlayer.CLASS_PLUS);
+						child.classList.add(QiSatPlayer.CLASS_MINUS);
+					}else{
+						child.classList.remove(QiSatPlayer.CLASS_MINUS);
+						child.classList.add(QiSatPlayer.CLASS_PLUS);
+					}
+				}
+			}else if(elem.nodeName == 'LI'){
+				let child = <HTMLDivElement>elem.childNodes[0];
+				let ulList = <HTMLUListElement>elem.childNodes[3];
+				if(elem.dataset['unid'] == this.options.unid){
+					elem.classList.add(QiSatPlayer.CLASS_ACTIVE);
+					child.classList.remove(QiSatPlayer.CLASS_ICON);
+					child.classList.add(QiSatPlayer.CLASS_ICON_ACTIVE);
+				} else {
+					elem.classList.remove(QiSatPlayer.CLASS_ACTIVE);
+					child.classList.remove(QiSatPlayer.CLASS_ICON_ACTIVE);
+					child.classList.add(QiSatPlayer.CLASS_ICON);
+				}
+				if(ulList){
+					if(elem.dataset['unid'] == unidade){
+						ulList.classList.remove(QiSatPlayer.CLASS_HIDE);
+					} else {
+						ulList.classList.add(QiSatPlayer.CLASS_HIDE);
+					}
+				}
+				if(ulList){
+					for (let j in ulList.childNodes) {
+						let elem2 = <HTMLElement>ulList.childNodes[j];
+						if(elem2.nodeName == 'LI'){
+							child = <HTMLDivElement>elem2.childNodes[0];
+							if(elem2.dataset['unid'] == this.options.unid){
+								child.classList.remove(QiSatPlayer.CLASS_ICON_DESACTIVE);
+								child.classList.add(QiSatPlayer.CLASS_ICON_ACTIVE);
+							}else{
+								child.classList.remove(QiSatPlayer.CLASS_ICON_ACTIVE);
+								child.classList.add(QiSatPlayer.CLASS_ICON_DESACTIVE);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+class ModuleTable {
+	table: HTMLTableElement;
+	private tbody: HTMLTableSectionElement;
+	constructor() {
+		this.table = document.createElement('table');
+		this.tbody = <HTMLTableSectionElement> this.table.createTBody();
+		let rom = 0;
+
+			
+		var hrow = <HTMLTableRowElement> this.table.tBodies[0].insertRow(rom++); 
+		hrow.insertCell(0).innerHTML = "Reprodução automática";
+		let autoplay = document.createElement("input");
+		autoplay.id = QiSatPlayer.ID_AUTOPLAY;
+		autoplay.type = 'checkbox';
+		hrow.insertCell(1).appendChild(autoplay);
+
+			
+		hrow = <HTMLTableRowElement> this.table.tBodies[0].insertRow(rom++);
+		hrow.insertCell(0).innerHTML = "Velocidade de reprodução";
+		let groupPlayback = document.createElement("div");
+		groupPlayback.id = QiSatPlayer.ID_GROUP_PLAYBACK;
+
+		let fiMinus = document.createElement("i");
+		fiMinus.classList.add(QiSatPlayer.CLASS_MINUS);
+		fiMinus.addEventListener('click', function () {
+			//
+		});
+		groupPlayback.appendChild(fiMinus);
+
+		let playback = document.createElement("label");
+		playback.id = QiSatPlayer.ID_PLAYBACK;
+		playback.innerHTML ='1x';
+		groupPlayback.appendChild(playback);
+
+		let fiPlus = document.createElement("i");
+		fiPlus.classList.add(QiSatPlayer.CLASS_PLUS);
+		fiPlus.addEventListener('click', function () {
+			//
+		});
+		groupPlayback.appendChild(fiPlus);
+
+		hrow.insertCell(1).appendChild(groupPlayback);
+	}
+}
+//let player = new QiSatPlayer(1, '0');

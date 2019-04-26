@@ -66,7 +66,7 @@ var PATHS = {
 	"local-player.qisat.com.br" :
 	{
 		'xml'       : '' ,
-		'local'     : 'http://' + window.location.hostname + ':90' ,
+		'local'     : 'http://' + window.location.hostname,
 		'imagens'   : '' ,
 		'imgMask'   : '',
 		'videos'    : '',
@@ -82,7 +82,7 @@ var PATHS = {
 	{
 		'xml'       : '' ,
 		//'local'   : 'https://cursos.qisat.com.br' ,
-		'local'     : 'http://' + window.location.hostname + ':90' ,
+		'local'     : 'http://' + window.location.hostname,
 		'imagens'   : '' ,
 		'imgMask'   : '',
 		'videos'    : '',
