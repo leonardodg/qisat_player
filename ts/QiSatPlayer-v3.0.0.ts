@@ -20,6 +20,7 @@ class QiSatPlayer {
 	static ID_PREVIOUS  = "previous";
 	static ID_PLAY  = "play";
 	static ID_NEXT  = "next";
+	static ID_VOLUME = "volume";
 	static CLASS_PREVIOUS = "fi-previous";
 	static CLASS_NEXT = "fi-next";
 	static CLASS_REFRESH = "fi-refresh";
@@ -73,8 +74,8 @@ class QiSatPlayer {
 	static CLASS_PROGRESS_BAR = "progress-bar";
 
 	static ID_SUBVIDEO_LIST = 'subVideos-List';
-	static CLASS_N_SUBVIDEO = "subvideo";
-	static CLASS_TOTAL_SUBVIDEO = "total-subvideo";
+	static CLASS_N_SUBVIDEO = "subVideo";
+	static CLASS_TOTAL_SUBVIDEO = "total-subVideo";
 
 	static ID_SUBMENU = 'subMenu';
 	static ID_AUTOPLAY = 'autoplay';
@@ -325,8 +326,8 @@ class QiSatPlayer {
 		let btClose = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_BT_CLOSE)[0];
 		btClose.classList.add(QiSatPlayer.CLASS_HIDE);
 
-		let menuList = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_MENU_LIST)[0];
-		menuList.classList.remove(QiSatPlayer.CLASS_HIDE);
+		//let menuList = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_MENU_LIST)[0];
+		//menuList.classList.remove(QiSatPlayer.CLASS_HIDE);
 	}
 	setBtClose(){
 		let btClose = document.createElement("div");
@@ -350,6 +351,23 @@ class QiSatPlayer {
 
 		video.addEventListener('playing', function () {
 			this.classList.remove(QiSatPlayer.CLASS_HIDE);
+			this.muted = Boolean(document.getElementsByClassName(QiSatPlayer.CLASS_VOLUME_NONE).length);
+
+			var curmins = Math.floor(this.duration / 60),
+				cursecs = Math.floor(this.duration - curmins * 60),
+				durtimetext = <HTMLSpanElement>document.getElementById(QiSatPlayer.ID_DURATION_TEXT);
+			durtimetext.innerHTML = ("00" + curmins).slice(-2)+":"+("00" + cursecs).slice(-2);
+		});
+		video.addEventListener("timeupdate", function(){
+			var curmins = Math.floor(this.currentTime / 60),
+				cursecs = Math.floor(this.currentTime - curmins * 60),
+				value = ( this.currentTime  / this.duration );
+
+			let curtimetext = <HTMLSpanElement>document.getElementById(QiSatPlayer.ID_TIME_TEXT);
+			curtimetext.innerHTML = ("00" + curmins).slice(-2)+":"+("00" + cursecs).slice(-2);
+
+			let progresso = <HTMLProgressElement>document.getElementById(QiSatPlayer.ID_PROGRESS);
+			progresso.value = (value) ? value : 0;
 		});
 		video.addEventListener('ended', this.endVideo);
 
@@ -473,12 +491,16 @@ class QiSatPlayer {
 		return videoControls;
 	}
 	setBarraProgresso(){
-		let progress = document.createElement("progress");
+		let progress = <HTMLProgressElement>document.createElement("progress");
 		progress.id = QiSatPlayer.ID_PROGRESS;
 		progress.max = 1;
 		progress.value = 0;
-		progress.addEventListener('change', function () {
-			//
+		progress.addEventListener('click', function (e) {
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			let value = e.offsetX / this.offsetWidth;
+			let time = video.duration * value;
+			video.currentTime = Math.floor(time);
+			this.value = value;
 		});
 		return progress;
 	}
@@ -509,10 +531,13 @@ class QiSatPlayer {
 				this.classList.add(QiSatPlayer.CLASS_PLAY);
 				video.pause();
 			}else{
+				if(this.classList.contains(QiSatPlayer.CLASS_REFRESH)){
+					video.currentTime = 0;
+				}
 				var promise = video.play();
 				if (promise !== undefined) {
 					promise.then(function() {
-						video.muted = false;
+						video.muted = Boolean(document.getElementsByClassName(QiSatPlayer.CLASS_VOLUME_NONE).length);
 					});
 				}
 				if(!video.paused){
@@ -538,6 +563,7 @@ class QiSatPlayer {
 	}
 	setVolume(){
 		let btVolume = document.createElement("div");
+		btVolume.id = QiSatPlayer.ID_VOLUME;
 		btVolume.classList.add(QiSatPlayer.CLASS_VOLUME);
 		btVolume.addEventListener('click', function () {
 			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
@@ -559,27 +585,41 @@ class QiSatPlayer {
 		btVolumeBar.max = btVolumeBar.value = '1';
 		btVolumeBar.step = '0.1';
 		btVolumeBar.addEventListener('click', function () {
-			//
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			video.volume = Number(this.value);
+			let volume = <HTMLInputElement>document.getElementById(QiSatPlayer.ID_VOLUME);
+			if(video.volume){
+				volume.classList.remove(QiSatPlayer.CLASS_VOLUME_NONE);
+				volume.classList.add(QiSatPlayer.CLASS_VOLUME);
+			} else {
+				volume.classList.remove(QiSatPlayer.CLASS_VOLUME);
+				volume.classList.add(QiSatPlayer.CLASS_VOLUME_NONE);
+			}
 		});
 		return btVolumeBar;
 	}
 	setSlides(){
+		let _self = this;
 		let slides = document.createElement("div");
 		slides.id = QiSatPlayer.ID_DIV_SLIDES;
 		slides.innerHTML = 'PARTE: ';
 		slides.dataset['unid'] = '0';
 		
 		for (var i = 1; i <= 10; i++) {
-			let p = document.createElement("p");
+			let p = <HTMLElement>document.createElement("p");
 			p.innerHTML = i.toString();
+			p.dataset['slide'] = (i-1).toString();
 			if(i==1){
 				p.classList.add(QiSatPlayer.CLASS_ACTIVE);
-				p.dataset['slide'] = '0';
 			}else{
 				p.classList.add(QiSatPlayer.CLASS_DISABLE);
 			}
 			p.addEventListener('click', function () {
-				//
+				//if(!this.classList.length){
+				if(!this.classList.contains(QiSatPlayer.CLASS_DISABLE)){
+					_self.options.slide = parseInt(this.dataset['slide']);
+					_self.setSource();
+				}
 			});
 			slides.appendChild(p);
 		}
@@ -595,14 +635,14 @@ class QiSatPlayer {
 		subVideosList.appendChild(p);
 		
 		let subVideo = document.createElement("p");
-		subVideo.classList.add('subVideo');
+		subVideo.classList.add(QiSatPlayer.CLASS_N_SUBVIDEO);
 		subVideo.innerHTML = '1';
 		subVideosList.appendChild(subVideo);
 		
 		subVideosList.append('/');
 		
 		let totalSubVideo = document.createElement("p");
-		totalSubVideo.classList.add('total-subVideo');
+		totalSubVideo.classList.add(QiSatPlayer.CLASS_TOTAL_SUBVIDEO);
 		totalSubVideo.innerHTML = '1';
 		subVideosList.appendChild(totalSubVideo);
 
@@ -630,11 +670,13 @@ class QiSatPlayer {
 	}
 	
 	setMenuContexto(){
-		let menu = new ModuleTable();
 		let subMenu = document.createElement("div");
 		subMenu.id = QiSatPlayer.ID_SUBMENU;
 		subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
+
+		let menu = new ModuleTable(QiSatPlayer);
 		subMenu.appendChild(menu.table);
+
 		return subMenu;
 	}
 	setBtMenuContexto(){
@@ -643,7 +685,7 @@ class QiSatPlayer {
 		btWidget.addEventListener('click', function () {
 			let subMenu = document.getElementById(QiSatPlayer.ID_SUBMENU);
 			subMenu.classList.toggle(QiSatPlayer.CLASS_HIDE);
-			//
+			// Girar engrenagem
 		});
 		return btWidget;
 	}
@@ -768,7 +810,7 @@ class QiSatPlayer {
 		xhReq.setResponseType('xml');
 		xhReq.get(this.options.path.xml+this.options.filename).success(function(data){
 			_self.listPlay = _self.listarXml(data.getElementsByTagName('curso'));
-			//console.log(_self.listPlay);
+			console.log(_self.listPlay);
 			_self.createMenuList();
 			_self.setSource();
 		});
@@ -827,8 +869,8 @@ class QiSatPlayer {
 
 		if(tag == 'aula' || tag == 'item' || tag == 'subItem')
 			return retorno;
-			
-		return retorno.sort().filter(function (el) {
+	
+		return retorno.filter(function (el) {
 			return el != null;
 		});
 	}
@@ -881,6 +923,14 @@ class QiSatPlayer {
 			let liAction = document.createElement("li");
 			liAction.classList.add(QiSatPlayer.CLASS_ACTION);
 			liAction.dataset['unid'] = i+'';
+			liAction.addEventListener('mouseover', function () {
+				let child = <HTMLSpanElement>this.childNodes[1];
+				child.classList.add(QiSatPlayer.CLASS_ACTIVE);
+			});
+			liAction.addEventListener('mouseout', function () {
+				let child = <HTMLSpanElement>this.childNodes[1];
+				child.classList.remove(QiSatPlayer.CLASS_ACTIVE);
+			});
 
 			let liIcon = document.createElement("div");
 			liIcon.classList.add(QiSatPlayer.CLASS_ICON);
@@ -909,6 +959,14 @@ class QiSatPlayer {
 						let liAction2 = document.createElement("li");
 						liAction2.classList.add(QiSatPlayer.CLASS_ACTION);
 						liAction2.dataset['unid'] = i+'.'+j;
+						liAction2.addEventListener('mouseover', function () {
+							let child = <HTMLSpanElement>this.childNodes[1];
+							child.classList.add(QiSatPlayer.CLASS_ACTIVE);
+						});
+						liAction2.addEventListener('mouseout', function () {
+							let child = <HTMLSpanElement>this.childNodes[1];
+							child.classList.remove(QiSatPlayer.CLASS_ACTIVE);
+						});
 
 						let liIcon2 = document.createElement("div");
 						liIcon2.classList.add(QiSatPlayer.CLASS_ICON_DESACTIVE);
@@ -958,6 +1016,36 @@ class QiSatPlayer {
 		}else{
 			btNext.classList.remove(QiSatPlayer.CLASS_NEXT_DISABLE);
 			btNext.classList.add(QiSatPlayer.CLASS_NEXT);
+		}
+
+		let unidade,nivel,parte,subVideo,totalSubVideo;
+		[unidade,nivel] = this.options.unid.split('.');
+		if(nivel==undefined){
+			parte = this.listPlay['aula'][this.options.aula]['item'][unidade]['slides'];
+		}else{
+			parte = this.listPlay['aula'][this.options.aula]['item'][unidade]['subItem'][nivel]['slides'];
+		}
+		let slides = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_DIV_SLIDES);
+		for (let i in slides.childNodes) {
+			let elem = <HTMLElement>slides.childNodes[i];
+			if(elem.nodeName == 'P'){
+				elem.classList.remove(QiSatPlayer.CLASS_ACTIVE);
+				if(parseInt(elem.dataset['slide']) == this.options.slide){
+					elem.classList.add(QiSatPlayer.CLASS_ACTIVE);
+				} 
+				if(parseInt(elem.dataset['slide']) > parte.length-1){
+					elem.classList.add(QiSatPlayer.CLASS_DISABLE);
+				} else {
+					elem.classList.remove(QiSatPlayer.CLASS_DISABLE);
+				}
+			}
+		}
+		
+		if(subVideo = <HTMLElement>document.getElementsByClassName(QiSatPlayer.CLASS_N_SUBVIDEO)[0]){
+			subVideo.innerHTML = this.options.subVideo + 1;
+		}
+		if(totalSubVideo = <HTMLElement>document.getElementsByClassName(QiSatPlayer.CLASS_TOTAL_SUBVIDEO)[0]){
+			totalSubVideo.innerHTML = parte[this.options.slide]['video'].length;
 		}
 
 		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
@@ -1046,6 +1134,7 @@ class QiSatPlayer {
 		}
 
 		if(alterVideo){
+			//this.options.canvas.sentido != this.options.canvas.sentido;
 			this.updateMenuList();
 		}
 
@@ -1111,48 +1200,3 @@ class QiSatPlayer {
 	}
 }
 
-class ModuleTable {
-	table: HTMLTableElement;
-	private tbody: HTMLTableSectionElement;
-	constructor() {
-		this.table = document.createElement('table');
-		this.tbody = <HTMLTableSectionElement> this.table.createTBody();
-		let rom = 0;
-
-			
-		var hrow = <HTMLTableRowElement> this.table.tBodies[0].insertRow(rom++); 
-		hrow.insertCell(0).innerHTML = "Reprodução automática";
-		let autoplay = document.createElement("input");
-		autoplay.id = QiSatPlayer.ID_AUTOPLAY;
-		autoplay.type = 'checkbox';
-		hrow.insertCell(1).appendChild(autoplay);
-
-			
-		hrow = <HTMLTableRowElement> this.table.tBodies[0].insertRow(rom++);
-		hrow.insertCell(0).innerHTML = "Velocidade de reprodução";
-		let groupPlayback = document.createElement("div");
-		groupPlayback.id = QiSatPlayer.ID_GROUP_PLAYBACK;
-
-		let fiMinus = document.createElement("i");
-		fiMinus.classList.add(QiSatPlayer.CLASS_MINUS);
-		fiMinus.addEventListener('click', function () {
-			//
-		});
-		groupPlayback.appendChild(fiMinus);
-
-		let playback = document.createElement("label");
-		playback.id = QiSatPlayer.ID_PLAYBACK;
-		playback.innerHTML ='1x';
-		groupPlayback.appendChild(playback);
-
-		let fiPlus = document.createElement("i");
-		fiPlus.classList.add(QiSatPlayer.CLASS_PLUS);
-		fiPlus.addEventListener('click', function () {
-			//
-		});
-		groupPlayback.appendChild(fiPlus);
-
-		hrow.insertCell(1).appendChild(groupPlayback);
-	}
-}
-//let player = new QiSatPlayer(1, '0');
