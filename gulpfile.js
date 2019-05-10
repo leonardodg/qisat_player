@@ -40,7 +40,7 @@ var jsDest = 'public/js';
 
 // JS Files to Merge
 var jsFiles = [
-  'ModuleTable.js',
+  'MenuContexto.js',
   'QiSatPlayer-v3.0.0.js'
 ]
 

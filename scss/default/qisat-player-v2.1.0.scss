@@ -1,3 +1,5 @@
+@import "loading.scss";
+
 @import "../components/foundation-icons/foundation-icons.css";
 
 $font-path: "../components/foundation-icons/foundation-icons";
@@ -52,7 +54,6 @@ body {
 		z-index: 30;
 	}
 }
-
 
 #canvasMask {
 	position: absolute;
@@ -212,6 +213,12 @@ body {
 	}
 }
 
+.bt-active{
+	box-shadow: inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15),
+				inset 0 0.6em 2em -0.3em rgba(0,0,0,0.15), 
+				inset 0 0 0em 0.05em rgba(255,255,255,0.1) !important;
+}
+
 #video-controls {
 	position: relative;
 	width: 1010px;
@@ -363,11 +370,6 @@ body {
 			float: left;
 		}
 
-		/*.bt_ctrl {
-			float: left;
-			cursor: pointer;
-		}*/
-
 		progress {
 			-webkit-appearance: progress-bar;
 			box-sizing: border-box;
@@ -490,7 +492,6 @@ body {
 	}
 
 	&:focus::-webkit-slider-runnable-track {
-		/*background: #424242;*/
 		background: darken($color-bar, 5%);
 	}
 
@@ -987,19 +988,9 @@ body {
 	table {
 		margin : 5px;
 	}
-
-	/*[class|=fi] {
-		border: none;
-	}*/
 }
 
-
 @media only screen and (max-device-height: 664px) {
-	/*#video, #canvasMask {
-		width: 1280px !important;
-		height: 720px !important;
-	}*/
-
 	.top{
 		opacity: 0.5;
 	};
@@ -1042,4 +1033,3 @@ body {
 	}
 
 }
-

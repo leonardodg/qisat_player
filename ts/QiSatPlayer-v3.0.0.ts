@@ -13,7 +13,7 @@ class QiSatPlayer {
 	static ID_ERROR  = "error";
 	static ID_VIDEO  = "video";
 	static ID_CANVAS = 'canvasMask';
-	static ID_VIDEO_LOAD = "loading";
+	static CLASS_LOADING = "loading";
 	static CLASS_BT_CLOSE = "bt-close";
 	static CLASS_BT_CLOSE_X   = "fi-x";
 
@@ -31,6 +31,7 @@ class QiSatPlayer {
 	static CLASS_VOLUME = "fi-volume";
 	static CLASS_VOLUME_NONE   = "fi-volume-none";
 	static CLASS_WIDGET   = "fi-widget";
+	static CLASS_BT_ACTIVE = "bt-active";
 
 	static CLASS_TOP = "top";
 	static CLASS_LOGO  = "logo";
@@ -62,9 +63,6 @@ class QiSatPlayer {
 	static ID_PLAYBACK_RATE = "playback-rate";
 	static CLASS_VOLUME_TRACK = "volume-track";
 	static CLASS_VOLUME_THUMB = "volume-thumb";
-	//static ID_DIV_LEGENDA_SETA = "seta";
-	//static CLASS_LEGENDA_LEFT = "seta-esquerda";
-	//static CLASS_LEGENDA_RIGHT = "seta-direita";
 	static ID_DIV_VIDEO_TIME   = "video-time";
 	static ID_DIV_SLIDES   = "slides";
 	static ID_LEGENDA_TEXT = "legenda-text";
@@ -105,22 +103,7 @@ class QiSatPlayer {
 				'defaLocal' : '/public',
 				'defaArq'   : '/getUrl.php',
 				'data'      : ''
-			}/*,
-		"qisat" :
-			{
-				'xml'       : '',
-				//'local'   : 'https://cursos.qisat.com.br',
-				'local'     : 'http://' + window.location.hostname,
-				'imagens'   : '',
-				'imgMask'   : '',
-				'videos'    : '',
-				'infouser'  : '/repository/user/getinfouser.php',
-				'geralog'   : '/course/format/topicstime/controle_acesso/geraLog.php',
-				'poster'    : '/lib/QiSatPlayer/public/imagens/poster.jpg',
-				'defaLocal' : '/lib/QiSatPlayer/public',
-				'defaArq'   : '/getUrl.php',
-				'data'      : ''
-			}*/
+			}
 	};
 	
 	static VIDEOTYPES = {
@@ -160,7 +143,6 @@ class QiSatPlayer {
 			height   : 568,
 			id       : QiSatPlayer.ID_VIDEO,
 			poster   : '',
-			//types    : canPlayType('video'),
 			filename : null,
 			ext      : ['mp4']
 		},
@@ -208,8 +190,6 @@ class QiSatPlayer {
 		}
 		if(QiSatPlayer.PATHS[location.hostname]){
 			this.options.path = QiSatPlayer.PATHS[location.hostname];
-		/*}else{
-			this.options['path'] = QiSatPlayer.PATHS['qisat'];*/
 		}
 		this.options.video.poster = this.options['path']['poster'];
 
@@ -220,6 +200,12 @@ class QiSatPlayer {
 		videoPlayer.appendChild(this.createControls());
 		this.carregarInfoUser();
 		this.carregarXML();
+
+		try {
+			new MenuContexto(this);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/**
@@ -303,6 +289,19 @@ class QiSatPlayer {
 	}
 
 	/**
+	 * Efeito de fundo ao clicar no botão
+	 * @param button 
+	 */
+	btEstilo(button){
+		button.addEventListener('mousedown', function(){
+			this.classList.add(QiSatPlayer.CLASS_BT_ACTIVE);
+		});
+		button.addEventListener('mouseup', function(){
+			this.classList.remove(QiSatPlayer.CLASS_BT_ACTIVE);
+		});
+	}
+
+	/**
 	 * Criando componentes de video do player
 	 */	
 	createVideoTag(){
@@ -313,6 +312,7 @@ class QiSatPlayer {
 		videoTag.appendChild(this.setCanvas());
 		return videoTag;
 	}
+	
 	endVideo () {
 		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
 		video.classList.add(QiSatPlayer.CLASS_HIDE);
@@ -325,10 +325,8 @@ class QiSatPlayer {
 
 		let btClose = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_BT_CLOSE)[0];
 		btClose.classList.add(QiSatPlayer.CLASS_HIDE);
-
-		//let menuList = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_MENU_LIST)[0];
-		//menuList.classList.remove(QiSatPlayer.CLASS_HIDE);
 	}
+
 	setBtClose(){
 		let btClose = document.createElement("div");
 		btClose.classList.add(QiSatPlayer.CLASS_BT_CLOSE);
@@ -338,7 +336,13 @@ class QiSatPlayer {
 		fiX.classList.add(QiSatPlayer.CLASS_BT_CLOSE_X);
 		btClose.appendChild(fiX);
 		
-		btClose.addEventListener('click', this.endVideo);
+		btClose.addEventListener('click', function(){
+			var evObj = document.createEvent('HTMLEvents');
+			evObj.initEvent('ended', false, false);
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			video.dispatchEvent(evObj);
+		});
+		this.btEstilo(btClose);
 
 		return btClose;
 	}
@@ -350,7 +354,7 @@ class QiSatPlayer {
 		video.poster = this.options.path.poster;
 
 		video.addEventListener('playing', function () {
-			this.classList.remove(QiSatPlayer.CLASS_HIDE);
+			//this.classList.remove(QiSatPlayer.CLASS_HIDE);
 			this.muted = Boolean(document.getElementsByClassName(QiSatPlayer.CLASS_VOLUME_NONE).length);
 
 			var curmins = Math.floor(this.duration / 60),
@@ -379,16 +383,20 @@ class QiSatPlayer {
 		canvas.width = 1010;
 		canvas.height = 568;
 		canvas.addEventListener('click', function () {
-			let btPlay = <HTMLElement>document.getElementById(QiSatPlayer.ID_PLAY);
-			btPlay.click();
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			if(!video.classList.contains(QiSatPlayer.CLASS_HIDE)){
+				let btPlay = <HTMLElement>document.getElementById(QiSatPlayer.ID_PLAY);
+				btPlay.click();
+			}
 		});
 
 		let _self = this;
 		setInterval(function(){
 			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
 			let context = canvas.getContext('2d');
-			context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+	
 			if(video.classList.contains(QiSatPlayer.CLASS_HIDE)){
+				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
 				let img = document.createElement("img");
 				let [unidade,nivel] = _self.options.unid.split('.');
 				if(nivel){
@@ -397,74 +405,75 @@ class QiSatPlayer {
 					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
 				}
 				context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
-			}
-			
-			/**
-			 * Barra diagonal com a chave
-			 */
-			if(_self.options.chave.length){
-				context.fillStyle = "rgba(120,120,120,0.1)";
-				context.beginPath();
+			} else if (video.played.length){
+				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
 
-				let diferenca = 45;
-				if(_self.options.canvas.sentido){
-					context.moveTo(0,0);
-					context.lineTo(diferenca,0);
-					context.lineTo(canvas.width,canvas.height-diferenca);
-					context.lineTo(canvas.width,canvas.height);
-					context.lineTo(canvas.width-diferenca,canvas.height);
-					context.lineTo(0,diferenca);
-				} else {
-					context.moveTo(0,canvas.height);
-					context.lineTo(diferenca,canvas.height);
-					context.lineTo(canvas.width,diferenca);
-					context.lineTo(canvas.width,0);
-					context.lineTo(canvas.width-diferenca,0);
-					context.lineTo(0,canvas.height-diferenca);
-				}
-				context.fill();
-				context.font = "16px 'Arial'";
-				context.fillStyle = "hsla("+_self.options.canvas.hue+","+_self.options.canvas.sat+"%,"+_self.options.canvas.val+"%,0.5)";
-				context.textAlign = "center";
+				/**
+				 * Barra diagonal com a chave
+				 */
+				if(_self.options.chave.length){
+					context.fillStyle = "rgba(120,120,120,0.1)";
+					context.beginPath();
 
-				//Chave do aluno
-				let count = 0;
-				while (count<11) {
+					let diferenca = 45;
 					if(_self.options.canvas.sentido){
-						context.fillText(_self.options.chave, 960-90.5*count, 535-48.5*(count++));
+						context.moveTo(0,0);
+						context.lineTo(diferenca,0);
+						context.lineTo(canvas.width,canvas.height-diferenca);
+						context.lineTo(canvas.width,canvas.height);
+						context.lineTo(canvas.width-diferenca,canvas.height);
+						context.lineTo(0,diferenca);
 					} else {
-						context.fillText(_self.options.chave, 46+91*count, 535-48.5*(count++));
+						context.moveTo(0,canvas.height);
+						context.lineTo(diferenca,canvas.height);
+						context.lineTo(canvas.width,diferenca);
+						context.lineTo(canvas.width,0);
+						context.lineTo(canvas.width-diferenca,0);
+						context.lineTo(0,canvas.height-diferenca);
+					}
+					context.fill();
+					context.font = "16px 'Arial'";
+					context.fillStyle = "hsla("+_self.options.canvas.hue+","+_self.options.canvas.sat+"%,"+_self.options.canvas.val+"%,0.5)";
+					context.textAlign = "center";
+
+					//Chave do aluno
+					let count = 0;
+					while (count<11) {
+						if(_self.options.canvas.sentido){
+							context.fillText(_self.options.chave, 960-90.5*count, 535-48.5*(count++));
+						} else {
+							context.fillText(_self.options.chave, 46+91*count, 535-48.5*(count++));
+						}
 					}
 				}
-			}
-			/**
-			 * Play do Canvas
-			 */
-			if (video.paused && !video.classList.contains(QiSatPlayer.CLASS_HIDE) && video.duration) {
-				var options_graph = {
-					size: 140,
-					lineWidth: 12
-				};
-				var radius = (options_graph.size - options_graph.lineWidth) / 2;
-				var drawCircle = function(color, lineWidth, percent) {
-					percent = Math.min(Math.max(0, percent || 1), 1);
+
+				/**
+				 * Play do Canvas
+				 */
+				if (video.paused && !video.classList.contains(QiSatPlayer.CLASS_HIDE) && video.innerHTML != '') {
+					var options_graph = {
+						size: 140,
+						lineWidth: 12
+					};
+					var radius = (options_graph.size - options_graph.lineWidth) / 2;
+
+					/* Desenhando circulo do Play */
 					context.beginPath();
-					context.arc(497, 285, radius, 0, Math.PI * 2 * percent, false);
-					context.strokeStyle = color;
+					context.arc(497, 285, radius, 0, Math.PI * 2, false);
+					context.strokeStyle = 'rgba(180, 180, 180, 0.6)';
 					context.lineCap = 'round';
-					context.lineWidth = lineWidth;
+					context.lineWidth = options_graph.lineWidth;
 					context.stroke();
-				};
-				drawCircle('rgba(180, 180, 180, 0.6)', options_graph.lineWidth, 1);
 
-				context.fillStyle = "rgba(180, 180, 180, 0.6)";
-				context.beginPath();
-				context.moveTo(475, 245);
-				context.lineTo(475, 325);
-				context.lineTo(540, 285);
-				context.fill();
+					/* Desenhando triangulo do Play */
+					context.fillStyle = "rgba(180, 180, 180, 0.6)";
+					context.beginPath();
+					context.moveTo(475, 245);
+					context.lineTo(475, 325);
+					context.lineTo(540, 285);
+					context.fill();
+				}
 			}
-
 		}, 50);
 
 		return canvas;
@@ -486,8 +495,6 @@ class QiSatPlayer {
 		videoControls.appendChild(this.setSlides());
 		videoControls.appendChild(this.setSubVideos());
 		videoControls.appendChild(this.setTime());
-		videoControls.appendChild(this.setMenuContexto());
-		videoControls.appendChild(this.setBtMenuContexto());
 		return videoControls;
 	}
 	setBarraProgresso(){
@@ -513,6 +520,7 @@ class QiSatPlayer {
 			if(this.classList.contains(QiSatPlayer.CLASS_PREVIOUS))
 				_self.setSource(false);
 		});
+		this.btEstilo(btPrevious);
 		return btPrevious;
 	}
 	setPlay(){
@@ -534,9 +542,10 @@ class QiSatPlayer {
 				if(this.classList.contains(QiSatPlayer.CLASS_REFRESH)){
 					video.currentTime = 0;
 				}
-				var promise = video.play();
+				let promise = video.play();
 				if (promise !== undefined) {
-					promise.then(function() {
+					//promise.then(function() {
+					promise.then(_ => {
 						video.muted = Boolean(document.getElementsByClassName(QiSatPlayer.CLASS_VOLUME_NONE).length);
 					});
 				}
@@ -548,6 +557,7 @@ class QiSatPlayer {
 			}
 		};
 		btPlay.addEventListener('click', btPlay.click);
+		this.btEstilo(btPlay);
 		return btPlay;
 	}
 	setNext(){
@@ -559,6 +569,7 @@ class QiSatPlayer {
 			if(this.classList.contains(QiSatPlayer.CLASS_NEXT))
 				_self.setSource(true);
 		});
+		this.btEstilo(btNext);
 		return btNext;
 	}
 	setVolume(){
@@ -575,6 +586,7 @@ class QiSatPlayer {
 				this.classList.add(QiSatPlayer.CLASS_VOLUME);
 			}
 		});
+		this.btEstilo(btVolume);
 		return btVolume;
 	}
 	setVolumeBar(){
@@ -668,27 +680,6 @@ class QiSatPlayer {
 
 		return videoTime;
 	}
-	
-	setMenuContexto(){
-		let subMenu = document.createElement("div");
-		subMenu.id = QiSatPlayer.ID_SUBMENU;
-		subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
-
-		let menu = new ModuleTable(QiSatPlayer);
-		subMenu.appendChild(menu.table);
-
-		return subMenu;
-	}
-	setBtMenuContexto(){
-		let btWidget = document.createElement("div");
-		btWidget.classList.add(QiSatPlayer.CLASS_WIDGET);
-		btWidget.addEventListener('click', function () {
-			let subMenu = document.getElementById(QiSatPlayer.ID_SUBMENU);
-			subMenu.classList.toggle(QiSatPlayer.CLASS_HIDE);
-			// Girar engrenagem
-		});
-		return btWidget;
-	}
 
 	/**
 	 * Requisições de dados externas
@@ -775,7 +766,7 @@ class QiSatPlayer {
 		return exports;
 	}
 
-	carregarGeraLog(unid){
+	carregarGeraLog(unid:string){
 		let idN = window.location.href.indexOf("?")!==-1 ? "&" : "?";
 		let nivel = this.options.unid.indexOf(".")>0 ? this.options.unid.substring(this.options.unid.indexOf(".")) : '0';
 		let payload:String = "conteudoAnterior=un" +
@@ -810,7 +801,7 @@ class QiSatPlayer {
 		xhReq.setResponseType('xml');
 		xhReq.get(this.options.path.xml+this.options.filename).success(function(data){
 			_self.listPlay = _self.listarXml(data.getElementsByTagName('curso'));
-			console.log(_self.listPlay);
+			//console.log(_self.listPlay);
 			_self.createMenuList();
 			_self.setSource();
 		});
@@ -882,6 +873,7 @@ class QiSatPlayer {
 		let _self = this;
 		let parent = document.getElementsByClassName(QiSatPlayer.CLASS_PARENT)[0];
 		function setVideo(){
+			_self.carregarGeraLog(this.parentNode.dataset['unid']);
 			_self.options.unid = this.parentNode.dataset['unid'];
 			_self.setSource();
 		};
@@ -998,6 +990,11 @@ class QiSatPlayer {
 	 * Manipulação do video
 	 */
 	setSource(pos=null){
+		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+		video.classList.remove(QiSatPlayer.CLASS_HIDE);
+		video.innerHTML = '';
+		video.load();
+
 		let src = this.getNextVideo(pos, true);
 
 		let btPrevious = <HTMLElement>document.getElementById(QiSatPlayer.ID_PREVIOUS);
@@ -1048,21 +1045,110 @@ class QiSatPlayer {
 			totalSubVideo.innerHTML = parte[this.options.slide]['video'].length;
 		}
 
-		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
-		video.innerHTML = '';
+		let type = [], srcs = [];
 		for (let i = 0; i < this.options.video.ext.length; i++) {
-			let ext     = this.options.video.ext[i];
-			let source  = document.createElement("source");
-			source.src  = src+'.'+ext;
-			source.type = QiSatPlayer.VIDEOTYPES[ext+"-codecs"];
-			video.appendChild(source);
+			let ext = this.options.video.ext[i];
+			type.push(QiSatPlayer.VIDEOTYPES[ext+"-codecs"]);
+			srcs.push(src+'.'+ext);
 		}
+		let data  = 'url='+ window.location.href +'&src='+srcs.join('|')+'&type='+ type.join('|')+'&defaLocal='+this.options.path.defaLocal;
+		let _self = this;
+		let xhReq = this.XhrFactory();
+		xhReq.setContentType('application/x-www-form-urlencoded');
+		xhReq.setResponseType('text');
+		xhReq.post(this.options.path.defaLocal+this.options.path.defaArq, data).success(function(data){
+			let result = data.split('|');
+
+			let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window['MSStream'];
+			let IE = /Trident/.test(navigator.userAgent) && window['MSStream'];
+			if(!iOS || IE){
+				//video.setAttribute('poster', _self.options.video.poster);
+				video.removeAttribute('poster');
+	
+				let canvas = <HTMLCanvasElement>document.getElementById(QiSatPlayer.ID_CANVAS);
+				let loading = <HTMLDivElement>document.getElementById(QiSatPlayer.CLASS_LOADING);
+				let xhReq = new XMLHttpRequest();
+				xhReq.onloadstart = function(ev) {
+					xhReq.responseType = "blob";
+
+					if(!loading){
+						loading = <HTMLDivElement>document.createElement('div');
+						loading.classList.add(QiSatPlayer.CLASS_LOADING);
+						let videoTag = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_TAG);
+						videoTag.insertBefore(loading, canvas.nextSibling);
+					}
+				}
+
+				let ctx = canvas.getContext('2d');
+				var drawCircle = function(percent) {
+					ctx.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+					ctx.beginPath();
+					ctx.arc(486, 282, 32, Math.PI * 1.5, (Math.PI * 1.5) + (Math.PI * 2 * percent), false);
+					ctx.strokeStyle = 'rgba(180, 180, 180, 0.5)';
+					ctx.lineCap = 'round'; // butt, round or square 
+					ctx.lineWidth = 6;
+					ctx.stroke();
+				};
+				xhReq.addEventListener("progress", function(event){
+					if (event.lengthComputable) {
+						drawCircle(event.loaded / event.total);
+					}
+				}, false);
+
+				xhReq.onload = function() {
+					let reader = new FileReader();
+					reader.onloadend = function() {
+						let result = reader.result.toString();
+						let byteCharacters = atob(result.slice(result.indexOf(',') + 1));
+						let byteNumbers = new Array(byteCharacters.length);
+						for (let i = 0; i < byteCharacters.length; i++) {
+							byteNumbers[i] = byteCharacters.charCodeAt(i);
+						}
+						let byteArray = new Uint8Array(byteNumbers);
+						let t = type.pop();
+						if(t.indexOf(';') > 0)
+							t = t.substr(0, t.indexOf(';'));
+						let blob = new Blob([byteArray], {type: t});
+						let sourceElem = document.createElement("source");
+						sourceElem.src = URL.createObjectURL(blob);
+						sourceElem.type = t;
+						video.appendChild(sourceElem);
+						//video.removeAttribute('poster');
+						ctx.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+						loading.remove();
+						_self.loadVideo(video);
+					};
+					reader.readAsDataURL(xhReq.response);
+				};
+				xhReq.open('GET', result[result.length-1]);
+				if(result[result.length-1].indexOf('defavid') !== -1)
+					xhReq.setRequestHeader("Range", "bytes=0-");
+				xhReq.send();
+			}else{
+				length = result.length;
+				while(length--){
+					let ext     = _self.options.video.ext[length];
+					let source  = document.createElement("source");
+					source.src  = result[length];
+					source.type = QiSatPlayer.VIDEOTYPES[ext+"-codecs"];
+					video.appendChild(source);
+				}
+				_self.loadVideo(video);
+			}
+		});
+	}
+
+	loadVideo(video:HTMLVideoElement){
 		video.load();
 		let btPlay = <HTMLElement>document.getElementById(QiSatPlayer.ID_PLAY);
 		if(btPlay.classList.contains(QiSatPlayer.CLASS_PAUSE)){
 			video.play();
 		}else{
 			btPlay.click();
+		}
+		var playback = document.getElementById('playback');
+		if(playback){
+			video.playbackRate = parseFloat(playback.textContent);
 		}
 	}
 
@@ -1105,17 +1191,23 @@ class QiSatPlayer {
 			if(src == undefined){
 				if(nivel+pos){
 					slides = this.listPlay['aula'][this.options.aula]['item'][unidade]['subItem'][nivel+pos];
-					if(alterVideo)
+					if(alterVideo){
+						this.carregarGeraLog(unidade+'.'+(nivel+pos));
 						this.options.unid = unidade+'.'+(nivel+pos);
+					}
 				} else {
 					slides = this.listPlay['aula'][this.options.aula]['item'][unidade];
-					if(alterVideo)
-						this.options.unid = unidade+'';
+					if(alterVideo){
+						this.carregarGeraLog(unidade.toString());
+						this.options.unid = unidade.toString();
+					}
 				}
 				if(slides == undefined){
 					slides = this.listPlay['aula'][this.options.aula]['item'][unidade+pos];
-					if(alterVideo)
-						this.options.unid = (unidade+pos)+'';
+					if(alterVideo){
+						this.carregarGeraLog((unidade+pos).toString());
+						this.options.unid = (unidade+pos).toString();
+					}
 				}
 				if(slides != undefined){
 					src = slides['slides'];
