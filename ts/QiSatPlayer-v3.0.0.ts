@@ -30,7 +30,7 @@ class QiSatPlayer {
 	static CLASS_NEXT_DISABLE = "fi-next-disable";
 	static CLASS_VOLUME = "fi-volume";
 	static CLASS_VOLUME_NONE   = "fi-volume-none";
-	static CLASS_WIDGET   = "fi-widget";
+	static CLASS_WIDGET   = "fi-widget"; // MenuContexto
 	static CLASS_BT_ACTIVE = "bt-active";
 
 	static CLASS_TOP = "top";
@@ -93,7 +93,7 @@ class QiSatPlayer {
 		"local-player.qisat.com.br" :
 			{
 				'xml'       : '',
-				'local'     : 'http://' + window.location.hostname,
+				'local'     : window.location.protocol + '//' + window.location.hostname,
 				'imagens'   : '',
 				'imgMask'   : '',
 				'videos'    : '',
@@ -107,7 +107,7 @@ class QiSatPlayer {
 		"mn40.mntec.com.br" :
 			{
 				'xml'       : '',
-				'local'     : 'http://' + window.location.hostname,
+				'local'     : window.location.protocol + '//' + window.location.hostname,
 				'imagens'   : '',
 				'imgMask'   : '',
 				'videos'    : '',
@@ -178,14 +178,14 @@ class QiSatPlayer {
 		path : {
 			xml       : '',
 			//local   : 'https://cursos.qisat.com.br',
-			local     : 'http://' + window.location.hostname,
+			local     : window.location.protocol + '//' + window.location.hostname,
 			imagens   : '',
 			imgMask   : '',
 			videos    : '',
 			infouser  : '/repository/user/getinfouser.php',
 			geralog   : '/course/format/topicstime/controle_acesso/geraLog.php',
-			poster    : '/lib/QiSatPlayer/public/imagens/poster.jpg',
-			defaLocal : '/lib/QiSatPlayer/public',
+			poster    : '/lib/QiSatPlayer3/public/imagens/poster.jpg',
+			defaLocal : '/lib/QiSatPlayer3/public',
 			defaArq   : '/getUrl.php',
 			data      : ''
 		}
@@ -330,8 +330,32 @@ class QiSatPlayer {
 		videoTag.appendChild(this.setCanvas());
 		return videoTag;
 	}
-	
-	endVideo () {
+
+	touchstart(){
+		let canvas = <HTMLCanvasElement>document.getElementById(QiSatPlayer.ID_CANVAS);
+		clearInterval(parseInt(canvas.dataset['intervalTouchEnd']));
+		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+		let videoTop = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_TOP);
+		let videoControls = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_CONTROLS);
+		if((video.classList.contains(QiSatPlayer.CLASS_HIDE) || !video.paused) && 
+		(videoTop.classList.contains(QiSatPlayer.CLASS_VISIBILY) || 
+		videoControls.classList.contains(QiSatPlayer.CLASS_VISIBILY))){
+			videoTop.classList.remove(QiSatPlayer.CLASS_VISIBILY);
+			videoControls.classList.remove(QiSatPlayer.CLASS_VISIBILY);
+
+			let subMenu = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_SUBMENU);
+			let widget = <HTMLDivElement>document.getElementsByClassName(MenuContexto.ID_GRAPH)[0];
+			subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
+			if(widget)
+				clearInterval(parseInt(widget.dataset['interval']));
+		} else {
+			videoTop.classList.add(QiSatPlayer.CLASS_VISIBILY);
+			videoControls.classList.add(QiSatPlayer.CLASS_VISIBILY);
+		}
+	}
+	endVideo (_self) {
+		_self.touchstart();
+
 		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
 		video.classList.add(QiSatPlayer.CLASS_HIDE);
 		video.load();
@@ -390,10 +414,12 @@ class QiSatPlayer {
 			let progresso = <HTMLProgressElement>document.getElementById(QiSatPlayer.ID_PROGRESS);
 			progresso.value = (value) ? value : 0;
 		});
-		video.addEventListener('ended', this.endVideo);
+		let _self = this;
+		video.addEventListener('ended', this.endVideo.bind(this, _self));
 
 		return video;
 	}
+	
 	setCanvas(){
 		let canvas = document.createElement("canvas");
 		canvas.id = QiSatPlayer.ID_CANVAS;
@@ -406,7 +432,25 @@ class QiSatPlayer {
 				btPlay.click();
 			}
 		});
-
+		canvas.addEventListener('touchstart', this.touchstart);
+		canvas.addEventListener('touchend', function () {
+			clearInterval(parseInt(this.dataset['intervalTouchEnd']));
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			this.dataset['intervalTouchEnd'] = setTimeout(function(){ 
+				if(!video.paused){
+					let videoTop = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_TOP);
+					let videoControls = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_CONTROLS);
+					let subMenu = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_SUBMENU);
+					let widget = <HTMLDivElement>document.getElementsByClassName(MenuContexto.ID_GRAPH)[0];
+					videoTop.classList.remove(QiSatPlayer.CLASS_VISIBILY);
+					videoControls.classList.remove(QiSatPlayer.CLASS_VISIBILY);
+					subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
+					if(widget)
+						clearInterval(parseInt(widget.dataset['interval']));
+				}
+			}, 1500).toString();
+		});
+		
 		return canvas;
 	}
 
@@ -455,6 +499,7 @@ class QiSatPlayer {
 		return btPrevious;
 	}
 	setPlay(){
+		let _self = this;
 		let btPlay = document.createElement("div");
 		btPlay.id = QiSatPlayer.ID_PLAY;
 		btPlay.classList.add(QiSatPlayer.CLASS_PLAY);
@@ -478,8 +523,10 @@ class QiSatPlayer {
 					promise.then(function() {
 					//promise.then(_ => {
 						video.muted = Boolean(document.getElementsByClassName(QiSatPlayer.CLASS_VOLUME_NONE).length);
+						_self.touchstart();
 					});
 				}*/
+				_self.touchstart();
 				if(!video.paused){
 					this.classList.remove(QiSatPlayer.CLASS_REFRESH);
 					this.classList.remove(QiSatPlayer.CLASS_PLAY);
@@ -1169,23 +1216,22 @@ class QiSatPlayer {
 		if(canvas.dataset['interval'])
 			clearInterval(parseInt(canvas.dataset['interval']));
 
+		let img = document.createElement("img");
+		let [unidade,nivel] = _self.options.unid.split('.');
+		if(nivel){
+			img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+		}else{
+			img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+		}
+
 		canvas.dataset['interval'] = setInterval(function(){
 			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
 			let context = canvas.getContext('2d');
 	
+			context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
 			if(video.classList.contains(QiSatPlayer.CLASS_HIDE)){
-				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
-				let img = document.createElement("img");
-				let [unidade,nivel] = _self.options.unid.split('.');
-				if(nivel){
-					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
-				}else{
-					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
-				}
 				context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
 			} else if (video.played.length){
-				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
-
 				/**
 				 * Barra diagonal com a chave
 				 */
