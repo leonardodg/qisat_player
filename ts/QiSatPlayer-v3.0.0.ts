@@ -103,6 +103,20 @@ class QiSatPlayer {
 				'defaLocal' : '/public',
 				'defaArq'   : '/getUrl.php',
 				'data'      : ''
+			},
+		"mn40.mntec.com.br" :
+			{
+				'xml'       : '',
+				'local'     : 'http://' + window.location.hostname,
+				'imagens'   : '',
+				'imgMask'   : '',
+				'videos'    : '',
+				'infouser'  : '/test/getinfouser.php',
+				'geralog'   : '/test/geraLog.php',
+				'poster'    : '/public/imagens/poster.jpg',
+				'defaLocal' : '/public',
+				'defaArq'   : '/getUrl.php',
+				'data'      : ''
 			}
 	};
 	
@@ -192,6 +206,10 @@ class QiSatPlayer {
 			this.options.path = QiSatPlayer.PATHS[location.hostname];
 		}
 		this.options.video.poster = this.options['path']['poster'];
+
+		/*window.oncontextmenu = (e) => {
+			e.preventDefault();
+		}*/
 
 		let videoPlayer = document.getElementById(QiSatPlayer.ID_VIDEO_CONTAINER);
 		videoPlayer.appendChild(this.createTop());
@@ -354,7 +372,6 @@ class QiSatPlayer {
 		video.poster = this.options.path.poster;
 
 		video.addEventListener('playing', function () {
-			//this.classList.remove(QiSatPlayer.CLASS_HIDE);
 			this.muted = Boolean(document.getElementsByClassName(QiSatPlayer.CLASS_VOLUME_NONE).length);
 
 			var curmins = Math.floor(this.duration / 60),
@@ -389,92 +406,6 @@ class QiSatPlayer {
 				btPlay.click();
 			}
 		});
-
-		let _self = this;
-		setInterval(function(){
-			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
-			let context = canvas.getContext('2d');
-	
-			if(video.classList.contains(QiSatPlayer.CLASS_HIDE)){
-				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
-				let img = document.createElement("img");
-				let [unidade,nivel] = _self.options.unid.split('.');
-				if(nivel){
-					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
-				}else{
-					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
-				}
-				context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
-			} else if (video.played.length){
-				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
-
-				/**
-				 * Barra diagonal com a chave
-				 */
-				if(_self.options.chave.length){
-					context.fillStyle = "rgba(120,120,120,0.1)";
-					context.beginPath();
-
-					let diferenca = 45;
-					if(_self.options.canvas.sentido){
-						context.moveTo(0,0);
-						context.lineTo(diferenca,0);
-						context.lineTo(canvas.width,canvas.height-diferenca);
-						context.lineTo(canvas.width,canvas.height);
-						context.lineTo(canvas.width-diferenca,canvas.height);
-						context.lineTo(0,diferenca);
-					} else {
-						context.moveTo(0,canvas.height);
-						context.lineTo(diferenca,canvas.height);
-						context.lineTo(canvas.width,diferenca);
-						context.lineTo(canvas.width,0);
-						context.lineTo(canvas.width-diferenca,0);
-						context.lineTo(0,canvas.height-diferenca);
-					}
-					context.fill();
-					context.font = "16px 'Arial'";
-					context.fillStyle = "hsla("+_self.options.canvas.hue+","+_self.options.canvas.sat+"%,"+_self.options.canvas.val+"%,0.5)";
-					context.textAlign = "center";
-
-					//Chave do aluno
-					let count = 0;
-					while (count<11) {
-						if(_self.options.canvas.sentido){
-							context.fillText(_self.options.chave, 960-90.5*count, 535-48.5*(count++));
-						} else {
-							context.fillText(_self.options.chave, 46+91*count, 535-48.5*(count++));
-						}
-					}
-				}
-
-				/**
-				 * Play do Canvas
-				 */
-				if (video.paused && !video.classList.contains(QiSatPlayer.CLASS_HIDE) && video.innerHTML != '') {
-					var options_graph = {
-						size: 140,
-						lineWidth: 12
-					};
-					var radius = (options_graph.size - options_graph.lineWidth) / 2;
-
-					/* Desenhando circulo do Play */
-					context.beginPath();
-					context.arc(497, 285, radius, 0, Math.PI * 2, false);
-					context.strokeStyle = 'rgba(180, 180, 180, 0.6)';
-					context.lineCap = 'round';
-					context.lineWidth = options_graph.lineWidth;
-					context.stroke();
-
-					/* Desenhando triangulo do Play */
-					context.fillStyle = "rgba(180, 180, 180, 0.6)";
-					context.beginPath();
-					context.moveTo(475, 245);
-					context.lineTo(475, 325);
-					context.lineTo(540, 285);
-					context.fill();
-				}
-			}
-		}, 50);
 
 		return canvas;
 	}
@@ -543,12 +474,12 @@ class QiSatPlayer {
 					video.currentTime = 0;
 				}
 				let promise = video.play();
-				if (promise !== undefined) {
-					//promise.then(function() {
-					promise.then(_ => {
+				/*if (promise !== undefined) {
+					promise.then(function() {
+					//promise.then(_ => {
 						video.muted = Boolean(document.getElementsByClassName(QiSatPlayer.CLASS_VOLUME_NONE).length);
 					});
-				}
+				}*/
 				if(!video.paused){
 					this.classList.remove(QiSatPlayer.CLASS_REFRESH);
 					this.classList.remove(QiSatPlayer.CLASS_PLAY);
@@ -627,7 +558,6 @@ class QiSatPlayer {
 				p.classList.add(QiSatPlayer.CLASS_DISABLE);
 			}
 			p.addEventListener('click', function () {
-				//if(!this.classList.length){
 				if(!this.classList.contains(QiSatPlayer.CLASS_DISABLE)){
 					_self.options.slide = parseInt(this.dataset['slide']);
 					_self.setSource();
@@ -651,7 +581,7 @@ class QiSatPlayer {
 		subVideo.innerHTML = '1';
 		subVideosList.appendChild(subVideo);
 		
-		subVideosList.append('/');
+		subVideosList.textContent += '/';
 		
 		let totalSubVideo = document.createElement("p");
 		totalSubVideo.classList.add(QiSatPlayer.CLASS_TOTAL_SUBVIDEO);
@@ -800,8 +730,8 @@ class QiSatPlayer {
 		xhReq.setContentType('text/xml');
 		xhReq.setResponseType('xml');
 		xhReq.get(this.options.path.xml+this.options.filename).success(function(data){
+			//console.log(data);
 			_self.listPlay = _self.listarXml(data.getElementsByTagName('curso'));
-			//console.log(_self.listPlay);
 			_self.createMenuList();
 			_self.setSource();
 		});
@@ -849,7 +779,7 @@ class QiSatPlayer {
 				} else {
 					for (let j = 0; j < nextTags.length; j++){
 						let nextTag = nextTags[j];
-						retorno[index][nextTag] = this.listarXml(elem[i].children, nextTag);
+						retorno[index][nextTag] = this.listarXml(elem[i].childNodes, nextTag);
 					}
 				}
 			}
@@ -1061,16 +991,15 @@ class QiSatPlayer {
 
 			let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window['MSStream'];
 			let IE = /Trident/.test(navigator.userAgent) && window['MSStream'];
-			if(!iOS || IE){
+			if(iOS || IE){
 				//video.setAttribute('poster', _self.options.video.poster);
 				video.removeAttribute('poster');
 	
-				let canvas = <HTMLCanvasElement>document.getElementById(QiSatPlayer.ID_CANVAS);
 				let loading = <HTMLDivElement>document.getElementById(QiSatPlayer.CLASS_LOADING);
+				let canvas = <HTMLCanvasElement>document.getElementById(QiSatPlayer.ID_CANVAS);
 				let xhReq = new XMLHttpRequest();
 				xhReq.onloadstart = function(ev) {
 					xhReq.responseType = "blob";
-
 					if(!loading){
 						loading = <HTMLDivElement>document.createElement('div');
 						loading.classList.add(QiSatPlayer.CLASS_LOADING);
@@ -1085,7 +1014,7 @@ class QiSatPlayer {
 					ctx.beginPath();
 					ctx.arc(486, 282, 32, Math.PI * 1.5, (Math.PI * 1.5) + (Math.PI * 2 * percent), false);
 					ctx.strokeStyle = 'rgba(180, 180, 180, 0.5)';
-					ctx.lineCap = 'round'; // butt, round or square 
+					ctx.lineCap = 'round'; 
 					ctx.lineWidth = 6;
 					ctx.stroke();
 				};
@@ -1115,7 +1044,7 @@ class QiSatPlayer {
 						video.appendChild(sourceElem);
 						//video.removeAttribute('poster');
 						ctx.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
-						loading.remove();
+						loading.parentNode.removeChild(loading);
 						_self.loadVideo(video);
 					};
 					reader.readAsDataURL(xhReq.response);
@@ -1226,11 +1155,104 @@ class QiSatPlayer {
 		}
 
 		if(alterVideo){
-			//this.options.canvas.sentido != this.options.canvas.sentido;
+			this.atualizarCanvas();
+			this.options.canvas.sentido = !this.options.canvas.sentido;
 			this.updateMenuList();
 		}
 
 		return src;
+	}
+
+	atualizarCanvas(){
+		let _self = this;
+		let canvas = <HTMLCanvasElement>document.getElementById(QiSatPlayer.ID_CANVAS);
+		if(canvas.dataset['interval'])
+			clearInterval(parseInt(canvas.dataset['interval']));
+
+		canvas.dataset['interval'] = setInterval(function(){
+			let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
+			let context = canvas.getContext('2d');
+	
+			if(video.classList.contains(QiSatPlayer.CLASS_HIDE)){
+				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+				let img = document.createElement("img");
+				let [unidade,nivel] = _self.options.unid.split('.');
+				if(nivel){
+					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+				}else{
+					img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+				}
+				context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
+			} else if (video.played.length){
+				context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+
+				/**
+				 * Barra diagonal com a chave
+				 */
+				if(_self.options.chave.length){
+					context.fillStyle = "rgba(120,120,120,0.1)";
+					context.beginPath();
+
+					let diferenca = 45;
+					if(_self.options.canvas.sentido){
+						context.moveTo(0,0);
+						context.lineTo(diferenca,0);
+						context.lineTo(canvas.width,canvas.height-diferenca);
+						context.lineTo(canvas.width,canvas.height);
+						context.lineTo(canvas.width-diferenca,canvas.height);
+						context.lineTo(0,diferenca);
+					} else {
+						context.moveTo(0,canvas.height);
+						context.lineTo(diferenca,canvas.height);
+						context.lineTo(canvas.width,diferenca);
+						context.lineTo(canvas.width,0);
+						context.lineTo(canvas.width-diferenca,0);
+						context.lineTo(0,canvas.height-diferenca);
+					}
+					context.fill();
+					context.font = "16px 'Arial'";
+					context.fillStyle = "hsla("+_self.options.canvas.hue+","+_self.options.canvas.sat+"%,"+_self.options.canvas.val+"%,0.5)";
+					context.textAlign = "center";
+
+					//Chave do aluno
+					let count = 0;
+					while (count<11) {
+						if(_self.options.canvas.sentido){
+							context.fillText(_self.options.chave, 960-90.5*count, 535-48.5*(count++));
+						} else {
+							context.fillText(_self.options.chave, 46+91*count, 535-48.5*(count++));
+						}
+					}
+				}
+
+				/**
+				 * Play do Canvas
+				 */
+				if (video.paused && !video.classList.contains(QiSatPlayer.CLASS_HIDE) && video.innerHTML != '') {
+					var options_graph = {
+						size: 140,
+						lineWidth: 12
+					};
+					var radius = (options_graph.size - options_graph.lineWidth) / 2;
+
+					/* Desenhando circulo do Play */
+					context.beginPath();
+					context.arc(497, 285, radius, 0, Math.PI * 2, false);
+					context.strokeStyle = 'rgba(180, 180, 180, 0.6)';
+					context.lineCap = 'round';
+					context.lineWidth = options_graph.lineWidth;
+					context.stroke();
+
+					/* Desenhando triangulo do Play */
+					context.fillStyle = "rgba(180, 180, 180, 0.6)";
+					context.beginPath();
+					context.moveTo(475, 245);
+					context.lineTo(475, 325);
+					context.lineTo(540, 285);
+					context.fill();
+				}
+			}
+		}, 50).toString();
 	}
 
 	/**

@@ -1,6 +1,5 @@
 class MenuContexto {
-	table: HTMLTableElement;
-	private tbody: HTMLTableSectionElement;
+	private table: HTMLTableElement;
 	private player;
 	
 	static ID_GRAPH = "graph";
@@ -8,13 +7,12 @@ class MenuContexto {
 	constructor(player) {
 		this.player = player;
 
-		this.table = document.createElement('table');
-		this.tbody = <HTMLTableSectionElement> this.table.createTBody();
+		this.table = <HTMLTableElement>document.createElement('table');
 		let rom = 0;
 
 		if(player.options){
 			if(player.options.autoplay){
-				var hrow = <HTMLTableRowElement> this.table.tBodies[0].insertRow(rom++); 
+				var hrow = <HTMLTableRowElement> this.table.insertRow(rom++); 
 				hrow.insertCell(0).innerHTML = "Reprodução automática";
 				let autoplay = document.createElement("input");
 				autoplay.id = QiSatPlayer.ID_AUTOPLAY;
@@ -28,7 +26,7 @@ class MenuContexto {
 			
 			if(player.options.playbackRate){
 				let _self = this;
-				hrow = <HTMLTableRowElement> this.table.tBodies[0].insertRow(rom++);
+				hrow = <HTMLTableRowElement> this.table.insertRow(rom++);
 				hrow.insertCell(0).innerHTML = "Velocidade de reprodução";
 				let groupPlayback = document.createElement("div");
 				groupPlayback.id = QiSatPlayer.ID_GROUP_PLAYBACK;
@@ -55,7 +53,7 @@ class MenuContexto {
 				hrow.insertCell(1).appendChild(groupPlayback);
 			}
 		}
-		
+
 		if(rom){
 			let videoControls = document.getElementById(QiSatPlayer.ID_VIDEO_CONTROLS);
 
