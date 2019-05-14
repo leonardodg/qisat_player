@@ -207,9 +207,9 @@ class QiSatPlayer {
 		}
 		this.options.video.poster = this.options['path']['poster'];
 
-		/*window.oncontextmenu = (e) => {
+		window.oncontextmenu = (e) => {
 			e.preventDefault();
-		}*/
+		}
 
 		let videoPlayer = document.getElementById(QiSatPlayer.ID_VIDEO_CONTAINER);
 		videoPlayer.appendChild(this.createTop());
@@ -1102,6 +1102,17 @@ class QiSatPlayer {
 				xhReq.send();
 			}else{
 				length = result.length;
+				/*video.onloadstart = function() {
+				};*/
+				video.onprogress = function() {
+					if (video.buffered.length > 0 && video.buffered.end && video.duration) {
+						var percent = video.buffered.end(0) / video.duration;
+						percent = 100 * Math.min(1, Math.max(0, percent));
+						//console.log(percent);
+					}
+				};
+				/*video.oncanplay = function() {//through
+				};*/
 				while(length--){
 					let ext     = _self.options.video.ext[length];
 					let source  = document.createElement("source");
