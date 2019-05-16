@@ -342,12 +342,6 @@ class QiSatPlayer {
 		videoControls.classList.contains(QiSatPlayer.CLASS_VISIBILY))){
 			videoTop.classList.remove(QiSatPlayer.CLASS_VISIBILY);
 			videoControls.classList.remove(QiSatPlayer.CLASS_VISIBILY);
-
-			let subMenu = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_SUBMENU);
-			let widget = <HTMLDivElement>document.getElementsByClassName(MenuContexto.ID_GRAPH)[0];
-			subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
-			if(widget)
-				clearInterval(parseInt(widget.dataset['interval']));
 		} else {
 			videoTop.classList.add(QiSatPlayer.CLASS_VISIBILY);
 			videoControls.classList.add(QiSatPlayer.CLASS_VISIBILY);
@@ -440,13 +434,8 @@ class QiSatPlayer {
 				if(!video.paused){
 					let videoTop = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_TOP);
 					let videoControls = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_CONTROLS);
-					let subMenu = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_SUBMENU);
-					let widget = <HTMLDivElement>document.getElementsByClassName(MenuContexto.ID_GRAPH)[0];
 					videoTop.classList.remove(QiSatPlayer.CLASS_VISIBILY);
 					videoControls.classList.remove(QiSatPlayer.CLASS_VISIBILY);
-					subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
-					if(widget)
-						clearInterval(parseInt(widget.dataset['interval']));
 				}
 			}, 1500).toString();
 		});
@@ -531,6 +520,16 @@ class QiSatPlayer {
 					this.classList.remove(QiSatPlayer.CLASS_REFRESH);
 					this.classList.remove(QiSatPlayer.CLASS_PLAY);
 					this.classList.add(QiSatPlayer.CLASS_PAUSE);
+				}
+				let subMenu = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_SUBMENU);
+				subMenu.classList.add(QiSatPlayer.CLASS_HIDE);
+				let widget = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_WIDGET)[0];
+				if(widget)
+					clearInterval(parseInt(widget.dataset['interval']));
+				if(MenuContexto){
+					let graph = <HTMLDivElement>document.getElementsByClassName(MenuContexto.ID_GRAPH)[0];
+					if(graph)
+						clearInterval(parseInt(graph.dataset['interval']));
 				}
 			}
 		};
@@ -628,7 +627,9 @@ class QiSatPlayer {
 		subVideo.innerHTML = '1';
 		subVideosList.appendChild(subVideo);
 		
-		subVideosList.textContent += '/';
+		let subVideoBarra = document.createElement("span");
+		subVideoBarra.innerHTML = '/';
+		subVideosList.appendChild(subVideoBarra);
 		
 		let totalSubVideo = document.createElement("p");
 		totalSubVideo.classList.add(QiSatPlayer.CLASS_TOTAL_SUBVIDEO);
