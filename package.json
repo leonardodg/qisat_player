@@ -10,9 +10,12 @@
   "license": "ISC",
   "devDependencies": {
     "event-stream": "^4.0.1",
-    "gulp": "^4.0.1",
+    "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
+    "gulp-compass": "^2.1.0",
     "gulp-concat": "^2.6.1",
+    "gulp-iconfont": "^10.0.3",
+    "gulp-iconfont-css": "^3.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
@@ -23,7 +26,13 @@
     "merge2": "^1.2.3"
   },
   "dependencies": {
+    "compass": "^0.1.1",
+    "gulp-ruby-sass": "^4.0.0",
+    "gulp-sprite-generator": "^0.2.3",
     "gulp-update": "0.0.2",
-    "typescript": "^3.3.3333"
+    "gulp.spritesmith": "^6.10.1",
+    "merge-stream": "^2.0.0",
+    "path": "^0.12.7",
+    "typescript": "^3.5.1"
   }
 }

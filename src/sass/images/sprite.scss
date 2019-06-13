@@ -1,0 +1,255 @@
+// SCSS variables are information about icon's compiled state, stored under its original file name
+//
+// .icon-home {
+//   width: $icon-home-width;
+// }
+//
+// The large array-like variables contain all information about a single icon
+// $icon-home: x y offset_x offset_y width height total_width total_height image_path;
+//
+// At the bottom of this section, we provide information about the spritesheet itself
+// $spritesheet: width height image $spritesheet-sprites;
+$cabecalho-alv-name: 'cabecalho_alv';
+$cabecalho-alv-x: 0px;
+$cabecalho-alv-y: 42px;
+$cabecalho-alv-offset-x: 0px;
+$cabecalho-alv-offset-y: -42px;
+$cabecalho-alv-width: 178px;
+$cabecalho-alv-height: 42px;
+$cabecalho-alv-total-width: 356px;
+$cabecalho-alv-total-height: 339px;
+$cabecalho-alv-image: '../images/sprite.png';
+$cabecalho-alv: (0px, 42px, 0px, -42px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_alv', );
+$cabecalho-cab-name: 'cabecalho_cab';
+$cabecalho-cab-x: 0px;
+$cabecalho-cab-y: 168px;
+$cabecalho-cab-offset-x: 0px;
+$cabecalho-cab-offset-y: -168px;
+$cabecalho-cab-width: 178px;
+$cabecalho-cab-height: 42px;
+$cabecalho-cab-total-width: 356px;
+$cabecalho-cab-total-height: 339px;
+$cabecalho-cab-image: '../images/sprite.png';
+$cabecalho-cab: (0px, 168px, 0px, -168px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_cab', );
+$cabecalho-cdc-name: 'cabecalho_cdc';
+$cabecalho-cdc-x: 0px;
+$cabecalho-cdc-y: 84px;
+$cabecalho-cdc-offset-x: 0px;
+$cabecalho-cdc-offset-y: -84px;
+$cabecalho-cdc-width: 178px;
+$cabecalho-cdc-height: 42px;
+$cabecalho-cdc-total-width: 356px;
+$cabecalho-cdc-total-height: 339px;
+$cabecalho-cdc-image: '../images/sprite.png';
+$cabecalho-cdc: (0px, 84px, 0px, -84px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_cdc', );
+$cabecalho-eb10-name: 'cabecalho_eb10';
+$cabecalho-eb10-x: 0px;
+$cabecalho-eb10-y: 126px;
+$cabecalho-eb10-offset-x: 0px;
+$cabecalho-eb10-offset-y: -126px;
+$cabecalho-eb10-width: 178px;
+$cabecalho-eb10-height: 42px;
+$cabecalho-eb10-total-width: 356px;
+$cabecalho-eb10-total-height: 339px;
+$cabecalho-eb10-image: '../images/sprite.png';
+$cabecalho-eb10: (0px, 126px, 0px, -126px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_eb10', );
+$cabecalho-feg-name: 'cabecalho_feg';
+$cabecalho-feg-x: 178px;
+$cabecalho-feg-y: 0px;
+$cabecalho-feg-offset-x: -178px;
+$cabecalho-feg-offset-y: 0px;
+$cabecalho-feg-width: 178px;
+$cabecalho-feg-height: 42px;
+$cabecalho-feg-total-width: 356px;
+$cabecalho-feg-total-height: 339px;
+$cabecalho-feg-image: '../images/sprite.png';
+$cabecalho-feg: (178px, 0px, -178px, 0px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_feg', );
+$cabecalho-hyd-name: 'cabecalho_hyd';
+$cabecalho-hyd-x: 178px;
+$cabecalho-hyd-y: 42px;
+$cabecalho-hyd-offset-x: -178px;
+$cabecalho-hyd-offset-y: -42px;
+$cabecalho-hyd-width: 178px;
+$cabecalho-hyd-height: 42px;
+$cabecalho-hyd-total-width: 356px;
+$cabecalho-hyd-total-height: 339px;
+$cabecalho-hyd-image: '../images/sprite.png';
+$cabecalho-hyd: (178px, 42px, -178px, -42px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_hyd', );
+$cabecalho-iaq-name: 'cabecalho_iaq';
+$cabecalho-iaq-x: 178px;
+$cabecalho-iaq-y: 84px;
+$cabecalho-iaq-offset-x: -178px;
+$cabecalho-iaq-offset-y: -84px;
+$cabecalho-iaq-width: 178px;
+$cabecalho-iaq-height: 42px;
+$cabecalho-iaq-total-width: 356px;
+$cabecalho-iaq-total-height: 339px;
+$cabecalho-iaq-image: '../images/sprite.png';
+$cabecalho-iaq: (178px, 84px, -178px, -84px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_iaq', );
+$cabecalho-ier-name: 'cabecalho_ier';
+$cabecalho-ier-x: 178px;
+$cabecalho-ier-y: 126px;
+$cabecalho-ier-offset-x: -178px;
+$cabecalho-ier-offset-y: -126px;
+$cabecalho-ier-width: 178px;
+$cabecalho-ier-height: 42px;
+$cabecalho-ier-total-width: 356px;
+$cabecalho-ier-total-height: 339px;
+$cabecalho-ier-image: '../images/sprite.png';
+$cabecalho-ier: (178px, 126px, -178px, -126px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_ier', );
+$cabecalho-lum-name: 'cabecalho_lum';
+$cabecalho-lum-x: 0px;
+$cabecalho-lum-y: 0px;
+$cabecalho-lum-offset-x: 0px;
+$cabecalho-lum-offset-y: 0px;
+$cabecalho-lum-width: 178px;
+$cabecalho-lum-height: 42px;
+$cabecalho-lum-total-width: 356px;
+$cabecalho-lum-total-height: 339px;
+$cabecalho-lum-image: '../images/sprite.png';
+$cabecalho-lum: (0px, 0px, 0px, 0px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_lum', );
+$cabecalho-pda-name: 'cabecalho_pda';
+$cabecalho-pda-x: 178px;
+$cabecalho-pda-y: 168px;
+$cabecalho-pda-offset-x: -178px;
+$cabecalho-pda-offset-y: -168px;
+$cabecalho-pda-width: 178px;
+$cabecalho-pda-height: 42px;
+$cabecalho-pda-total-width: 356px;
+$cabecalho-pda-total-height: 339px;
+$cabecalho-pda-image: '../images/sprite.png';
+$cabecalho-pda: (178px, 168px, -178px, -168px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_pda', );
+$cabecalho-pmf-name: 'cabecalho_pmf';
+$cabecalho-pmf-x: 0px;
+$cabecalho-pmf-y: 210px;
+$cabecalho-pmf-offset-x: 0px;
+$cabecalho-pmf-offset-y: -210px;
+$cabecalho-pmf-width: 178px;
+$cabecalho-pmf-height: 42px;
+$cabecalho-pmf-total-width: 356px;
+$cabecalho-pmf-total-height: 339px;
+$cabecalho-pmf-image: '../images/sprite.png';
+$cabecalho-pmf: (0px, 210px, 0px, -210px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'cabecalho_pmf', );
+$loading-name: 'loading';
+$loading-x: 100px;
+$loading-y: 294px;
+$loading-offset-x: -100px;
+$loading-offset-y: -294px;
+$loading-width: 49px;
+$loading-height: 44px;
+$loading-total-width: 356px;
+$loading-total-height: 339px;
+$loading-image: '../images/sprite.png';
+$loading: (100px, 294px, -100px, -294px, 49px, 44px, 356px, 339px, '../images/sprite.png', 'loading', );
+$logo-mn-altoqi-name: 'logo-mn-altoqi';
+$logo-mn-altoqi-x: 0px;
+$logo-mn-altoqi-y: 252px;
+$logo-mn-altoqi-offset-x: 0px;
+$logo-mn-altoqi-offset-y: -252px;
+$logo-mn-altoqi-width: 170px;
+$logo-mn-altoqi-height: 42px;
+$logo-mn-altoqi-total-width: 356px;
+$logo-mn-altoqi-total-height: 339px;
+$logo-mn-altoqi-image: '../images/sprite.png';
+$logo-mn-altoqi: (0px, 252px, 0px, -252px, 170px, 42px, 356px, 339px, '../images/sprite.png', 'logo-mn-altoqi', );
+$next-name: 'next';
+$next-x: 0px;
+$next-y: 294px;
+$next-offset-x: 0px;
+$next-offset-y: -294px;
+$next-width: 50px;
+$next-height: 45px;
+$next-total-width: 356px;
+$next-total-height: 339px;
+$next-image: '../images/sprite.png';
+$next: (0px, 294px, 0px, -294px, 50px, 45px, 356px, 339px, '../images/sprite.png', 'next', );
+$prev-name: 'prev';
+$prev-x: 50px;
+$prev-y: 294px;
+$prev-offset-x: -50px;
+$prev-offset-y: -294px;
+$prev-width: 50px;
+$prev-height: 45px;
+$prev-total-width: 356px;
+$prev-total-height: 339px;
+$prev-image: '../images/sprite.png';
+$prev: (50px, 294px, -50px, -294px, 50px, 45px, 356px, 339px, '../images/sprite.png', 'prev', );
+$top-icon-name: 'top-icon';
+$top-icon-x: 178px;
+$top-icon-y: 210px;
+$top-icon-offset-x: -178px;
+$top-icon-offset-y: -210px;
+$top-icon-width: 178px;
+$top-icon-height: 42px;
+$top-icon-total-width: 356px;
+$top-icon-total-height: 339px;
+$top-icon-image: '../images/sprite.png';
+$top-icon: (178px, 210px, -178px, -210px, 178px, 42px, 356px, 339px, '../images/sprite.png', 'top-icon', );
+$spritesheet-width: 356px;
+$spritesheet-height: 339px;
+$spritesheet-image: '../images/sprite.png';
+$spritesheet-sprites: ($cabecalho-alv, $cabecalho-cab, $cabecalho-cdc, $cabecalho-eb10, $cabecalho-feg, $cabecalho-hyd, $cabecalho-iaq, $cabecalho-ier, $cabecalho-lum, $cabecalho-pda, $cabecalho-pmf, $loading, $logo-mn-altoqi, $next, $prev, $top-icon, );
+$spritesheet: (356px, 339px, '../images/sprite.png', $spritesheet-sprites, );
+
+// The provided mixins are intended to be used with the array-like variables
+//
+// .icon-home {
+//   @include sprite-width($icon-home);
+// }
+//
+// .icon-email {
+//   @include sprite($icon-email);
+// }
+//
+// Example usage in HTML:
+//
+// `display: block` sprite:
+// <div class="icon-home"></div>
+//
+// To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+//
+// // CSS
+// .icon {
+//   display: inline-block;
+// }
+//
+// // HTML
+// <i class="icon icon-home"></i>
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+// The `sprites` mixin generates identical output to the CSS template
+//   but can be overridden inside of SCSS
+//
+// @include sprites($spritesheet-sprites);
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}

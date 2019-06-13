@@ -1,0 +1,97 @@
+#video-tag {
+  height: 564px !important;
+}
+
+#video {
+  left: 75px !important;
+}
+
+#video-top > .title-curso {
+  width: 510px !important;
+}
+
+.title-curso {
+  margin: 9px 0 0 15px;
+  font-size: 16px;
+}
+
+.title-aula {
+  display: none !important;
+  background-color: transparent !important;
+  border-style: none !important;
+  color: #333 !important;
+  margin: 5px 0 0 7px !important;
+}
+
+.title-aula:before {
+  content: "MENU";
+}
+
+#video-menu > .menu-action {
+  background-color: transparent !important;
+  margin: 243px 0 0 0px !important;
+  position: absolute;
+  width: 0px !important;
+  height: 35px !important;
+  border: none !important;
+  border-left: 15px solid #111 !important;
+  border-top: 10px solid transparent !important;
+  border-bottom: 10px solid transparent !important;
+  border-radius: 0px !important;
+}
+
+#video-menu > .menu-action > span {
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+  position: absolute;
+  margin: 5px 0 0 -22px !important;
+  color: white;
+}
+
+#video-menu > .menu-list > span.title-aula {
+  display: block !important;
+  opacity: 0.6;
+  -webkit-transition: opacity 1s linear 1s;
+  transition: opacity 1s linear 1s;
+}
+
+#video-menu > .menu-list.hide > span.title-aula {
+  display: block !important;
+  opacity: 0;
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;
+}
+
+.menu-list {
+  height: 564px;
+  opacity: 1;
+  width: 75px;
+  background-color: rgba(128, 128, 128, 0.3);
+  -webkit-transition: opacity 1.5s, background 1.5s, width 2s;
+  transition: opacity 1.5s, background 1.5s, width 2s;
+}
+
+.menu-list.hide {
+  display: block !important;
+  opacity: 0;
+  width: 0px;
+  background-color: rgba(128, 128, 128, 0);
+  -webkit-transition: opacity 1.5s linear 0.2s, background 1.5s linear 0.2s, width 2s linear 0.2s;
+  transition: opacity 1.5s linear 0.2s, background 1.5s linear 0.2s, width 2s linear 0.2s;
+}
+
+.menu-list ul.parent {
+  opacity: 1;
+  margin: 0 4px 0 15px !important;
+  -webkit-transition: opacity 1s linear 1s;
+  transition: opacity 1s linear 1s;
+}
+
+.menu-list.hide ul.parent {
+  opacity: 0;
+  margin: 0 4px 0 -9999px !important;
+  -webkit-transition: opacity 1s, margin 0s linear 2.1s;
+  transition: opacity 1s, margin 0s linear 2.1s;
+}
