@@ -90,15 +90,15 @@ class QiSatPlayer {
 	static ERROR_NO_XMLHTTPREQUEST = " >> BROWSER NO SUPORTE XML HTTP REQUEST!";
 	
 	static PATHS = {	
-		"local-player.qisat.com.br" :
+		"localhost" :
 			{
 				'xml'       : '',
 				'local'     : window.location.protocol + '//' + window.location.hostname,
 				'imagens'   : '',
 				'imgMask'   : '',
 				'videos'    : '',
-				'infouser'  : '/test/getinfouser.php',
-				'geralog'   : '/test/geraLog.php',
+				'infouser'  : '/dist/getinfouser.php',
+				'geralog'   : '/dist/geraLog.php',
 				'poster'    : '/dist/images/poster.jpg',
 				'defaLocal' : '/dist',
 				'defaArq'   : '/getUrl.php',

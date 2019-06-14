@@ -1,4 +1,4 @@
-$color-bar: #424242;
+$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;
@@ -969,7 +969,27 @@ body {
 
 }
 
-//@import "styles/style-lum.scss";
-//@import "styles/*.scss";
+@import "styles/style-796-564.scss";
+@import "styles/style-864-574.scss";
+@import "styles/style-934-564.scss";
+@import "styles/style-alv.scss";
+@import "styles/style-art.scss";
+@import "styles/style-cab.scss";
+@import "styles/style-cdc.scss";
+@import "styles/style-cdebp.scss";
+@import "styles/style-cdimp.scss";
+@import "styles/style-eb10.scss";
+@import "styles/style-feg.scss";
+@import "styles/style-hyd.scss";
+@import "styles/style-iaq.scss";
+@import "styles/style-ier.scss";
+@import "styles/style-lum.scss";
+@import "styles/style-pda.scss";
+@import "styles/style-pmf.scss";
+@import "styles/style-series.scss";
+@import "styles/style.scss";
+
+//@import 'styles/*';
+
 //@import "modules/lightbox.scss"; // Verificar a existencia do lightbox
 

@@ -1,4 +1,4 @@
-// npm install --save-dev gulp gulp-iconfont gulp-iconfont-css gulp.spritesmith merge-stream gulp-sass gulp-rename gulp-typescript gulp-concat gulp-watch 
+// npm install --save-dev gulp gulp-mode gulp-iconfont gulp-iconfont-css gulp.spritesmith merge-stream gulp-sass gulp-rename typescript gulp-typescript gulp-concat gulp-watch 
 
 /**
  * Criar o merge de todos os estilos num unico arquivo 
@@ -6,6 +6,8 @@
  */
 
 var gulp = require('gulp');
+var mode = require('gulp-mode')();
+//var mode = require('gulp-mode')({ default: "production" }); gulp --production
 var iconfont = require('gulp-iconfont');
 var iconfontcss = require('gulp-iconfont-css');
 var spritesmith = require('gulp.spritesmith');
@@ -36,10 +38,12 @@ var sassProdOptions = { outputStyle: 'compressed' };
 
 // TS Source
 var tsFiles = 'src/ts/*.ts';
-/*var tsFiles = [
-  'src/ts/MenuContexto.ts',
-  'src/ts/QiSatPlayer-v3.0.0.ts'
-];*/
+
+// Copy files
+var copyFiles = [
+  'src/copy/getUrl.php',
+  'src/copy/defavid.php'
+];
 
 
 // Task 'iconfont' - Run with command 'gulp iconfont'
@@ -57,10 +61,6 @@ gulp.task('iconfont', function(){
       formats: ['eot', 'svg', 'ttf', 'woff', 'woff2'], // default, 'woff2' and 'svg' are available
       timestamp: Math.round(Date.now()/1000), // recommended to get consistent builds when watching files
     }))
-    /*.on('glyphs', function(glyphs, options) {
-      // CSS templating, e.g.
-      console.log(glyphs, options);
-    })*/
     .pipe(gulp.dest(destination + "/fonts"));
 });
 
@@ -78,19 +78,17 @@ gulp.task('sprite', function () {
   return merge(imgStream, cssStream);
 });
 
-// Task 'sassdev' - Run with command 'gulp sassdev'
-gulp.task('sassdev', function() {
+// Task 'styles' - Run with command 'gulp styles'
+gulp.task('styles', function() {
+  if(mode.production()){
+    return gulp.src(scssFiles)
+      .pipe(sass(sassProdOptions).on('error', sass.logError))
+      .pipe(rename({ suffix: ".min" }))
+      .pipe(gulp.dest(destination + "/styles"));
+  }
+
   return gulp.src(scssFiles)
     .pipe(sass(sassDevOptions).on('error', sass.logError))
-    .pipe(gulp.dest(destination + "/styles"));
-});
-// Task 'sassprod' - Run with command 'gulp sassprod'
-gulp.task('sassprod', function() {
-  return gulp.src(scssFiles)
-    .pipe(sass(sassProdOptions).on('error', sass.logError))
-    .pipe(rename({
-      suffix: ".min"
-    }))
     .pipe(gulp.dest(destination + "/styles"));
 });
 
@@ -101,7 +99,22 @@ gulp.task('typescript', function() {
     .pipe(gulp.dest(destination));
 });
 
+// Task 'copy' - Run with command 'gulp copy'
+gulp.task('copy', function() {
+  if(mode.production()){
+    return gulp.src(copyFiles).pipe(gulp.dest(destination));
+  }
+  return gulp.src('src/copy/*').pipe(gulp.dest(destination));
+});
+
+// Task 'copy-images' - Run with command 'gulp copy-images'
+gulp.task('copy-images', function() {
+  return gulp.src('src/copy/images/*').pipe(gulp.dest(destination + "/images"));
+});
+
 /* Function Default */
 gulp.task('default', function() {
-  watch([scssFiles, tsFiles],gulp.series('iconfont', 'sprite', 'sassdev', 'typescript'));
+  watch([scssFiles, tsFiles],gulp.series(
+    'iconfont', 'sprite', 'styles', 'typescript', 'copy', 'copy-images'
+  ));
 });
