@@ -1,7 +1,6 @@
 // npm install --save-dev gulp gulp-mode gulp-iconfont gulp-iconfont-css gulp.spritesmith merge-stream gulp-sass gulp-rename typescript gulp-typescript gulp-concat gulp-watch 
 
 /**
- * Criar o merge de todos os estilos num unico arquivo 
  * Verificar lightbox 
  */
 
@@ -42,7 +41,8 @@ var tsFiles = 'src/ts/*.ts';
 // Copy files
 var copyFiles = [
   'src/copy/getUrl.php',
-  'src/copy/defavid.php'
+  'src/copy/defavid.php',
+  'src/copy/favicon.ico'
 ];
 
 
