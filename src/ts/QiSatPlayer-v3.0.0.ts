@@ -81,6 +81,10 @@ class QiSatPlayer {
 	static ID_PLAYBACK = 'playback';
 	static CLASS_MINUS = "fi-minus";
 	static CLASS_PLUS = "fi-plus";
+	
+	static CLASS_LIGHTBOX = "lightbox";
+	static CLASS_BNT_CLASS = "btnClass";
+	static CLASS_BUTTON = "buttonSVG";
 
 	static ERROR_NOT_VIDEO_SUPPORT = " >> Navegador não tem suporte ao novo formato de video HTML5, FAVOR ACESSAR ATRAVÉS POR UM BROWSER ATUALIZADO!";
 	static ERROR_NOT_VIDEO_EXT = " >> Nenhuma extensão do video HTML5 é suportada!";
@@ -134,6 +138,10 @@ class QiSatPlayer {
 		unid         : "0",
 		slide        : 0,
 		subVideo     : 0,
+		alternativo  : {
+			subVideo : -1,
+			video    : -1
+		},
 		filename     : "menu_items.xml",
 		videoElem    : true,
 		canvasElem   : true,
@@ -192,6 +200,7 @@ class QiSatPlayer {
 		}
 	};
 	private listPlay;
+	private buttonSvg;
 
 	constructor(...opDefault) {
 		opDefault = opDefault[0];
@@ -229,6 +238,14 @@ class QiSatPlayer {
 		} catch (error) {
 			console.log(error);
 		}
+
+		let _self = this;
+		let xhReq = this.XhrFactory();
+		xhReq.setContentType('text/plain');
+		xhReq.setResponseType('text');
+		xhReq.get('../images/button.svg').success(function(data){
+			_self.buttonSvg = data;
+		});
 	}
 
 	/**
@@ -366,6 +383,96 @@ class QiSatPlayer {
 
 		let btClose = <HTMLDivElement>document.getElementsByClassName(QiSatPlayer.CLASS_BT_CLOSE)[0];
 		btClose.classList.add(QiSatPlayer.CLASS_HIDE);
+
+		let videoTag = <HTMLDivElement>document.getElementById(QiSatPlayer.ID_VIDEO_TAG);
+
+		// LightBox
+		let btnImagemId, [unidade,nivel] = _self.options.unid.split('.');
+		if(nivel){
+			btnImagemId = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['btnImagem'];
+		}else{
+			btnImagemId = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['btnImagem'];
+		}
+		if(btnImagemId != undefined){
+			let btnImagens = btnImagemId.split(',');
+			btnImagens.forEach(element => {
+				_self.listPlay['aula'][_self.options.aula]['btnImagem'].forEach(element2 => {
+					if(element == element2.id) {
+						let posIndex = element2['img'][0]['pos'].split(';'); 
+						let posVal = element2['pos'].split(';');
+						let lightbox = <HTMLDivElement>document.createElement("div");
+						lightbox.id = element;
+						lightbox.classList.add(QiSatPlayer.CLASS_LIGHTBOX, QiSatPlayer.CLASS_BNT_CLASS);
+						lightbox.style[posIndex[0]] = posVal[0];
+						lightbox.style[posIndex[1]] = posVal[1];
+						lightbox.style[posIndex[2]] = posVal[2];
+						lightbox.style[posIndex[3]] = posVal[3];
+		
+						let count = 0;
+						element2['img'].forEach(element3 => {
+							let aLightbox = document.createElement("a");
+							aLightbox.href = element3['src'];
+							aLightbox.dataset['lightbox'] = element + '-' + count++;
+			
+							let imgLightbox = document.createElement("img");
+							imgLightbox.src = '#';
+							for (let index = 0; index < posIndex.length; index++) {
+								if(posIndex[index] == 'width' || posIndex[index] == 'height')
+									imgLightbox.style[posIndex[index]] = posVal[index];
+							}
+							imgLightbox.style['opacity'] = '0';
+							aLightbox.appendChild(imgLightbox);
+							lightbox.appendChild(aLightbox);
+						});
+
+						videoTag.insertBefore(lightbox, btClose.nextSibling);
+						btClose = lightbox;
+					}
+				});
+			});
+		}
+
+		// Bt's
+		let subVideoId;
+		if(nivel){
+			subVideoId = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['subVideo'];
+		}else{
+			subVideoId = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['subVideo'];
+		}
+		if(subVideoId != undefined && _self.options.alternativo.subVideo == -1){
+			let subVideos = subVideoId.split(',');
+			let count = 0;
+			subVideos.forEach(element => {
+				_self.listPlay['aula'][_self.options.aula]['subVideo'].forEach(//element2 => {
+				function(element2, index){
+					if(element == element2.id) {
+						//console.log(_self.listPlay);
+
+						let btFailed = <HTMLDivElement>document.createElement("div");
+						btFailed.classList.add(element2['action'], QiSatPlayer.CLASS_BUTTON);
+						btFailed.style['bottom'] = (10 + 40 * count++) + 'px';
+						videoTag.insertBefore(btFailed, btClose.nextSibling);
+						btClose = btFailed;
+						
+						btFailed.innerHTML = _self.buttonSvg;
+						btFailed.addEventListener('click', function(){
+							_self.options.alternativo.subVideo = index;
+							_self.options.alternativo.video = 0;
+							_self.setSource();
+						});
+						const style = getComputedStyle(btFailed);
+						
+						if(style.fill != "rgb(0, 0, 0)")
+							(<SVGPathElement>btFailed.getElementsByClassName('ButtonBase')[0]).style['fill'] = style.fill.replace(/"/g, "");
+
+						let tspan = btFailed.getElementsByTagName('tspan');
+						for (let index = 0; index < tspan.length; index++) {
+							tspan[index].textContent = style.content.replace(/"/g, "");
+						}
+					}
+				});
+			});
+		}
 	}
 
 	setBtClose(){
@@ -511,6 +618,7 @@ class QiSatPlayer {
 			}else{
 				if(this.classList.contains(QiSatPlayer.CLASS_REFRESH)){
 					video.currentTime = 0;
+					_self.lightBoxClear();
 				}
 				let promise = video.play();
 				/*if (promise !== undefined) {
@@ -783,8 +891,8 @@ class QiSatPlayer {
 		xhReq.setContentType('text/xml');
 		xhReq.setResponseType('xml');
 		xhReq.get(this.options.path.xml+this.options.filename).success(function(data){
-			//console.log(data);
 			_self.listPlay = _self.listarXml(data.getElementsByTagName('curso'));
+			//console.log(_self.listPlay);
 			_self.createMenuList();
 			_self.setSource();
 		});
@@ -799,9 +907,10 @@ class QiSatPlayer {
 		let retorno = [];
 		let tagRelacionamento = {
 			'curso'     : ['aula'], 
-			'aula'      : ['item', 'btnImagem'],
+			'aula'      : ['item', 'btnImagem', 'subVideo'],
 			'item'      : ['titulo', 'slides', 'subItem'],
 			'subItem'   : ['titulo', 'slides'],
+			'subVideo'  : ['video'],
 			'slides'    : ['video'],
 			'btnImagem' : ['img']
 		};
@@ -972,14 +1081,25 @@ class QiSatPlayer {
 	/**
 	 * Manipulação do video
 	 */
+	lightBoxClear(){
+		let lightbox = document.getElementsByClassName(QiSatPlayer.CLASS_LIGHTBOX + ' ' + QiSatPlayer.CLASS_BNT_CLASS);
+		let button = document.getElementsByClassName(QiSatPlayer.CLASS_BUTTON);
+		lightbox = Array.prototype.slice.apply(lightbox).concat(Array.prototype.slice.apply(button));
+		for (let index = lightbox.length-1; index > -1; index--) {
+			lightbox[index].remove();
+		}
+	}
+
 	setSource(pos=null){
 		let video = <HTMLVideoElement>document.getElementById(QiSatPlayer.ID_VIDEO);
 		video.classList.remove(QiSatPlayer.CLASS_HIDE);
 		video.innerHTML = '';
-		video.load();
+		video.load();		
+
+		this.lightBoxClear();
 
 		let src = this.getNextVideo(pos, true);
-
+		
 		let btPrevious = <HTMLElement>document.getElementById(QiSatPlayer.ID_PREVIOUS);
 		if(this.getNextVideo(false) == undefined){
 			btPrevious.classList.remove(QiSatPlayer.CLASS_PREVIOUS);
@@ -1146,7 +1266,34 @@ class QiSatPlayer {
 	}
 
 	getNextVideo(pos=null, alterVideo=false){
-		let src,unidade,nivel,slides;
+		let src;
+
+		if(this.options.alternativo.subVideo > -1 || this.options.alternativo.video > -1){
+			let posAlter = pos == undefined ? 0 : (pos ? 1 : -1);
+			src = this.listPlay['aula'][this.options.aula]['subVideo'][this.options.alternativo.subVideo]['video'][this.options.alternativo.video+posAlter];
+			if(src){
+				src = src['video'];
+				if(alterVideo){
+					this.atualizarCanvas();
+					this.options.alternativo.video += posAlter;
+					this.options.canvas.sentido = !this.options.canvas.sentido;
+					this.updateMenuList();
+				}
+				return src;
+			}
+			if(this.options.alternativo.video == 0 && posAlter == -1){
+				pos = null;
+				if(!alterVideo)
+					return true;
+			}
+		}
+		
+		if(alterVideo){
+			this.options.alternativo.subVideo = -1;
+			this.options.alternativo.video = -1;
+		}
+
+		let unidade,nivel,slides;
 		nivel = this.options.unid.split('.');
 		unidade = parseInt(nivel[0]);
 		slides = this.listPlay['aula'][this.options.aula]['item'][unidade];
@@ -1234,11 +1381,16 @@ class QiSatPlayer {
 			clearInterval(parseInt(canvas.dataset['interval']));
 
 		let img = document.createElement("img");
-		let [unidade,nivel] = _self.options.unid.split('.');
-		if(nivel){
-			img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
-		}else{
-			img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+
+		if(this.options.alternativo.subVideo > -1 && this.options.alternativo.video > -1){
+			img.src = _self.listPlay['aula'][_self.options.aula]['subVideo'][_self.options.alternativo.subVideo]['video'][_self.options.alternativo.video]['img'];
+		} else {
+			let [unidade,nivel] = _self.options.unid.split('.');
+			if(nivel){
+				img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['subItem'][nivel]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+			}else{
+				img.src = _self.listPlay['aula'][_self.options.aula]['item'][unidade]['slides'][_self.options.slide]['video'][_self.options.subVideo]['img'];
+			}
 		}
 
 		canvas.dataset['interval'] = setInterval(function(){
@@ -1376,4 +1528,4 @@ class QiSatPlayer {
 		}
 	}
 }
-
+//import 'lightbox-plus-jquery';

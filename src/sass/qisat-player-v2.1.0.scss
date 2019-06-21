@@ -143,8 +143,7 @@ body {
 			z-index: 50;
 		}
 
-		.bt-failed {
-			/*@include icon-cdeb18-sprite(nao-deu-certo);*/
+		[class|=bt] {
 			position: absolute;
 			bottom: 10px;
 			right: 0;
@@ -152,13 +151,25 @@ body {
 			z-index: 200;
 		}
 
+		.bt-failed {
+			/*@include icon-cdeb18-sprite(nao-deu-certo);*/
+			/*position: absolute;
+			bottom: 10px;
+			right: 0;
+			cursor: pointer;
+			z-index: 200;*/
+			content: "Não deu certo";
+		}
+
 		.bt-install {
 			/*@include icon-cdeb18-sprite(new_video);*/
-			position: absolute;
+			/*position: absolute;
 			bottom: 50px;
 			right: 0;
 			cursor: pointer;
-			z-index: 200;
+			z-index: 200;*/
+			content: "Ainda não instalei o software";
+			fill: #C55711;
 		}
 	}
 }
@@ -969,6 +980,7 @@ body {
 
 }
 
+//@import 'styles/*';
 @import "styles/style-796-564.scss";
 @import "styles/style-864-574.scss";
 @import "styles/style-934-564.scss";
@@ -989,7 +1001,4 @@ body {
 @import "styles/style-series.scss";
 @import "styles/style.scss";
 
-//@import 'styles/*';
-
 //@import "modules/lightbox.scss"; // Verificar a existencia do lightbox
-

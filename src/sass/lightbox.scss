@@ -3,6 +3,7 @@
   content: url(../imagens/close.png) url(../imagens/loading.gif) url(../imagens/prev.png) url(../imagens/next.png);
   display: none;
 }*/
+@import "images/sprite.scss";
 
 body.lb-disable-scrolling {
   overflow: hidden;
@@ -78,7 +79,7 @@ body.lb-disable-scrolling {
   width: 32px;
   height: 32px;
   margin: 0 auto;
-  background: url(loading.gif) no-repeat;
+  background: url(../images/loading.gif) no-repeat;
   //@include sprite($loading);
 }
 
