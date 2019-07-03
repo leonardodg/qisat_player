@@ -121,6 +121,20 @@ class QiSatPlayer {
 				'defaLocal' : '/public',
 				'defaArq'   : '/getUrl.php',
 				'data'      : ''
+			},
+		"moodle.mntec.com.br" :
+			{
+				'xml'       : '',
+				'local'     : window.location.protocol + '//' + window.location.hostname,
+				'imagens'   : '',
+				'imgMask'   : '',
+				'videos'    : '',
+				'infouser'  : '/repository/coursefilearea/user/getinfouser.php',
+				'geralog'   : '/course/format/topicstime/controle_acesso/geraLog.php',
+				'poster'    : '/lib/QiSatPlayer/images/poster.jpg',
+				'defaLocal' : '/lib/QiSatPlayer',
+				'defaArq'   : '/getUrl.php',
+				'data'      : ''
 			}
 	};
 	
@@ -243,7 +257,7 @@ class QiSatPlayer {
 		let xhReq = this.XhrFactory();
 		xhReq.setContentType('text/plain');
 		xhReq.setResponseType('text');
-		xhReq.get('../images/button.svg').success(function(data){
+		xhReq.get(this.options.path.defaLocal + '/images/button.svg').success(function(data){
 			_self.buttonSvg = data;
 		});
 	}
@@ -274,13 +288,11 @@ class QiSatPlayer {
 	setTitleCurso(){
 		let titleCurso = document.createElement("span");
 		titleCurso.classList.add(QiSatPlayer.CLASS_CURSO_TEXT);
-		titleCurso.innerHTML = 'Test Player';
 		return titleCurso;
 	}
 	setTitleAula(){
 		let titleAula = document.createElement("span");
 		titleAula.classList.add(QiSatPlayer.CLASS_AULA_TEXT);
-		titleAula.innerHTML = 'Demonstrativo';
 		return titleAula;
 	}
 
@@ -893,6 +905,12 @@ class QiSatPlayer {
 		xhReq.get(this.options.path.xml+this.options.filename).success(function(data){
 			_self.listPlay = _self.listarXml(data.getElementsByTagName('curso'));
 			//console.log(_self.listPlay);
+
+			var titleCurso = document.getElementsByClassName(QiSatPlayer.CLASS_CURSO_TEXT)[0];
+            titleCurso.innerHTML = _self.listPlay['titulo'];
+            var titleAula = document.getElementsByClassName(QiSatPlayer.CLASS_AULA_TEXT)[0];
+			titleAula.innerHTML = _self.listPlay['aula'][_self.options.aula]['titulo'];
+			
 			_self.createMenuList();
 			_self.setSource();
 		});
@@ -1228,17 +1246,31 @@ class QiSatPlayer {
 				xhReq.send();
 			}else{
 				length = result.length;
-				/*video.onloadstart = function() {
+
+				/*let buffered: [any], total = 921436 * 8;
+				video.onloadstart = function() {
+					buffered.push([0, (new Date()).getTime(), 0]);
 				};*/
 				video.onprogress = function() {
 					if (video.buffered.length > 0 && video.buffered.end && video.duration) {
 						var percent = video.buffered.end(0) / video.duration;
 						percent = 100 * Math.min(1, Math.max(0, percent));
-						//console.log(percent);
+						//console.log('loading percent: '+percent);
+
+						/*var media = 0;
+						var parcial = video.buffered.end(video.buffered.length-1) * total / video.duration;
+						buffered.push([parcial, (new Date()).getTime(), 0]);
+						var buff_dif = buffered[buffered.length-1][0] - buffered[buffered.length-2][0];
+						var tempo_dif = buffered[buffered.length-1][1] - buffered[buffered.length-2][1];
+						buffered[buffered.length-1][2] = buff_dif / tempo_dif;
+						buffered.forEach(elem => {
+							media += elem[2];
+						});
+						var Kbps = media/(buffered.length-1);
+						console.log('Velocidade da conexão: '+Kbps+' Kbps');*/
 					}
 				};
-				/*video.oncanplay = function() {//through
-				};*/
+
 				while(length--){
 					let ext     = _self.options.video.ext[length];
 					let source  = document.createElement("source");
@@ -1528,4 +1560,3 @@ class QiSatPlayer {
 		}
 	}
 }
-//import 'lightbox-plus-jquery';
