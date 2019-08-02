@@ -1,28 +1,50 @@
 {
   "name": "qisatplayer",
-  "version": "1.0.0",
-  "description": "",
-  "main": "gulpfile.js",
+  "version": "3.0.0",
+  "description": "QiSat Player HTML5 - Desenvolvimento Equipe QiSat - Utilizado em nossa Plataforma Moodle.",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:backend": "php -t backend/ -S local-backend.dev.com.br:8080",
+    "start": "gulp"
   },
-  "author": "",
+  "author": "Equipe QiSat",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.2",
+    "@types/jquery": "^3.3.30",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.2",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^10.0.0",
+    "browser-sync": "^2.26.7",
+    "browserify": "^16.3.0",
     "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
     "gulp-iconfont": "^10.0.3",
     "gulp-iconfont-css": "^3.0.0",
-    "gulp-mode": "^1.0.2",
+    "gulp-if": "^3.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
     "gulp-watch": "^5.0.1",
     "gulp.spritesmith": "^6.10.1",
-    "merge-stream": "^2.0.0"
-  },
-  "dependencies": {
-    "typescript": "^3.5.2"
+    "http-proxy-middleware": "^0.19.1",
+    "jquery": "^3.4.1",
+    "lightbox2": "^2.11.1",
+    "merge-stream": "^2.0.0",
+    "prettier": "^1.18.2",
+    "tsify": "^4.0.1",
+    "typescript": "^3.5.3",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "watchify": "^3.11.1"
   }
 }

@@ -1,4 +1,17 @@
 {
+    "files": [
+        "src/ts/index.ts"
+    ],
     "compilerOptions": {
+        "target": "es6",
+        "baseUrl": "./src",
+        "paths": {
+            "@app/*": [
+                "ts/*"
+            ],
+            "lightbox2": [
+                "./node_modules/lightbox2/dist/js/*"
+            ]
+        }
     }
 }

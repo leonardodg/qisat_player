@@ -1,0 +1,82 @@
+@font-face {
+	font-family: "qisat-player-icons";
+	src: url('../fonts/qisat-player-icons.eot');
+	src: url('../fonts/qisat-player-icons.eot?#iefix') format('eot'),
+		url('../fonts/qisat-player-icons.woff2') format('woff2'),
+		url('../fonts/qisat-player-icons.woff') format('woff'),
+		url('../fonts/qisat-player-icons.ttf') format('truetype'),
+		url('../fonts/qisat-player-icons.svg#qisat-player-icons') format('svg');
+}
+
+.fi:before {
+	font-family: "qisat-player-icons";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	/* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+	text-decoration: none;
+	text-transform: none;
+}
+
+
+.fi-minus:before {
+	content: "\E001";
+}
+
+.fi-next-disable:before {
+	content: "\E002";
+}
+
+.fi-next:before {
+	content: "\E003";
+}
+
+.fi-page-small:before {
+	content: "\E004";
+}
+
+.fi-page:before {
+	content: "\E005";
+}
+
+.fi-pause:before {
+	content: "\E006";
+}
+
+.fi-play:before {
+	content: "\E007";
+}
+
+.fi-plus:before {
+	content: "\E008";
+}
+
+.fi-previous-disable:before {
+	content: "\E009";
+}
+
+.fi-previous:before {
+	content: "\E00A";
+}
+
+.fi-refresh:before {
+	content: "\E00B";
+}
+
+.fi-volume-none:before {
+	content: "\E00C";
+}
+
+.fi-volume:before {
+	content: "\E00D";
+}
+
+.fi-widget:before {
+	content: "\E00E";
+}
+
+.fi-x:before {
+	content: "\E00F";
+}

@@ -1,0 +1,108 @@
+/*$color-bar: #828282; // #424242
+$color-top: #383838;
+$color-border: #5D5D5D;
+$color-painel: #2c2c2c;*/
+
+#{$style}{
+	#video-components {
+		border: 1px solid $color-border;
+	}
+	#video-top {
+		background: $color-top;
+		@media only screen and (max-device-height: 664px) {
+			background: rgba(red($color-top), green($color-top), blue($color-top), .8);
+		}
+	}
+	#video-tag {
+		> {
+			#loading, #error{
+				background: $color-painel;
+			}
+		}
+	}
+	.bt-close {
+		color: $color-bar;
+		border: 1px solid $color-border;
+		> .fi-x {
+			color: $color-top;
+		}
+	}
+	#video-controls {
+		background: $color-painel;
+		@media only screen and (max-device-height: 664px) {
+			background: rgba(red($color-painel), green($color-painel), blue($color-painel), .8);
+		}
+		> {
+			[class|=fi], #group-playback > [class|=fi] {
+				border: 1px solid $color-border;
+			}
+			[class$=disable] {
+				color: darken($color-painel, 15%); // Teste 
+			}
+			.fi-next {
+				&.show {
+					border-radius: 50px;
+					-webkit-box-shadow: 0px 0px 13px 6px $color-border;
+					-moz-box-shadow: 0px 0px 10px 4px $color-border;
+					box-shadow: 0px 0px 4px 4px $color-border;
+				}
+			}
+			progress {
+				background-color:lighten($color-painel, 25%);
+				&::-webkit-progress-bar{
+					background-color: lighten($color-painel, 25%);
+				}
+				&::-webkit-progress-value{
+					background-color: darken($color-painel, 25%);
+				}
+				&::-moz-progress-bar {
+					background-color: darken($color-painel, 25%);
+				}
+			}
+			/* [IE 9] */
+			.progress {
+				background: lighten($color-painel, 25%);
+				> {
+					.progress-bar[value] {
+						background-color: darken($color-painel, 25%);
+					}
+				}
+			}
+		}
+	}
+	.volume-bar{
+		background: lighten($color-bar, 25%); 
+		> {
+			.volume-track[value] {
+				background-color: darken($color-bar, 15%); 
+			}
+		}
+		.volume-thumb {
+			background-color: darken($color-bar, 25%); 
+		}
+	}
+	#volume-bar {
+		background-color: $color-painel;
+		&::-webkit-slider-runnable-track {
+			box-shadow: 1px 1px 1px $color-border, 0px 0px 1px $color-border;
+			background: $color-painel; // Teste 
+		}
+		&::-webkit-slider-thumb {
+			box-shadow: 1px 1px 1px darken($color-border, 15%), 0px 0px 1px darken($color-border, 15%);
+			background: darken($color-painel, 15%); // Teste 
+		}
+		&:focus::-webkit-slider-runnable-track {
+			background: darken($color-painel, 5%); // Teste 
+		}
+	}
+	#slides {
+		border: 1px solid $color-border;
+	}
+	#subVideos-List {
+		border: 1px solid $color-border;
+	}
+	#video-time {
+		border: 1px solid $color-border;
+	}
+}
+

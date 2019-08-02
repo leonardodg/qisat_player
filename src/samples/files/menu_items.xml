@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<curso sigla="TEST" titulo="Test Player">
+  <aula num="1" titulo="Demonstrativo">
+    <item num="0">
+      <titulo>Big Buck Bunny</titulo>
+      <slides>
+      	<video img="mov_bbb.png">big_buck_bunny</video>
+      </slides>
+    </item>
+    <item num="1">
+      <titulo>Big Buck Bunny - test 2</titulo>
+      <slides>
+	      <video img="mov_bbb.png" btnImagem="a">mov_bbb</video>
+	      <video img="mov_bbb.png">mov_bbb</video>
+      </slides>
+      <subItem num="1.1">
+        <titulo>Big Buck Bunny - test 2.1</titulo>
+        <slides>
+          <video img="mov_bbb.png">mov_bbb</video>
+        </slides>
+      </subItem>
+      <subItem num="1.2">
+        <titulo>Big Buck Bunny - test 2.2</titulo>
+        <slides>
+          <video img="mov_bbb.png">big_buck_bunny</video>
+        </slides>
+      </subItem>
+    </item>
+
+    <btnImagem class="btnClass" id="a" pos="200px;200px;200px;200px" >
+      <img class="imgclass" pos="top;left;with;heigth" src="mov_bbb.png" > </img>
+    </btnImagem>
+
+  </aula>
+</curso>
