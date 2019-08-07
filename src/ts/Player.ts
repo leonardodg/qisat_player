@@ -65,19 +65,36 @@ export default class Player {
 
 		path: {
 			local: '/var/www/html/player/dist/',
-			files: '/var/www/html/player/dist/samples/files/',
 			poster: 'files/preloader-qisat.gif'
 		},
 
 		url: {
-			base: 'http://local-player.dev.com.br:8080/player/dist/samples', // URL
 			path: '/player/dist/samples/files/',
-			infoUser: 'http://local-backend.dev.com.br:8000/getinfouser.php', // Dados de Identificação do Usuário
-			geraLog: 'http://local-backend.dev.com.br:8000/geraLog.php', // Log de Acesso Moodle
-			startDefa: 'http://local-backend.dev.com.br:8000/getUrl.php', // Gerar Link do video
-			getDefa: 'http://local-backend.dev.com.br:8000/', // Default Filename defavid.php in getUrl.php
-			files: 'http://local-player.dev.com.br:8080/player/dist/samples/' // link de acesso ao arquivos 
+			infoUser: 'http://local-backend.dev.com.br:8080/getinfouser.php', // Dados de Identificação do Usuário
+			geraLog: 'http://local-backend.dev.com.br:8080/geraLog.php', // Log de Acesso Moodle
+			startDefa: 'http://local-backend.dev.com.br:8080/getUrl.php', // Gerar Link do video
+			defa: 'http://local-backend.dev.com.br:8080/defavid.php', // Default Filename defavid.php in getUrl.php
+			local: '/var/www/html/player/dist/samples/files/'
+			//  url.local: 
+			//		 ATENÇÃO: teste basic use path absoluto de onde fica os arquivos,
+			//					no moodle file.php link					
 		}
+		/**
+		 * 
+		 *  EXEMPLO Moodle
+		 path: {
+			local: '/var/www/html/moodle/lib/QiSatPlayer3/dist/',
+			poster: 'files/preloader-qisat.gif'
+		},
+
+		url: {
+			path: '',
+			infoUser: '/lib/QiSatPlayer3/backend/getinfouser.php', // Dados de Identificação do Usuário
+			geraLog: '/lib/QiSatPlayer3/backend/geraLog.php', // Log de Acesso Moodle
+			startDefa: '/lib/QiSatPlayer3/backend/getUrl.php', // Gerar Link do video
+			defa: '/lib/QiSatPlayer3/backend/defavid.php', // Default Filename defavid.php in getUrl.php
+			local: window.location.href // link de acesso ao arquivos 
+		}*/
 	};
 
 	constructor(opDefault: string | any[][]) {
@@ -970,7 +987,7 @@ export default class Player {
 			type.push(CONFIG.VIDEOTYPES[ext + "-codecs"]);
 			srcs.push(src + '.' + ext);
 		}
-		let data = 'url=' + this.options.path.files + '&src=' + srcs.join('|') + '&type=' + type.join('|') + '&defaLocal=' + this.options.url.getDefa;
+		let data = 'url=' + this.options.url.local + '&src=' + srcs.join('|') + '&type=' + type.join('|') + '&defaUrl=' + this.options.url.defa;
 		let _self = this;
 		xhReq.setContentType('application/x-www-form-urlencoded');
 		xhReq.setResponseType('text');

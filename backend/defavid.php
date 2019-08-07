@@ -16,6 +16,10 @@ if(array_key_exists('REQUEST_METHOD', $_SERVER)){
     }
 }
 
+if(file_exists('../filelib.php')){
+    require_once('../filelib.php');
+}
+
 if(file_exists($_SERVER['DOCUMENT_ROOT'].'/config.php')){
     require_once($_SERVER['DOCUMENT_ROOT'].'/config.php');
     global $CFG;
@@ -28,11 +32,18 @@ if(file_exists($_SERVER['DOCUMENT_ROOT'].'/config.php')){
 
 ob_start();
 
-$crc    = filter_var($_GET['crc']);
-$file   = $_SESSION['defaprotect' . $crc];
+if(array_key_exists('REQUEST_METHOD', $_SERVER)){
+	if ($_SERVER['REQUEST_METHOD'] === 'POST' || $_SERVER['REQUEST_METHOD'] === 'GET') {
 
-// echo '<pre>';
-// var_dump($_SESSION);die;
+		if(array_key_exists('crc', $_REQUEST)){
+			$crc = $_REQUEST['crc'];
+        }
+
+	if(array_key_exists('defaprotect' . $crc, $_SESSION)){
+            $file  = $_SESSION['defaprotect' . $crc];
+        } 
+    }
+}
 
 /*
 $iPod   = stripos($_SERVER['HTTP_USER_AGENT'], "iPod");
