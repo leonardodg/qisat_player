@@ -1,5 +1,5 @@
 $color-bar: #828282; // #424242
-$color-top: #114d09;
+$color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;
 $menu-color  : #AAA;
@@ -96,7 +96,7 @@ body {
 			height: 20px;
 			margin: 3px 0px 3px -30px;
 			padding: 0;
-			/*width: 510px;*/
+			width: 510px;
 			font-family: "PT Sans",Arial,Helvetica,sans-serif;
 		}
 
@@ -105,7 +105,7 @@ body {
 			float: left;
 			height: 20px;
 			text-transform: uppercase;
-			/*width: 500px;*/
+			width: 500px;
 			margin-left: -20px;
 			font-size: 11px;
 		}

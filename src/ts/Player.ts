@@ -64,17 +64,25 @@ export default class Player {
 		},
 
 		path: {
-			local: '/var/www/html/player/dist/',
-			poster: 'files/preloader-qisat.gif'
+			/*local: '/var/www/html/player/dist/',
+			poster: 'files/preloader-qisat.gif'*/
+			local: 'C:/Desenvolvimento/xampp5/htdocs/QiSatPlayer/dist/',
+			poster: 'http://local-player.qisat.com.br/samples/files/preloader-qisat.gif'
 		},
 
 		url: {
-			path: '/player/dist/samples/files/',
+			/*path: '/player/dist/samples/files/',
 			infoUser: 'http://local-backend.dev.com.br:8080/getinfouser.php', // Dados de Identificação do Usuário
 			geraLog: 'http://local-backend.dev.com.br:8080/geraLog.php', // Log de Acesso Moodle
 			startDefa: 'http://local-backend.dev.com.br:8080/getUrl.php', // Gerar Link do video
 			defa: 'http://local-backend.dev.com.br:8080/defavid.php', // Default Filename defavid.php in getUrl.php
-			local: '/var/www/html/player/dist/samples/files/'
+			local: '/var/www/html/player/dist/samples/files/'*/
+			path: '/samples/files/',
+			infoUser: 'http://local-player-backend.qisat.com.br/getinfouser.php', // Dados de Identificação do Usuário
+			geraLog: 'http://local-player-backend.qisat.com.br/geraLog.php', // Log de Acesso Moodle
+			startDefa: 'http://local-player-backend.qisat.com.br/getUrl.php', // Gerar Link do video
+			defa: 'http://local-player-backend.qisat.com.br/defavid.php', // Default Filename defavid.php in getUrl.php
+			local: 'C:/Desenvolvimento/xampp5/htdocs/QiSatPlayer/dist/samples/files/'
 			//  url.local: 
 			//		 ATENÇÃO: teste basic use path absoluto de onde fica os arquivos,
 			//					no moodle file.php link					
@@ -291,6 +299,14 @@ export default class Player {
 		btClose.classList.add(CONFIG.CLASS_HIDE);
 
 		let videoTag = <HTMLDivElement>document.getElementById(CONFIG.ID_VIDEO_TAG);
+
+		let btNext = <HTMLDivElement>document.getElementById(CONFIG.ID_NEXT);
+		btNext.dataset['interval'] = setInterval(function () {
+			if(btNext.classList.contains(CONFIG.CLASS_VISIBILY))
+				btNext.classList.remove(CONFIG.CLASS_VISIBILY);
+			else		
+				btNext.classList.add(CONFIG.CLASS_VISIBILY);
+		}, 800).toString();
 
 		// LightBox
 		let btnImagemId, [unidade, nivel] = _self.options.unid.split('.');
@@ -522,6 +538,15 @@ export default class Player {
 			btClose.classList.remove(CONFIG.CLASS_HIDE);
 			video.classList.remove(CONFIG.CLASS_HIDE);
 
+			let graph = <HTMLDivElement>document.getElementById(CONFIG.ID_GRAPH);
+			if (graph)
+				graph.remove();
+
+			let btNext = <HTMLDivElement>document.getElementById(CONFIG.ID_NEXT);
+			clearInterval(parseInt(btNext.dataset['interval']));
+			if (btNext.classList.contains(CONFIG.CLASS_VISIBILY)) 
+				btNext.classList.remove(CONFIG.CLASS_VISIBILY);
+
 			if (this.classList.contains(CONFIG.CLASS_PAUSE)) {
 				this.classList.remove(CONFIG.CLASS_PAUSE);
 				this.classList.add(CONFIG.CLASS_PLAY);
@@ -544,11 +569,6 @@ export default class Player {
 				let widget = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_WIDGET)[0];
 				if (widget)
 					clearInterval(parseInt(widget.dataset['interval']));
-				if (MenuContexto) {
-					let graph = <HTMLDivElement>document.getElementsByClassName(CONFIG.ID_GRAPH)[0];
-					if (graph)
-						clearInterval(parseInt(graph.dataset['interval']));
-				}
 			}
 		};
 		btPlay.addEventListener('click', btPlay.click);

@@ -5,11 +5,7 @@ var spritesmith = require('gulp.spritesmith');
 var merge = require('merge-stream');
 var sass = require('gulp-sass');
 var rename = require('gulp-rename');
-var typescript = require('gulp-typescript');
-var tsProject = typescript.createProject("tsconfig.json");
-var concat = require('gulp-concat');
 var watch = require('gulp-watch');
-var gulpif = require('gulp-if');
 var { config } = require('./config');
 var browserSync = require('browser-sync').create();
 var proxy = require('http-proxy-middleware');
@@ -17,8 +13,6 @@ var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var babelify = require('babelify');
 var source = require("vinyl-source-stream");
-var buffer = require("vinyl-buffer");
-var sourcemaps = require('gulp-sourcemaps');
 var tsify = require("tsify");
 var watchify = require("watchify");
 
@@ -72,7 +66,7 @@ gulp.task('build-sprite', function () {
         .pipe(spritesmith({
             imgName: 'sprite.png',
             cssName: '_sprite.scss',
-            imgPath: '../images/'
+            imgPath: '../images/sprite.png'
         }));
 
     var imgStream = spriteData.img.pipe(gulp.dest(config.path.build.images));
@@ -156,14 +150,16 @@ gulp.task('default', gulp.series('build'), function () {
 gulp.task('browser-sync', function (callback) {
 
     var httpProxy = proxy('/', {
-        target: "http://local-player.dev.com.br",
+        //target: "http://local-player.dev.com.br",
+        target: "http://local-player.qisat.com.br",
         changeOrigin: true // for vhosted sites
     });
 
     browserSync.init({
         port: 8080,
         server: {
-            baseDir: '/var/www/html/player/dist/',
+            //baseDir: '/var/www/html/player/dist/',
+            baseDir: 'C:/Desenvolvimento/xampp5/htdocs/QiSatPlayer/dist/',
             middleware: [httpProxy]
         },
         startPath: '/samples/basic.html',

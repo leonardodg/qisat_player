@@ -78,7 +78,7 @@
 }
 
 .loading {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -100px -294px;
   width: 49px;
   height: 44px;
@@ -192,18 +192,18 @@ body {
   position: relative;
   width: 1010px;
   height: 42px;
-  background: #114d09;
+  background: #383838;
 }
 
 @media only screen and (max-device-height: 664px) {
   #video-top {
-    background: rgba(17, 77, 9, 0.8);
+    background: rgba(56, 56, 56, 0.8);
   }
 }
 
 #video-top > .top {
   /*background-image: url('imagens/top-icon.png');*/
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -178px -210px;
   width: 178px;
   height: 42px;
@@ -215,7 +215,7 @@ body {
 
 #video-top > .logo {
   /*background-image: url('imagens/logo-mn-altoqi.png');*/
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px -252px;
   width: 170px;
   height: 42px;
@@ -232,7 +232,7 @@ body {
   height: 20px;
   margin: 3px 0px 3px -30px;
   padding: 0;
-  /*width: 510px;*/
+  width: 510px;
   font-family: "PT Sans",Arial,Helvetica,sans-serif;
 }
 
@@ -241,7 +241,7 @@ body {
   float: left;
   height: 20px;
   text-transform: uppercase;
-  /*width: 500px;*/
+  width: 500px;
   margin-left: -20px;
   font-size: 11px;
 }
@@ -1308,7 +1308,7 @@ body.lb-disable-scrolling {
 }
 
 .lb-nav a.lb-prev {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -50px -294px;
   width: 50px;
   height: 45px;
@@ -1317,7 +1317,7 @@ body.lb-disable-scrolling {
 }
 
 .lb-nav a.lb-next {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px -294px;
   width: 50px;
   height: 45px;
@@ -1878,7 +1878,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .alv > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px -42px;
   width: 178px;
   height: 42px;
@@ -2150,7 +2150,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .cab > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px -168px;
   width: 178px;
   height: 42px;
@@ -2292,7 +2292,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .cdc > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px -84px;
   width: 178px;
   height: 42px;
@@ -2692,7 +2692,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .eb10 > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px -126px;
   width: 178px;
   height: 42px;
@@ -2830,7 +2830,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .feg > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -178px 0px;
   width: 178px;
   height: 42px;
@@ -2971,7 +2971,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .hyd > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -178px -42px;
   width: 178px;
   height: 42px;
@@ -3112,7 +3112,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .iaq > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -178px -84px;
   width: 178px;
   height: 42px;
@@ -3253,7 +3253,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .ier > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -178px -126px;
   width: 178px;
   height: 42px;
@@ -3394,7 +3394,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .lum > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px 0px;
   width: 178px;
   height: 42px;
@@ -3535,7 +3535,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .pda > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: -178px -168px;
   width: 178px;
   height: 42px;
@@ -3676,7 +3676,7 @@ $color-painel: #2c2c2c;*/
 }
 
 .pmf > #video-top > .top {
-  background-image: url(../images/);
+  background-image: url(../images/sprite.png);
   background-position: 0px -210px;
   width: 178px;
   height: 42px;
