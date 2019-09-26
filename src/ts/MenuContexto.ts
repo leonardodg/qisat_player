@@ -12,6 +12,18 @@ export default class MenuContexto {
 		let rom = 0;
 
 		if (player.options) {
+			if (player.options.fullScreen && 
+			!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				var hrow = <HTMLTableRowElement>this.table.insertRow(rom++);
+				hrow.insertCell(0).innerHTML = TEXT.FULLSCREEN;
+				let fullScreen = <HTMLInputElement>document.createElement("input");
+				fullScreen.id = CONFIG.ID_FULLSCREEN;
+				fullScreen.type = 'checkbox';
+				fullScreen.checked = player.options.fullScreen;
+				fullScreen.addEventListener("change", player.resize.bind(null, player));
+				hrow.insertCell(1).appendChild(fullScreen);
+			}
+
 			if (player.options.autoplay) {
 				var hrow = <HTMLTableRowElement>this.table.insertRow(rom++);
 				hrow.insertCell(0).innerHTML = TEXT.AUTO_PLAY;
@@ -56,12 +68,13 @@ export default class MenuContexto {
 		}
 
 		if (rom) {
-			let videoControls = document.getElementById(CONFIG.ID_VIDEO_CONTROLS);
+			let videoControls = document.getElementsByClassName(CONFIG.CLASS_VIDEO_CONTROLS)[0];
 
 			let subMenu = document.createElement("div");
 			subMenu.id = CONFIG.ID_SUBMENU;
 			subMenu.classList.add(CONFIG.CLASS_HIDE);
 			subMenu.appendChild(this.table);
+			if(rom)	subMenu.style['marginTop'] = (24 * rom) * -1 + 'px';
 			videoControls.appendChild(subMenu);
 
 			let btWidget = document.createElement("div");
@@ -95,7 +108,7 @@ export default class MenuContexto {
 	}
 
 	endVideo(_self) {
-		let videoTag = document.getElementById(CONFIG.ID_VIDEO_TAG);
+		let videoTag = document.getElementsByClassName(CONFIG.CLASS_VIDEO_TAG)[0];
 		let video = document.getElementById(CONFIG.ID_VIDEO);
 
 		let graph = document.getElementById(CONFIG.ID_GRAPH), canvas, span;

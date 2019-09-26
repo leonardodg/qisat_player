@@ -11,7 +11,7 @@ export default class Player {
 	private buttonSvg;
 	private menuContext;
 	private options = {
-		id: CONFIG.ID_VIDEO_CONTAINER,
+		class: CONFIG.CLASS_VIDEO_CONTAINER,
 		aula: 1,
 		unid: "0",
 		slide: 0,
@@ -36,6 +36,7 @@ export default class Player {
 		autoplay: true,
 		playbackRate: true,
 		style: null,
+		fullScreen: true,
 		video: {
 			controls: false,
 			autoplay: true,
@@ -64,25 +65,20 @@ export default class Player {
 		},
 
 		path: {
-			/*local: '/var/www/html/player/dist/',
-			poster: 'files/preloader-qisat.gif'*/
-			local: 'C:/Desenvolvimento/xampp5/htdocs/QiSatPlayer/dist/',
-			poster: 'http://local-player.qisat.com.br/samples/files/preloader-qisat.gif'
+			local: '/var/www/html/player/dist/',
+			poster: 'files/preloader-qisat.gif'
 		},
 
 		url: {
-			/*path: '/player/dist/samples/files/',
+
+			path: '/player/dist/samples/files/',
 			infoUser: 'http://local-backend.dev.com.br:8080/getinfouser.php', // Dados de Identificação do Usuário
 			geraLog: 'http://local-backend.dev.com.br:8080/geraLog.php', // Log de Acesso Moodle
 			startDefa: 'http://local-backend.dev.com.br:8080/getUrl.php', // Gerar Link do video
 			defa: 'http://local-backend.dev.com.br:8080/defavid.php', // Default Filename defavid.php in getUrl.php
-			local: '/var/www/html/player/dist/samples/files/'*/
-			path: '/samples/files/',
-			infoUser: 'http://local-player-backend.qisat.com.br/getinfouser.php', // Dados de Identificação do Usuário
-			geraLog: 'http://local-player-backend.qisat.com.br/geraLog.php', // Log de Acesso Moodle
-			startDefa: 'http://local-player-backend.qisat.com.br/getUrl.php', // Gerar Link do video
-			defa: 'http://local-player-backend.qisat.com.br/defavid.php', // Default Filename defavid.php in getUrl.php
-			local: 'C:/Desenvolvimento/xampp5/htdocs/QiSatPlayer/dist/samples/files/'
+			local: '/var/www/html/player/dist/samples/files/',
+			images: '/images'
+			
 			//  url.local: 
 			//		 ATENÇÃO: teste basic use path absoluto de onde fica os arquivos,
 			//					no moodle file.php link					
@@ -120,54 +116,195 @@ export default class Player {
 				}
 			}
 		} else if (typeof opDefault === 'string') {
-			this.options.id = opDefault;
+			this.options.class = opDefault;
 		}
 
-		let videoPlayer = document.getElementById(this.options.id);
+		let videoPlayer = <HTMLDivElement>document.getElementsByClassName(this.options.class)[0];
 		this.options.video.poster = this.options['path']['poster'] + this.options.video.poster;
 
 		window.oncontextmenu = (e) => {
 			e.preventDefault();
 		}
 
-		if (this.options.style != null) {
+		if (this.options.style != null) 
 			videoPlayer.classList.add(this.options.style);
-		}
+
+		if (!videoPlayer.classList.contains(CONFIG.CLASS_VIDEO_CONTAINER))
+			videoPlayer.classList.add(CONFIG.CLASS_VIDEO_CONTAINER);
 
 		videoPlayer.appendChild(this.createTop());
 		videoPlayer.appendChild(this.createMenu());
 		videoPlayer.appendChild(this.createVideoTag());
 		videoPlayer.appendChild(this.createControls());
-		this.carregarInfoUser();
 
+
+		let metaTag = <HTMLMetaElement>document.querySelector("meta[name=viewport]");
+		if(!metaTag){
+			metaTag = <HTMLMetaElement>document.createElement('meta');
+			metaTag.name = "viewport";
+		}
+		metaTag.content = "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no";
+		if(!document.querySelector("meta[name=viewport]"))
+			document.getElementsByTagName('head')[0].appendChild(metaTag);
+
+
+		window.addEventListener("resize", this.resize.bind(null, this));
+		window.addEventListener("orientationchange", this.resize.bind(null, this));
+
+		this.carregarInfoUser();
 		this.carregarXML();
 
 		try {
 			this.menuContext = new MenuContexto(this);
+			this.resize(this);
 		} catch (error) {
 			console.log(error);
 		}
 
-
-		/*xhReq.setContentType('text/plain');
+		this.buttonSvg = "";
+		xhReq.setContentType('text/plain');
 		xhReq.setResponseType('text');
-		xhReq.get(this.options.path.defaLocal + '/images/button.svg')
-			.success(data => {
-				this._self.buttonSvg = data;
-			});*/
+		xhReq.get(this.options.url.images + '/button.svg').success(data => {
+			this._self.buttonSvg = data;
+		});
 	}
+
+	resize(_self){
+		let videoPlayer = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_CONTAINER)[0];
+		let videoTop = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_TOP)[0];
+		let top = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_TOP)[0];
+		let titleCurso = <HTMLSpanElement>document.getElementsByClassName(CONFIG.CLASS_CURSO_TEXT)[0];
+		let titleAula = <HTMLSpanElement>document.getElementsByClassName(CONFIG.CLASS_AULA_TEXT)[0];
+		let logo = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_LOGO)[0];
+		let menuAction = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_MENU_ACTION)[0];
+		let menuList = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_MENU_LIST)[0];
+		let videoTag = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_TAG)[0];
+		let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
+		let canvas = <HTMLCanvasElement>document.getElementById(CONFIG.ID_CANVAS);
+		let videoControls = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_CONTROLS)[0];
+		let fullScreen = <HTMLInputElement>document.getElementById(CONFIG.ID_FULLSCREEN);
+
+		videoTag.style['height'] = null;
+		menuList.style['height'] = null;
+		videoTop.style['width'] = null;
+		videoTag.style['width'] = null;
+		videoControls.style['width'] = null;
+		videoPlayer.style['width'] = null;
+		menuAction.style['marginTop'] = null;
+		
+		video.width = _self.options.video.width;
+		video.height = _self.options.video.height;
+		canvas.width = _self.options.canvas.width;
+		canvas.height = _self.options.canvas.height;
+
+		let altura = videoTop.clientHeight + _self.options.video.height + videoControls.clientHeight;
+		if (fullScreen && fullScreen.checked || 
+		(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && altura > window.outerHeight)){
+			if(fullScreen && fullScreen.checked)
+				videoPlayer.classList.add(CONFIG.CLASS_FULLSCREEN);
+
+			let proporcaoVideo = _self.options.video.width / _self.options.video.height;
+			let proporcaoDisplay = window.innerWidth / (window.innerHeight - videoTop.clientHeight - videoControls.clientHeight);
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				if(altura > window.innerHeight){
+					proporcaoDisplay = window.outerWidth / (window.outerHeight - videoTop.clientHeight - videoControls.clientHeight);
+				}
+			}
+
+			if(proporcaoDisplay >= proporcaoVideo){
+				if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && altura > window.innerHeight) {
+					video.height = canvas.height = window.outerHeight;
+				} else {
+					video.height = canvas.height = window.innerHeight - videoTop.clientHeight - videoControls.clientHeight;
+				}
+				videoTag.style['height'] = video.height + "px";
+				let width = video.height * 16 / 9;
+				video.width = canvas.width = width;
+				videoPlayer.style['width'] = (width < video.clientWidth ? video.clientWidth: width) + "px";
+				videoTop.style['width'] = videoTag.style['width'] = 
+				videoControls.style['width'] = width + "px";
+			}else{
+				if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && altura > window.innerHeight) {
+					if(window.outerWidth){
+						video.width = canvas.width = window.outerWidth > _self.options.video.width ? _self.options.video.width : window.outerWidth;
+					}else{
+						video.width = canvas.width = window.innerWidth > _self.options.video.width ? _self.options.video.width : window.innerWidth;
+						videoPlayer.style['width'] = video.width + "px";
+					}
+				} else {
+					video.width = canvas.width = window.innerWidth > _self.options.video.width ? _self.options.video.width : window.innerWidth;
+					if(fullScreen && fullScreen.checked)
+						video.width = canvas.width = window.innerWidth;
+				}
+				videoTop.style['width'] = videoTag.style['width'] = 
+				videoControls.style['width'] = video.width + "px";
+				let height = video.width * 9 / 16;
+				video.height = canvas.height = height;
+				videoTag.style['height'] = height + "px";
+			}
+
+			let selector = CONFIG.CLASS + CONFIG.CLASS_VIDEO_CONTAINER +" "+ CONFIG.CLASS + CONFIG.CLASS_VIDEO_TOP +" > "+ CONFIG.CLASS + CONFIG.CLASS_TITLE +" > "+ CONFIG.CLASS;
+			let marginLeftCurso = parseInt(_self.getStyleBySelector(selector+CONFIG.CLASS_CURSO_TEXT).marginLeft);
+			let marginLeftAula = parseInt(_self.getStyleBySelector(selector+CONFIG.CLASS_AULA_TEXT).marginLeft);
+
+			titleCurso.style['maxWidth'] = (videoTop.clientWidth - top.clientWidth - logo.clientWidth - marginLeftCurso) + "px";
+			titleAula.style['maxWidth'] = (videoTop.clientWidth - top.clientWidth - logo.clientWidth - marginLeftAula) + "px";
+			
+			menuAction.style['marginTop'] = (video.height / 2 - menuAction.clientHeight) + "px";
+			menuList.style['maxHeight'] = menuList.style['height'] = (video.clientHeight + 1)+"px";
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+				menuList.style['overflowX'] = "hidden";
+				menuList.style['overflowY'] = "auto";
+				if(proporcaoDisplay >= proporcaoVideo && altura > window.innerHeight){
+					menuList.style['maxHeight'] = (video.clientHeight + 1 - videoTop.clientHeight - videoControls.clientHeight)+"px";
+					menuAction.style['marginTop'] = (video.height / 2 - videoTop.clientHeight - menuAction.clientHeight) + "px";
+				}
+			}
+
+		} else {
+			videoPlayer.classList.remove(CONFIG.CLASS_FULLSCREEN);
+		}
+
+		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+			videoTop.style['minWidth'] = videoTag.style['minWidth'] = videoControls.style['minWidth'] = 
+			video.style['minWidth'] = canvas.style['minWidth']  = "0px";
+
+			videoTop.style['minHeight'] = videoTag.style['minHeight'] = videoControls.style['minHeight'] = 
+			video.style['minHeight'] = canvas.style['minHeight'] = "0px";
+		}
+	}
+
+	getStyleBySelector( selector )
+    {
+       var sheetList = document.styleSheets;
+       var ruleList;
+       var i, j;
+   
+       for (i=sheetList.length-1; i >= 0; i--)
+       {
+           ruleList = (<CSSStyleSheet>sheetList[i]).cssRules;
+           for (j=0; j<ruleList.length; j++)
+           {
+               if (ruleList[j].type == CSSRule.STYLE_RULE && 
+                   ruleList[j].selectorText == selector)
+               {
+                   return ruleList[j].style;
+               }   
+           }
+       }
+       return null;
+    }
 
 	/**
 	 * Criando componentes do topo do player
 	 */
 	createTop() {
 		let videoTop = document.createElement("div");
-		videoTop.id = CONFIG.ID_VIDEO_TOP;
+		videoTop.classList.add(CONFIG.CLASS_VIDEO_TOP);
 		videoTop.classList.add(CONFIG.CLASS_VISIBILY);
 		videoTop.appendChild(this.setTop());
+		videoTop.appendChild(this.setTitle());
 		videoTop.appendChild(this.setLogo());
-		videoTop.appendChild(this.setTitleCurso());
-		videoTop.appendChild(this.setTitleAula());
 		return videoTop;
 	}
 
@@ -177,22 +314,25 @@ export default class Player {
 		return top;
 	}
 
+	setTitle() {
+		let title = document.createElement("div");
+		title.classList.add(CONFIG.CLASS_TITLE);
+
+		let titleCurso = document.createElement("span");
+		titleCurso.classList.add(CONFIG.CLASS_CURSO_TEXT);
+		title.appendChild(titleCurso);
+		
+		let titleAula = document.createElement("span");
+		titleAula.classList.add(CONFIG.CLASS_AULA_TEXT);
+		title.appendChild(titleAula);
+
+		return title;
+	}
+
 	setLogo() {
 		let logo = document.createElement("div");
 		logo.classList.add(CONFIG.CLASS_LOGO);
 		return logo;
-	}
-
-	setTitleCurso() {
-		let titleCurso = document.createElement("span");
-		titleCurso.classList.add(CONFIG.CLASS_CURSO_TEXT);
-		return titleCurso;
-	}
-
-	setTitleAula() {
-		let titleAula = document.createElement("span");
-		titleAula.classList.add(CONFIG.CLASS_AULA_TEXT);
-		return titleAula;
 	}
 
 	/**
@@ -200,7 +340,7 @@ export default class Player {
 	 */
 	createMenu() {
 		let videoMenu = document.createElement("div");
-		videoMenu.id = CONFIG.ID_VIDEO_MENU;
+		videoMenu.classList.add(CONFIG.CLASS_VIDEO_MENU);
 		videoMenu.appendChild(this.setAction());
 		videoMenu.appendChild(this.setList());
 		return videoMenu;
@@ -259,22 +399,22 @@ export default class Player {
 	 */
 	createVideoTag() {
 		let videoTag = document.createElement("div");
-		videoTag.id = CONFIG.ID_VIDEO_TAG;
+		videoTag.classList.add(CONFIG.CLASS_VIDEO_TAG);
 		videoTag.appendChild(this.setBtClose());
 		videoTag.appendChild(this.setVideo());
 		videoTag.appendChild(this.setCanvas());
 		return videoTag;
 	}
-
+	
 	touchstart() {
 		let canvas = <HTMLCanvasElement>document.getElementById(CONFIG.ID_CANVAS);
 		clearInterval(parseInt(canvas.dataset['intervalTouchEnd']));
 		let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
-		let videoTop = <HTMLDivElement>document.getElementById(CONFIG.ID_VIDEO_TOP);
-		let videoControls = <HTMLDivElement>document.getElementById(CONFIG.ID_VIDEO_CONTROLS);
+		let videoTop = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_TOP)[0];
+		let videoControls = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_CONTROLS)[0];
 		if ((video.classList.contains(CONFIG.CLASS_HIDE) || !video.paused) &&
-			(videoTop.classList.contains(CONFIG.CLASS_VISIBILY) ||
-				videoControls.classList.contains(CONFIG.CLASS_VISIBILY))) {
+		(videoTop.classList.contains(CONFIG.CLASS_VISIBILY) ||
+		videoControls.classList.contains(CONFIG.CLASS_VISIBILY))) {
 			videoTop.classList.remove(CONFIG.CLASS_VISIBILY);
 			videoControls.classList.remove(CONFIG.CLASS_VISIBILY);
 		} else {
@@ -298,7 +438,7 @@ export default class Player {
 		let btClose = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_BT_CLOSE)[0];
 		btClose.classList.add(CONFIG.CLASS_HIDE);
 
-		let videoTag = <HTMLDivElement>document.getElementById(CONFIG.ID_VIDEO_TAG);
+		let videoTag = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_TAG)[0];
 
 		let btNext = <HTMLDivElement>document.getElementById(CONFIG.ID_NEXT);
 		btNext.dataset['interval'] = setInterval(function () {
@@ -333,7 +473,7 @@ export default class Player {
 						let count = 0;
 						element2['img'].forEach(element3 => {
 							let aLightbox = document.createElement("a");
-							aLightbox.href = element3['src'];
+							aLightbox.href = _self.options.url.path + element3['src'];
 							aLightbox.dataset['lightbox'] = element + '-' + count++;
 
 							let imgLightbox = document.createElement("img");
@@ -418,11 +558,14 @@ export default class Player {
 	}
 
 	setVideo() {
+		let _self = this;
 		let video = document.createElement("video");
 		video.id = CONFIG.ID_VIDEO;
-		video.width = 1010;
-		video.height = 568;
-		video.poster = this.options.path.poster;
+		/*var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+		if (!isMobile) {
+			video.width = this.options.video.width;
+			video.height = this.options.video.height;
+		}*/
 
 		video.addEventListener('playing', function () {
 			this.muted = Boolean(document.getElementsByClassName(CONFIG.CLASS_VOLUME_NONE).length);
@@ -443,17 +586,32 @@ export default class Player {
 			let progresso = <HTMLProgressElement>document.getElementById(CONFIG.ID_PROGRESS);
 			progresso.value = (value) ? value : 0;
 		});
-		let _self = this;
+		video.addEventListener('loadstart', function () {
+			$(this).attr('poster', _self.options.path.poster);
+			$(this).addClass('loading');
+		});
+		video.addEventListener('canplay', function () {
+			$(this).removeClass('loading');
+			$(this).attr('poster', '');
+		});
 		video.addEventListener('ended', this.endVideo.bind(this, _self));
 
 		return video;
 	}
 
 	setCanvas() {
+		let _self = this;
 		let canvas = document.createElement("canvas");
 		canvas.id = CONFIG.ID_CANVAS;
-		canvas.width = 1010;
-		canvas.height = 568;
+		var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+		if (isMobile) {
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+		} else {
+			canvas.width = this.options.canvas.width;
+			canvas.height = this.options.canvas.height;
+		}
+		
 		canvas.addEventListener('click', function () {
 			let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
 			if (!video.classList.contains(CONFIG.CLASS_HIDE)) {
@@ -467,12 +625,14 @@ export default class Player {
 			let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
 			this.dataset['intervalTouchEnd'] = setTimeout(function () {
 				if (!video.paused) {
-					let videoTop = <HTMLDivElement>document.getElementById(CONFIG.ID_VIDEO_TOP);
-					let videoControls = <HTMLDivElement>document.getElementById(CONFIG.ID_VIDEO_CONTROLS);
+					let videoTop = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_TOP)[0];
+					let videoControls = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_CONTROLS)[0];
 					videoTop.classList.remove(CONFIG.CLASS_VISIBILY);
 					videoControls.classList.remove(CONFIG.CLASS_VISIBILY);
 				}
 			}, 1500).toString();
+
+			setTimeout(_self.resize, 100, _self);
 		});
 
 		return canvas;
@@ -483,14 +643,16 @@ export default class Player {
 	 */
 	createControls() {
 		let videoControls = document.createElement("div");
-		videoControls.id = CONFIG.ID_VIDEO_CONTROLS;
+		videoControls.classList.add(CONFIG.CLASS_VIDEO_CONTROLS);
 		videoControls.classList.add(CONFIG.CLASS_VISIBILY);
 		videoControls.appendChild(this.setBarraProgresso());
 		videoControls.appendChild(this.setBtPrevious());
 		videoControls.appendChild(this.setPlay());
 		videoControls.appendChild(this.setNext());
 		videoControls.appendChild(this.setVolume());
-		videoControls.appendChild(this.setVolumeBar());
+		if(!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+			videoControls.appendChild(this.setVolumeBar());
+		}
 		videoControls.appendChild(this.setSlides());
 		videoControls.appendChild(this.setSubVideos());
 		videoControls.appendChild(this.setTime());
@@ -614,6 +776,7 @@ export default class Player {
 		btVolumeBar.min = '0';
 		btVolumeBar.max = btVolumeBar.value = '1';
 		btVolumeBar.step = '0.1';
+
 		btVolumeBar.addEventListener('click', function () {
 			let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
 			video.volume = Number(this.value);
@@ -737,6 +900,10 @@ export default class Player {
 		xhReq.setResponseType('xml');
 		xhReq.get(this.options.url.path + this.options.filename)
 			.success(data => {
+				if(typeof data == 'string'){
+					let parser = new DOMParser();
+					data = parser.parseFromString(data,"text/xml");
+				}
 				_self.listPlay = _self.listarXml(data.getElementsByTagName('curso'));
 
 				var titleCurso = document.getElementsByClassName(CONFIG.CLASS_CURSO_TEXT)[0];
@@ -1018,8 +1185,8 @@ export default class Player {
 			let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window['MSStream'];
 			let IE = /Trident/.test(navigator.userAgent) && window['MSStream'];
 			if (iOS || IE) {
-				video.setAttribute('poster', _self.options.video.poster);
-				video.removeAttribute('poster');
+				//video.setAttribute('poster', _self.options.video.poster);
+				//video.removeAttribute('poster');
 
 				let loading = <HTMLDivElement>document.getElementById(CONFIG.CLASS_LOADING);
 				let canvas = <HTMLCanvasElement>document.getElementById(CONFIG.ID_CANVAS);
@@ -1029,7 +1196,7 @@ export default class Player {
 					if (!loading) {
 						loading = <HTMLDivElement>document.createElement('div');
 						loading.classList.add(CONFIG.CLASS_LOADING);
-						let videoTag = <HTMLDivElement>document.getElementById(CONFIG.ID_VIDEO_TAG);
+						let videoTag = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_VIDEO_TAG)[0];
 						videoTag.insertBefore(loading, canvas.nextSibling);
 					}
 				}
@@ -1074,6 +1241,9 @@ export default class Player {
 						_self.loadVideo(video);
 					};
 					reader.readAsDataURL(xhReq.response);
+
+					if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) 
+						_self.resize(_self);
 				};
 				xhReq.open('GET', result[result.length - 1]);
 				if (result[result.length - 1].indexOf('defavid') !== -1) {
@@ -1116,6 +1286,10 @@ export default class Player {
 				}
 				_self.loadVideo(video);
 			}
+
+			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) 
+				_self.resize(_self);
+
 		});
 	}
 
@@ -1267,12 +1441,13 @@ export default class Player {
 
 			context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
 			if (video.classList.contains(CONFIG.CLASS_HIDE)) {
-				context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
-			} else if (video.played.length) {
+				//context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
+				context.drawImage(img, 75, 0, canvas.clientWidth, canvas.clientHeight);
+			} else {//if (video.played.length) {
 				/**
 				 * Barra diagonal com a chave
 				 */
-				if (_self.options.chave.length) {
+				if (_self.options.mascara && _self.options.chave.length) {
 					context.fillStyle = "rgba(120,120,120,0.1)";
 					context.beginPath();
 
@@ -1297,13 +1472,28 @@ export default class Player {
 					context.fillStyle = "hsla(" + _self.options.canvas.hue + "," + _self.options.canvas.sat + "%," + _self.options.canvas.val + "%,0.5)";
 					context.textAlign = "center";
 
-					//Chave do aluno
-					let count = 0;
-					while (count < 11) {
+					_self.options.canvas.hue += 0.5;
+					_self.options.canvas.sat += _self.options.canvas.val2;
+					_self.options.canvas.val += _self.options.canvas.val2;
+					if (_self.options.canvas.sat >= 57) {
+						_self.options.canvas.val2 = -0.5;	
+					} else if (_self.options.canvas.sat <= 0) {
+						_self.options.canvas.val2 = 0.5;
+					}
+
+					// Chave do aluno 
+					let count = 0, countTotal = 11;
+					while (count < countTotal) {
 						if (_self.options.canvas.sentido) {
-							context.fillText(_self.options.chave, 960 - 90.5 * count, 535 - 48.5 * (count++));
+							//context.fillText(_self.options.chave, 960 - 90.5 * count, 535 - 48.5 * (count++));
+							context.fillText(_self.options.chave, 
+								(canvas.width/countTotal) * count, 
+								(canvas.height/countTotal) * (count++));
 						} else {
-							context.fillText(_self.options.chave, 46 + 91 * count, 535 - 48.5 * (count++));
+							//context.fillText(_self.options.chave, 46 + 91 * count, 535 - 48.5 * (count++));
+							context.fillText(_self.options.chave, 
+								canvas.width - (canvas.width/countTotal) * count - (count * 3) + 25, 
+								(canvas.height/countTotal) * (count++));
 						}
 					}
 				}
@@ -1318,21 +1508,29 @@ export default class Player {
 					};
 					var radius = (options_graph.size - options_graph.lineWidth) / 2;
 
-					/* Desenhando circulo do Play */
-					context.beginPath();
-					context.arc(497, 285, radius, 0, Math.PI * 2, false);
-					context.strokeStyle = 'rgba(180, 180, 180, 0.6)';
-					context.lineCap = 'round';
-					context.lineWidth = options_graph.lineWidth;
-					context.stroke();
+					let isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+					if(!isMobile || video.clientWidth >= window.innerWidth || video.clientHeight >= window.innerHeight){
+						/* Desenhando circulo do Play */
+						context.beginPath();
+						//context.arc(497, 285, radius, 0, Math.PI * 2, false); 
+						context.arc(video.clientWidth/2, video.clientHeight/2, radius, 0, Math.PI * 2, false); 
+						context.strokeStyle = 'rgba(180, 180, 180, 0.6)';
+						context.lineCap = 'round';
+						context.lineWidth = options_graph.lineWidth;
+						context.stroke();
 
-					/* Desenhando triangulo do Play */
-					context.fillStyle = "rgba(180, 180, 180, 0.6)";
-					context.beginPath();
-					context.moveTo(475, 245);
-					context.lineTo(475, 325);
-					context.lineTo(540, 285);
-					context.fill();
+						/* Desenhando triangulo do Play */
+						context.fillStyle = "rgba(180, 180, 180, 0.6)";
+						context.beginPath();
+						/*context.moveTo(475, 245);
+						context.lineTo(475, 325);
+						context.lineTo(540, 285);*/
+						context.moveTo(video.clientWidth/2-22, video.clientHeight/2-40); 
+						context.lineTo(video.clientWidth/2-22, video.clientHeight/2+40); 
+						context.lineTo(video.clientWidth/2+43, video.clientHeight/2);
+						context.fill();
+					}
+					
 				}
 			}
 		}, 50).toString();

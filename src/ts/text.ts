@@ -1,3 +1,4 @@
+export const FULLSCREEN = "Tela Cheia";
 export const AUTO_PLAY = "Reprodução automática";
 export const PLAY_SPEED = "Velocidade de reprodução";
 export const MENU = "MENU";

@@ -4,8 +4,7 @@
   "description": "QiSat Player HTML5 - Desenvolvimento Equipe QiSat - Utilizado em nossa Plataforma Moodle.",
   "main": "./dist/index.js",
   "scripts": {
-    //"dev:backend": "php -t backend/ -S local-backend.dev.com.br:8080",
-    "dev:backend": "php -t backend/ -S local-player.qisat.com.br",
+    "dev:backend": "php -t backend/ -S local-backend.dev.com.br:8080",
     "start": "gulp"
   },
   "author": "Equipe QiSat",
@@ -43,5 +42,8 @@
     "typescript": "^3.5.3",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^3.11.1"
+  },
+  "dependencies": {
+    "foundation-sites": "^6.5.3"
   }
 }
