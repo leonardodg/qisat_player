@@ -12905,8 +12905,10 @@ function () {
         context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
 
         if (video.classList.contains(CONFIG.CLASS_HIDE)) {
-          //context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
-          context.drawImage(img, 75, 0, canvas.clientWidth, canvas.clientHeight);
+		  //context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
+		  var left = _self.options.canvas.width - _self.options.canvas.imgWidth,
+		      top = _self.options.canvas.height - _self.options.canvas.imgHeight;
+          context.drawImage(img, left, top, canvas.clientWidth, canvas.clientHeight);
         } else {
           //if (video.played.length) {
 
