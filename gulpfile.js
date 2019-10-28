@@ -150,16 +150,14 @@ gulp.task('default', gulp.series('build'), function () {
 gulp.task('browser-sync', function (callback) {
 
     var httpProxy = proxy('/', {
-        //target: "http://local-player.dev.com.br",
-        target: "http://local-player.qisat.com.br",
+        target: "http://local-player.dev.com.br",
         changeOrigin: true // for vhosted sites
     });
 
     browserSync.init({
         port: 8080,
         server: {
-            //baseDir: '/var/www/html/player/dist/',
-            baseDir: 'C:/Desenvolvimento/xampp5/htdocs/QiSatPlayer/dist/',
+            baseDir: '/var/www/html/player/dist/',
             middleware: [httpProxy]
         },
         startPath: '/samples/basic.html',

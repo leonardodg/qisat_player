@@ -109,7 +109,7 @@ export default class MenuContexto {
 
 	endVideo(_self) {
 		let videoTag = document.getElementsByClassName(CONFIG.CLASS_VIDEO_TAG)[0];
-		let video = document.getElementById(CONFIG.ID_VIDEO);
+		let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
 
 		let graph = document.getElementById(CONFIG.ID_GRAPH), canvas, span;
 		if (graph) {
@@ -130,9 +130,15 @@ export default class MenuContexto {
 			graph.appendChild(canvas);
 
 			span = document.createElement('span');
-			span.textContent = span.dataset['segundos'] = '10';
+			span.textContent = span.dataset['segundos'] = _self.player.options.autoplayTime.toString();
 			span.classList.add(CONFIG.CLASS_HIDE);
 			graph.appendChild(span);
+		}
+		let fullScreen = <HTMLInputElement>document.getElementById(CONFIG.ID_FULLSCREEN);
+		if (fullScreen && fullScreen.checked || 
+		(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))){
+			graph.style['left'] = (video.width/2-30) + "px";
+			graph.style['top'] = (video.height/2-60) + "px";
 		}
 
 		var ctx = canvas.getContext('2d');
@@ -171,7 +177,7 @@ export default class MenuContexto {
 
 				var segundos = parseFloat(span.dataset['segundos']);
 				if (segundos > -1) {
-					segundos = segundos - (10 / 360);
+					segundos = segundos - (_self.player.options.autoplayTime / 360);
 					span.dataset['segundos'] = segundos.toString();
 					if (Math.ceil(segundos) > -1)
 						span.textContent = Math.ceil(segundos).toString();
@@ -188,7 +194,7 @@ export default class MenuContexto {
 			} else {
 				canvas.classList.add(CONFIG.CLASS_HIDE);
 				span.classList.add(CONFIG.CLASS_HIDE);
-				span.dataset['segundos'] = '10';
+				span.dataset['segundos'] = _self.player.options.autoplayTime.toString();
 				if (graph) {
 					graph.setAttribute('data-percent', '0');
 					graph.setAttribute('data-size', '120');
@@ -198,7 +204,7 @@ export default class MenuContexto {
 				if (!video.classList.contains(CONFIG.CLASS_HIDE))
 					clearInterval(startGraph);
 			}
-		}, 10000 / 360);
+		}, (_self.player.options.autoplayTime * 1000) / 360);
 	}
 
 	playbackRate(plus = true) {

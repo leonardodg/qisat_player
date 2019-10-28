@@ -34,9 +34,10 @@ export default class Player {
 		mascara: true,
 		geraLog: true,
 		autoplay: true,
+		autoplayTime: 5,
 		playbackRate: true,
 		style: null,
-		fullScreen: true,
+		fullScreen: true, // Proporção baseada nas configurações abaixo de altura e largura do video 
 		video: {
 			controls: false,
 			autoplay: true,
@@ -210,7 +211,7 @@ export default class Player {
 					proporcaoDisplay = window.outerWidth / (window.outerHeight - videoTop.clientHeight - videoControls.clientHeight);
 				}
 			}
-
+			
 			if(proporcaoDisplay >= proporcaoVideo){
 				if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && altura > window.innerHeight) {
 					video.height = canvas.height = window.outerHeight;
@@ -218,7 +219,8 @@ export default class Player {
 					video.height = canvas.height = window.innerHeight - videoTop.clientHeight - videoControls.clientHeight;
 				}
 				videoTag.style['height'] = video.height + "px";
-				let width = video.height * 16 / 9;
+				//let width = video.height * 16 / 9;
+				let width = video.height * proporcaoVideo;
 				video.width = canvas.width = width;
 				videoPlayer.style['width'] = (width < video.clientWidth ? video.clientWidth: width) + "px";
 				videoTop.style['width'] = videoTag.style['width'] = 
@@ -271,6 +273,13 @@ export default class Player {
 
 			videoTop.style['minHeight'] = videoTag.style['minHeight'] = videoControls.style['minHeight'] = 
 			video.style['minHeight'] = canvas.style['minHeight'] = "0px";
+		}
+
+		let graph = document.getElementById(CONFIG.ID_GRAPH);
+		if (graph && (fullScreen && fullScreen.checked || 
+		(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)))){
+			graph.style['left'] = (video.width/2-30) + "px";
+			graph.style['top'] = (video.height/2-60) + "px";
 		}
 	}
 
@@ -1439,7 +1448,7 @@ export default class Player {
 			let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
 			let context = canvas.getContext('2d');
 
-			context.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+			context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 			if (video.classList.contains(CONFIG.CLASS_HIDE)) {
 				//context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
 				let left = _self.options.canvas.width - _self.options.canvas.imgWidth,
@@ -1489,7 +1498,7 @@ export default class Player {
 						if (_self.options.canvas.sentido) {
 							//context.fillText(_self.options.chave, 960 - 90.5 * count, 535 - 48.5 * (count++));
 							context.fillText(_self.options.chave, 
-								(canvas.width/countTotal) * count, 
+								(canvas.width/countTotal) * count - (25 - count * 3), 
 								(canvas.height/countTotal) * (count++));
 						} else {
 							//context.fillText(_self.options.chave, 46 + 91 * count, 535 - 48.5 * (count++));
