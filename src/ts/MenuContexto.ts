@@ -102,6 +102,18 @@ export default class MenuContexto {
 				}
 				subMenu.classList.toggle(CONFIG.CLASS_HIDE);
 			});
+
+			window.addEventListener('click', function (e) {
+				var ocultar = true;
+				e.composedPath().forEach(element => {
+					if(element == subMenu || element == btWidget) ocultar = false;
+				});
+				if(ocultar) {
+					clearInterval(parseInt(btWidget.dataset['interval']));
+					subMenu.classList.add(CONFIG.CLASS_HIDE);
+				}
+			});
+
 			this.player.btEstilo(btWidget);
 			videoControls.appendChild(btWidget);
 		}
