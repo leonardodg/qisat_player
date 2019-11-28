@@ -1453,7 +1453,7 @@ export default class Player {
 				//context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
 				let left = _self.options.canvas.width - _self.options.canvas.imgWidth,
 					top = _self.options.canvas.height - _self.options.canvas.imgHeight;
-				context.drawImage(img, left, top, canvas.clientWidth, canvas.clientHeight);
+				context.drawImage(img, left, top, canvas.clientWidth - left, canvas.clientHeight);
 			} else {//if (video.played.length) {
 				/**
 				 * Barra diagonal com a chave
