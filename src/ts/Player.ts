@@ -45,7 +45,7 @@ export default class Player {
 			width: 1010,
 			height: 568,
 			id: CONFIG.ID_VIDEO,
-			poster: '',
+			poster: '/lib/QiSatPlayer3/dist/images/preloader-qisat.gif',
 			filename: null,
 			ext: ['mp4']
 		},
@@ -66,19 +66,18 @@ export default class Player {
 		},
 
 		path: {
-			local: '/var/www/html/player/dist/',
-			poster: 'files/preloader-qisat.gif'
+			local: 'E:/Sites/Moodle/lib/QiSatPlayer3/dist/'
 		},
 
 		url: {
 
-			path: '/player/dist/samples/files/',
-			infoUser: 'http://local-backend.dev.com.br:8080/getinfouser.php', // Dados de Identificação do Usuário
-			geraLog: 'http://local-backend.dev.com.br:8080/geraLog.php', // Log de Acesso Moodle
-			startDefa: 'http://local-backend.dev.com.br:8080/getUrl.php', // Gerar Link do video
-			defa: 'http://local-backend.dev.com.br:8080/defavid.php', // Default Filename defavid.php in getUrl.php
-			local: '/var/www/html/player/dist/samples/files/',
-			images: '/images'
+			path: '',
+			infoUser: '/lib/QiSatPlayer3/backend/getinfouser.php', // Dados de Identificação do Usuário
+			geraLog: '/lib/QiSatPlayer3/backend/geraLog.php', // Log de Acesso Moodle
+			startDefa: '/lib/QiSatPlayer3/backend/getUrl.php', // Gerar Link do video
+			defa: '/lib/QiSatPlayer3/backend/defavid.php', // Default Filename defavid.php in getUrl.php
+			local: '/lib/QiSatPlayer3/dist/samples/files/',
+			images: '/lib/QiSatPlayer3/dist/images'
 			
 			//  url.local: 
 			//		 ATENÇÃO: teste basic use path absoluto de onde fica os arquivos,
@@ -88,8 +87,7 @@ export default class Player {
 		 * 
 		 *  EXEMPLO Moodle
 		 path: {
-			local: '/var/www/html/moodle/lib/QiSatPlayer3/dist/',
-			poster: 'files/preloader-qisat.gif'
+			local: '/var/www/html/moodle/lib/QiSatPlayer3/dist/'
 		},
 
 		url: {
@@ -121,7 +119,6 @@ export default class Player {
 		}
 
 		let videoPlayer = <HTMLDivElement>document.getElementsByClassName(this.options.class)[0];
-		this.options.video.poster = this.options['path']['poster'] + this.options.video.poster;
 
 		window.oncontextmenu = (e) => {
 			e.preventDefault();
@@ -137,8 +134,7 @@ export default class Player {
 		videoPlayer.appendChild(this.createMenu());
 		videoPlayer.appendChild(this.createVideoTag());
 		videoPlayer.appendChild(this.createControls());
-
-
+		
 		let metaTag = <HTMLMetaElement>document.querySelector("meta[name=viewport]");
 		if(!metaTag){
 			metaTag = <HTMLMetaElement>document.createElement('meta');
@@ -147,7 +143,6 @@ export default class Player {
 		metaTag.content = "width=device-width, height=device-height, initial-scale=1.0, user-scalable=no";
 		if(!document.querySelector("meta[name=viewport]"))
 			document.getElementsByTagName('head')[0].appendChild(metaTag);
-
 
 		window.addEventListener("resize", this.resize.bind(null, this));
 		window.addEventListener("orientationchange", this.resize.bind(null, this));
@@ -596,12 +591,13 @@ export default class Player {
 			progresso.value = (value) ? value : 0;
 		});
 		video.addEventListener('loadstart', function () {
-			$(this).attr('poster', _self.options.path.poster);
-			$(this).addClass('loading');
+			video.poster = "/";
+			video.style['background'] = "url('"+_self.options['video']['poster']+"')";
+			video.style['backgroundRepeat'] = 'no-repeat';
+			video.style['backgroundPosition'] = 'center';
 		});
 		video.addEventListener('canplay', function () {
-			$(this).removeClass('loading');
-			$(this).attr('poster', '');
+			video.style['background'] = "";
 		});
 		video.addEventListener('ended', this.endVideo.bind(this, _self));
 
@@ -1194,9 +1190,6 @@ export default class Player {
 			let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window['MSStream'];
 			let IE = /Trident/.test(navigator.userAgent) && window['MSStream'];
 			if (iOS || IE) {
-				//video.setAttribute('poster', _self.options.video.poster);
-				//video.removeAttribute('poster');
-
 				let loading = <HTMLDivElement>document.getElementById(CONFIG.CLASS_LOADING);
 				let canvas = <HTMLCanvasElement>document.getElementById(CONFIG.ID_CANVAS);
 				let xhReq = new XMLHttpRequest();
@@ -1244,7 +1237,6 @@ export default class Player {
 						sourceElem.src = URL.createObjectURL(blob);
 						sourceElem.type = t;
 						video.appendChild(sourceElem);
-						//video.removeAttribute('poster');
 						ctx.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
 						loading.parentNode.removeChild(loading);
 						_self.loadVideo(video);
@@ -1512,7 +1504,7 @@ export default class Player {
 				/**
 				 * Play do Canvas
 				 */
-				if (video.paused && !video.classList.contains(CONFIG.CLASS_HIDE) && video.innerHTML != '') {
+				if (video.buffered.length && video.paused && !video.classList.contains(CONFIG.CLASS_HIDE) && video.innerHTML != '') {
 					var options_graph = {
 						size: 140,
 						lineWidth: 12
