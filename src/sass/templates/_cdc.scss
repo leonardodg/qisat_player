@@ -1,13 +1,13 @@
 /* PALETA DE CORES PLAYER */
 $color-bar: #828282; /* BAR (progress:background-color) */
-$color-top: #D2D2D2; /* TOPO DO PLAYER (#video-top:background) */
+$color-top: #D2D2D2; /* TOPO DO PLAYER (.video-top:background) */
 $color-border: #5D5D5D; /* BORDAS (#video-components:border) */
 $color-painel: #D2D2D2; /* PAINEL DE CONTROLE (#video-controls:background) */
 $style: '.cdc';
 
 @import "../components/template";
 
-#{$style} > #video-top > .top {
+#{$style} > .video-top > .top {
     //background-image: url(../imagens/cabecalho_cdc.png);
     @include sprite($cabecalho_cdc);
 }

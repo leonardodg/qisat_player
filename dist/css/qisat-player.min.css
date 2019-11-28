@@ -1456,28 +1456,28 @@ body.lb-disable-scrolling {
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.w796-h564 #video-components {
+.w796-h564 .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.w796-h564 #video-top {
+.w796-h564 .video-top {
   background: #383838;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .w796-h564 #video-top {
+  .w796-h564 .video-top {
     background: rgba(56, 56, 56, 0.8);
   }
 }
 
-.w796-h564 #video-tag > #loading, .w796-h564 #video-tag > #error {
+.w796-h564 .video-tag > #loading, .w796-h564 .video-tag > #error {
   background: #2c2c2c;
 }
 
@@ -1490,56 +1490,56 @@ $color-painel: #2c2c2c;*/
   color: #383838;
 }
 
-.w796-h564 #video-controls {
+.w796-h564 .video-controls {
   background: #2c2c2c;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .w796-h564 #video-controls {
+  .w796-h564 .video-controls {
     background: rgba(44, 44, 44, 0.8);
   }
 }
 
-.w796-h564 #video-controls > {
+.w796-h564 .video-controls > {
   /* [IE 9] */
 }
 
-.w796-h564 #video-controls > [class|=fi], .w796-h564 #video-controls > #group-playback > [class|=fi] {
+.w796-h564 .video-controls > [class|=fi], .w796-h564 .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.w796-h564 #video-controls > [class$=disable] {
+.w796-h564 .video-controls > [class$=disable] {
   color: #060606;
 }
 
-.w796-h564 #video-controls > .fi-next.show {
+.w796-h564 .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.w796-h564 #video-controls > progress {
+.w796-h564 .video-controls > progress {
   background-color: #6c6c6c;
 }
 
-.w796-h564 #video-controls > progress::-webkit-progress-bar {
+.w796-h564 .video-controls > progress::-webkit-progress-bar {
   background-color: #6c6c6c;
 }
 
-.w796-h564 #video-controls > progress::-webkit-progress-value {
+.w796-h564 .video-controls > progress::-webkit-progress-value {
   background-color: black;
 }
 
-.w796-h564 #video-controls > progress::-moz-progress-bar {
+.w796-h564 .video-controls > progress::-moz-progress-bar {
   background-color: black;
 }
 
-.w796-h564 #video-controls > .progress {
+.w796-h564 .video-controls > .progress {
   background: #6c6c6c;
 }
 
-.w796-h564 #video-controls > .progress > .progress-bar[value] {
+.w796-h564 .video-controls > .progress > .progress-bar[value] {
   background-color: black;
 }
 
@@ -1587,28 +1587,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.w864-h574 #video-components {
+.w864-h574 .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.w864-h574 #video-top {
+.w864-h574 .video-top {
   background: #383838;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .w864-h574 #video-top {
+  .w864-h574 .video-top {
     background: rgba(56, 56, 56, 0.8);
   }
 }
 
-.w864-h574 #video-tag > #loading, .w864-h574 #video-tag > #error {
+.w864-h574 .video-tag > #loading, .w864-h574 .video-tag > #error {
   background: #2c2c2c;
 }
 
@@ -1621,56 +1621,56 @@ $color-painel: #2c2c2c;*/
   color: #383838;
 }
 
-.w864-h574 #video-controls {
+.w864-h574 .video-controls {
   background: #2c2c2c;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .w864-h574 #video-controls {
+  .w864-h574 .video-controls {
     background: rgba(44, 44, 44, 0.8);
   }
 }
 
-.w864-h574 #video-controls > {
+.w864-h574 .video-controls > {
   /* [IE 9] */
 }
 
-.w864-h574 #video-controls > [class|=fi], .w864-h574 #video-controls > #group-playback > [class|=fi] {
+.w864-h574 .video-controls > [class|=fi], .w864-h574 .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.w864-h574 #video-controls > [class$=disable] {
+.w864-h574 .video-controls > [class$=disable] {
   color: #060606;
 }
 
-.w864-h574 #video-controls > .fi-next.show {
+.w864-h574 .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.w864-h574 #video-controls > progress {
+.w864-h574 .video-controls > progress {
   background-color: #6c6c6c;
 }
 
-.w864-h574 #video-controls > progress::-webkit-progress-bar {
+.w864-h574 .video-controls > progress::-webkit-progress-bar {
   background-color: #6c6c6c;
 }
 
-.w864-h574 #video-controls > progress::-webkit-progress-value {
+.w864-h574 .video-controls > progress::-webkit-progress-value {
   background-color: black;
 }
 
-.w864-h574 #video-controls > progress::-moz-progress-bar {
+.w864-h574 .video-controls > progress::-moz-progress-bar {
   background-color: black;
 }
 
-.w864-h574 #video-controls > .progress {
+.w864-h574 .video-controls > .progress {
   background: #6c6c6c;
 }
 
-.w864-h574 #video-controls > .progress > .progress-bar[value] {
+.w864-h574 .video-controls > .progress > .progress-bar[value] {
   background-color: black;
 }
 
@@ -1718,28 +1718,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.w934-h564 #video-components {
+.w934-h564 .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.w934-h564 #video-top {
+.w934-h564 .video-top {
   background: #383838;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .w934-h564 #video-top {
+  .w934-h564 .video-top {
     background: rgba(56, 56, 56, 0.8);
   }
 }
 
-.w934-h564 #video-tag > #loading, .w934-h564 #video-tag > #error {
+.w934-h564 .video-tag > #loading, .w934-h564 .video-tag > #error {
   background: #2c2c2c;
 }
 
@@ -1752,56 +1752,56 @@ $color-painel: #2c2c2c;*/
   color: #383838;
 }
 
-.w934-h564 #video-controls {
+.w934-h564 .video-controls {
   background: #2c2c2c;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .w934-h564 #video-controls {
+  .w934-h564 .video-controls {
     background: rgba(44, 44, 44, 0.8);
   }
 }
 
-.w934-h564 #video-controls > {
+.w934-h564 .video-controls > {
   /* [IE 9] */
 }
 
-.w934-h564 #video-controls > [class|=fi], .w934-h564 #video-controls > #group-playback > [class|=fi] {
+.w934-h564 .video-controls > [class|=fi], .w934-h564 .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.w934-h564 #video-controls > [class$=disable] {
+.w934-h564 .video-controls > [class$=disable] {
   color: #060606;
 }
 
-.w934-h564 #video-controls > .fi-next.show {
+.w934-h564 .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.w934-h564 #video-controls > progress {
+.w934-h564 .video-controls > progress {
   background-color: #6c6c6c;
 }
 
-.w934-h564 #video-controls > progress::-webkit-progress-bar {
+.w934-h564 .video-controls > progress::-webkit-progress-bar {
   background-color: #6c6c6c;
 }
 
-.w934-h564 #video-controls > progress::-webkit-progress-value {
+.w934-h564 .video-controls > progress::-webkit-progress-value {
   background-color: black;
 }
 
-.w934-h564 #video-controls > progress::-moz-progress-bar {
+.w934-h564 .video-controls > progress::-moz-progress-bar {
   background-color: black;
 }
 
-.w934-h564 #video-controls > .progress {
+.w934-h564 .video-controls > .progress {
   background: #6c6c6c;
 }
 
-.w934-h564 #video-controls > .progress > .progress-bar[value] {
+.w934-h564 .video-controls > .progress > .progress-bar[value] {
   background-color: black;
 }
 
@@ -1849,28 +1849,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.alv #video-components {
+.alv .video-components {
   border: 1px solid #D2C6BA;
 }
 
-.alv #video-top {
+.alv .video-top {
   background: #9D7A57;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .alv #video-top {
+  .alv .video-top {
     background: rgba(157, 122, 87, 0.8);
   }
 }
 
-.alv #video-tag > #loading, .alv #video-tag > #error {
+.alv .video-tag > #loading, .alv .video-tag > #error {
   background: #9D7A57;
 }
 
@@ -1883,56 +1883,56 @@ $color-painel: #2c2c2c;*/
   color: #9D7A57;
 }
 
-.alv #video-controls {
+.alv .video-controls {
   background: #9D7A57;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .alv #video-controls {
+  .alv .video-controls {
     background: rgba(157, 122, 87, 0.8);
   }
 }
 
-.alv #video-controls > {
+.alv .video-controls > {
   /* [IE 9] */
 }
 
-.alv #video-controls > [class|=fi], .alv #video-controls > #group-playback > [class|=fi] {
+.alv .video-controls > [class|=fi], .alv .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #D2C6BA;
 }
 
-.alv #video-controls > [class$=disable] {
+.alv .video-controls > [class$=disable] {
   color: #6c543c;
 }
 
-.alv #video-controls > .fi-next.show {
+.alv .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #D2C6BA;
   -moz-box-shadow: 0px 0px 10px 4px #D2C6BA;
   box-shadow: 0px 0px 4px 4px #D2C6BA;
 }
 
-.alv #video-controls > progress {
+.alv .video-controls > progress {
   background-color: #cebaa6;
 }
 
-.alv #video-controls > progress::-webkit-progress-bar {
+.alv .video-controls > progress::-webkit-progress-bar {
   background-color: #cebaa6;
 }
 
-.alv #video-controls > progress::-webkit-progress-value {
+.alv .video-controls > progress::-webkit-progress-value {
   background-color: #4b3a2a;
 }
 
-.alv #video-controls > progress::-moz-progress-bar {
+.alv .video-controls > progress::-moz-progress-bar {
   background-color: #4b3a2a;
 }
 
-.alv #video-controls > .progress {
+.alv .video-controls > .progress {
   background: #cebaa6;
 }
 
-.alv #video-controls > .progress > .progress-bar[value] {
+.alv .video-controls > .progress > .progress-bar[value] {
   background-color: #4b3a2a;
 }
 
@@ -1978,7 +1978,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #D2C6BA;
 }
 
-.alv > #video-top > .top {
+.alv > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: 0px -42px;
   width: 178px;
@@ -1990,28 +1990,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.art #video-components {
+.art .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.art #video-top {
+.art .video-top {
   background: #2471B6;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .art #video-top {
+  .art .video-top {
     background: rgba(36, 113, 182, 0.8);
   }
 }
 
-.art #video-tag > #loading, .art #video-tag > #error {
+.art .video-tag > #loading, .art .video-tag > #error {
   background: #2471B6;
 }
 
@@ -2024,56 +2024,56 @@ $color-painel: #2c2c2c;*/
   color: #2471B6;
 }
 
-.art #video-controls {
+.art .video-controls {
   background: #2471B6;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .art #video-controls {
+  .art .video-controls {
     background: rgba(36, 113, 182, 0.8);
   }
 }
 
-.art #video-controls > {
+.art .video-controls > {
   /* [IE 9] */
 }
 
-.art #video-controls > [class|=fi], .art #video-controls > #group-playback > [class|=fi] {
+.art .video-controls > [class|=fi], .art .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.art #video-controls > [class$=disable] {
+.art .video-controls > [class$=disable] {
   color: #174976;
 }
 
-.art #video-controls > .fi-next.show {
+.art .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.art #video-controls > progress {
+.art .video-controls > progress {
   background-color: #76b0e4;
 }
 
-.art #video-controls > progress::-webkit-progress-bar {
+.art .video-controls > progress::-webkit-progress-bar {
   background-color: #76b0e4;
 }
 
-.art #video-controls > progress::-webkit-progress-value {
+.art .video-controls > progress::-webkit-progress-value {
   background-color: #0f2f4c;
 }
 
-.art #video-controls > progress::-moz-progress-bar {
+.art .video-controls > progress::-moz-progress-bar {
   background-color: #0f2f4c;
 }
 
-.art #video-controls > .progress {
+.art .video-controls > .progress {
   background: #76b0e4;
 }
 
-.art #video-controls > .progress > .progress-bar[value] {
+.art .video-controls > .progress > .progress-bar[value] {
   background-color: #0f2f4c;
 }
 
@@ -2121,28 +2121,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.cab #video-components {
+.cab .video-components {
   border: 1px solid #F0E4B2;
 }
 
-.cab #video-top {
+.cab .video-top {
   background: #D1AA0D;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cab #video-top {
+  .cab .video-top {
     background: rgba(209, 170, 13, 0.8);
   }
 }
 
-.cab #video-tag > #loading, .cab #video-tag > #error {
+.cab .video-tag > #loading, .cab .video-tag > #error {
   background: #D1AA0D;
 }
 
@@ -2155,56 +2155,56 @@ $color-painel: #2c2c2c;*/
   color: #D1AA0D;
 }
 
-.cab #video-controls {
+.cab .video-controls {
   background: #D1AA0D;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cab #video-controls {
+  .cab .video-controls {
     background: rgba(209, 170, 13, 0.8);
   }
 }
 
-.cab #video-controls > {
+.cab .video-controls > {
   /* [IE 9] */
 }
 
-.cab #video-controls > [class|=fi], .cab #video-controls > #group-playback > [class|=fi] {
+.cab .video-controls > [class|=fi], .cab .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #F0E4B2;
 }
 
-.cab #video-controls > [class$=disable] {
+.cab .video-controls > [class$=disable] {
   color: #896f09;
 }
 
-.cab #video-controls > .fi-next.show {
+.cab .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #F0E4B2;
   -moz-box-shadow: 0px 0px 10px 4px #F0E4B2;
   box-shadow: 0px 0px 4px 4px #F0E4B2;
 }
 
-.cab #video-controls > progress {
+.cab .video-controls > progress {
   background-color: #f6d968;
 }
 
-.cab #video-controls > progress::-webkit-progress-bar {
+.cab .video-controls > progress::-webkit-progress-bar {
   background-color: #f6d968;
 }
 
-.cab #video-controls > progress::-webkit-progress-value {
+.cab .video-controls > progress::-webkit-progress-value {
   background-color: #594806;
 }
 
-.cab #video-controls > progress::-moz-progress-bar {
+.cab .video-controls > progress::-moz-progress-bar {
   background-color: #594806;
 }
 
-.cab #video-controls > .progress {
+.cab .video-controls > .progress {
   background: #f6d968;
 }
 
-.cab #video-controls > .progress > .progress-bar[value] {
+.cab .video-controls > .progress > .progress-bar[value] {
   background-color: #594806;
 }
 
@@ -2250,7 +2250,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #F0E4B2;
 }
 
-.cab > #video-top > .top {
+.cab > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: 0px -168px;
   width: 178px;
@@ -2263,28 +2263,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.cdc #video-components {
+.cdc .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.cdc #video-top {
+.cdc .video-top {
   background: #D2D2D2;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cdc #video-top {
+  .cdc .video-top {
     background: rgba(210, 210, 210, 0.8);
   }
 }
 
-.cdc #video-tag > #loading, .cdc #video-tag > #error {
+.cdc .video-tag > #loading, .cdc .video-tag > #error {
   background: #D2D2D2;
 }
 
@@ -2297,56 +2297,56 @@ $color-painel: #2c2c2c;*/
   color: #D2D2D2;
 }
 
-.cdc #video-controls {
+.cdc .video-controls {
   background: #D2D2D2;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cdc #video-controls {
+  .cdc .video-controls {
     background: rgba(210, 210, 210, 0.8);
   }
 }
 
-.cdc #video-controls > {
+.cdc .video-controls > {
   /* [IE 9] */
 }
 
-.cdc #video-controls > [class|=fi], .cdc #video-controls > #group-playback > [class|=fi] {
+.cdc .video-controls > [class|=fi], .cdc .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.cdc #video-controls > [class$=disable] {
+.cdc .video-controls > [class$=disable] {
   color: #acacac;
 }
 
-.cdc #video-controls > .fi-next.show {
+.cdc .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.cdc #video-controls > progress {
+.cdc .video-controls > progress {
   background-color: white;
 }
 
-.cdc #video-controls > progress::-webkit-progress-bar {
+.cdc .video-controls > progress::-webkit-progress-bar {
   background-color: white;
 }
 
-.cdc #video-controls > progress::-webkit-progress-value {
+.cdc .video-controls > progress::-webkit-progress-value {
   background-color: #929292;
 }
 
-.cdc #video-controls > progress::-moz-progress-bar {
+.cdc .video-controls > progress::-moz-progress-bar {
   background-color: #929292;
 }
 
-.cdc #video-controls > .progress {
+.cdc .video-controls > .progress {
   background: white;
 }
 
-.cdc #video-controls > .progress > .progress-bar[value] {
+.cdc .video-controls > .progress > .progress-bar[value] {
   background-color: #929292;
 }
 
@@ -2392,7 +2392,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #5D5D5D;
 }
 
-.cdc > #video-top > .top {
+.cdc > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: 0px -84px;
   width: 178px;
@@ -2401,28 +2401,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.cdebp #video-components {
+.cdebp .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.cdebp #video-top {
+.cdebp .video-top {
   background: #1A435D;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cdebp #video-top {
+  .cdebp .video-top {
     background: rgba(26, 67, 93, 0.8);
   }
 }
 
-.cdebp #video-tag > #loading, .cdebp #video-tag > #error {
+.cdebp .video-tag > #loading, .cdebp .video-tag > #error {
   background: #072133;
 }
 
@@ -2435,56 +2435,56 @@ $color-painel: #2c2c2c;*/
   color: #1A435D;
 }
 
-.cdebp #video-controls {
+.cdebp .video-controls {
   background: #072133;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cdebp #video-controls {
+  .cdebp .video-controls {
     background: rgba(7, 33, 51, 0.8);
   }
 }
 
-.cdebp #video-controls > {
+.cdebp .video-controls > {
   /* [IE 9] */
 }
 
-.cdebp #video-controls > [class|=fi], .cdebp #video-controls > #group-playback > [class|=fi] {
+.cdebp .video-controls > [class|=fi], .cdebp .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.cdebp #video-controls > [class$=disable] {
+.cdebp .video-controls > [class$=disable] {
   color: black;
 }
 
-.cdebp #video-controls > .fi-next.show {
+.cdebp .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.cdebp #video-controls > progress {
+.cdebp .video-controls > progress {
   background-color: #166aa3;
 }
 
-.cdebp #video-controls > progress::-webkit-progress-bar {
+.cdebp .video-controls > progress::-webkit-progress-bar {
   background-color: #166aa3;
 }
 
-.cdebp #video-controls > progress::-webkit-progress-value {
+.cdebp .video-controls > progress::-webkit-progress-value {
   background-color: black;
 }
 
-.cdebp #video-controls > progress::-moz-progress-bar {
+.cdebp .video-controls > progress::-moz-progress-bar {
   background-color: black;
 }
 
-.cdebp #video-controls > .progress {
+.cdebp .video-controls > .progress {
   background: #166aa3;
 }
 
-.cdebp #video-controls > .progress > .progress-bar[value] {
+.cdebp .video-controls > .progress > .progress-bar[value] {
   background-color: black;
 }
 
@@ -2532,28 +2532,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.cdimp #video-components {
+.cdimp .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.cdimp #video-top {
+.cdimp .video-top {
   background: #1A435D;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cdimp #video-top {
+  .cdimp .video-top {
     background: rgba(26, 67, 93, 0.8);
   }
 }
 
-.cdimp #video-tag > #loading, .cdimp #video-tag > #error {
+.cdimp .video-tag > #loading, .cdimp .video-tag > #error {
   background: #072133;
 }
 
@@ -2566,56 +2566,56 @@ $color-painel: #2c2c2c;*/
   color: #1A435D;
 }
 
-.cdimp #video-controls {
+.cdimp .video-controls {
   background: #072133;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .cdimp #video-controls {
+  .cdimp .video-controls {
     background: rgba(7, 33, 51, 0.8);
   }
 }
 
-.cdimp #video-controls > {
+.cdimp .video-controls > {
   /* [IE 9] */
 }
 
-.cdimp #video-controls > [class|=fi], .cdimp #video-controls > #group-playback > [class|=fi] {
+.cdimp .video-controls > [class|=fi], .cdimp .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.cdimp #video-controls > [class$=disable] {
+.cdimp .video-controls > [class$=disable] {
   color: black;
 }
 
-.cdimp #video-controls > .fi-next.show {
+.cdimp .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.cdimp #video-controls > progress {
+.cdimp .video-controls > progress {
   background-color: #166aa3;
 }
 
-.cdimp #video-controls > progress::-webkit-progress-bar {
+.cdimp .video-controls > progress::-webkit-progress-bar {
   background-color: #166aa3;
 }
 
-.cdimp #video-controls > progress::-webkit-progress-value {
+.cdimp .video-controls > progress::-webkit-progress-value {
   background-color: black;
 }
 
-.cdimp #video-controls > progress::-moz-progress-bar {
+.cdimp .video-controls > progress::-moz-progress-bar {
   background-color: black;
 }
 
-.cdimp #video-controls > .progress {
+.cdimp .video-controls > .progress {
   background: #166aa3;
 }
 
-.cdimp #video-controls > .progress > .progress-bar[value] {
+.cdimp .video-controls > .progress > .progress-bar[value] {
   background-color: black;
 }
 
@@ -2663,28 +2663,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.eb10 #video-components {
+.eb10 .video-components {
   border: 1px solid #D2C6BA;
 }
 
-.eb10 #video-top {
+.eb10 .video-top {
   background: #423426;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .eb10 #video-top {
+  .eb10 .video-top {
     background: rgba(66, 52, 38, 0.8);
   }
 }
 
-.eb10 #video-tag > #loading, .eb10 #video-tag > #error {
+.eb10 .video-tag > #loading, .eb10 .video-tag > #error {
   background: #423426;
 }
 
@@ -2697,56 +2697,56 @@ $color-painel: #2c2c2c;*/
   color: #423426;
 }
 
-.eb10 #video-controls {
+.eb10 .video-controls {
   background: #423426;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .eb10 #video-controls {
+  .eb10 .video-controls {
     background: rgba(66, 52, 38, 0.8);
   }
 }
 
-.eb10 #video-controls > {
+.eb10 .video-controls > {
   /* [IE 9] */
 }
 
-.eb10 #video-controls > [class|=fi], .eb10 #video-controls > #group-playback > [class|=fi] {
+.eb10 .video-controls > [class|=fi], .eb10 .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #D2C6BA;
 }
 
-.eb10 #video-controls > [class$=disable] {
+.eb10 .video-controls > [class$=disable] {
   color: #110e0a;
 }
 
-.eb10 #video-controls > .fi-next.show {
+.eb10 .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #D2C6BA;
   -moz-box-shadow: 0px 0px 10px 4px #D2C6BA;
   box-shadow: 0px 0px 4px 4px #D2C6BA;
 }
 
-.eb10 #video-controls > progress {
+.eb10 .video-controls > progress {
   background-color: #937455;
 }
 
-.eb10 #video-controls > progress::-webkit-progress-bar {
+.eb10 .video-controls > progress::-webkit-progress-bar {
   background-color: #937455;
 }
 
-.eb10 #video-controls > progress::-webkit-progress-value {
+.eb10 .video-controls > progress::-webkit-progress-value {
   background-color: black;
 }
 
-.eb10 #video-controls > progress::-moz-progress-bar {
+.eb10 .video-controls > progress::-moz-progress-bar {
   background-color: black;
 }
 
-.eb10 #video-controls > .progress {
+.eb10 .video-controls > .progress {
   background: #937455;
 }
 
-.eb10 #video-controls > .progress > .progress-bar[value] {
+.eb10 .video-controls > .progress > .progress-bar[value] {
   background-color: black;
 }
 
@@ -2792,7 +2792,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #D2C6BA;
 }
 
-.eb10 > #video-top > .top {
+.eb10 > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: 0px -126px;
   width: 178px;
@@ -2801,28 +2801,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.feg #video-components {
+.feg .video-components {
   border: 1px solid #D2C6BA;
 }
 
-.feg #video-top {
+.feg .video-top {
   background: #9D7A57;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .feg #video-top {
+  .feg .video-top {
     background: rgba(157, 122, 87, 0.8);
   }
 }
 
-.feg #video-tag > #loading, .feg #video-tag > #error {
+.feg .video-tag > #loading, .feg .video-tag > #error {
   background: #9D7A57;
 }
 
@@ -2835,56 +2835,56 @@ $color-painel: #2c2c2c;*/
   color: #9D7A57;
 }
 
-.feg #video-controls {
+.feg .video-controls {
   background: #9D7A57;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .feg #video-controls {
+  .feg .video-controls {
     background: rgba(157, 122, 87, 0.8);
   }
 }
 
-.feg #video-controls > {
+.feg .video-controls > {
   /* [IE 9] */
 }
 
-.feg #video-controls > [class|=fi], .feg #video-controls > #group-playback > [class|=fi] {
+.feg .video-controls > [class|=fi], .feg .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #D2C6BA;
 }
 
-.feg #video-controls > [class$=disable] {
+.feg .video-controls > [class$=disable] {
   color: #6c543c;
 }
 
-.feg #video-controls > .fi-next.show {
+.feg .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #D2C6BA;
   -moz-box-shadow: 0px 0px 10px 4px #D2C6BA;
   box-shadow: 0px 0px 4px 4px #D2C6BA;
 }
 
-.feg #video-controls > progress {
+.feg .video-controls > progress {
   background-color: #cebaa6;
 }
 
-.feg #video-controls > progress::-webkit-progress-bar {
+.feg .video-controls > progress::-webkit-progress-bar {
   background-color: #cebaa6;
 }
 
-.feg #video-controls > progress::-webkit-progress-value {
+.feg .video-controls > progress::-webkit-progress-value {
   background-color: #4b3a2a;
 }
 
-.feg #video-controls > progress::-moz-progress-bar {
+.feg .video-controls > progress::-moz-progress-bar {
   background-color: #4b3a2a;
 }
 
-.feg #video-controls > .progress {
+.feg .video-controls > .progress {
   background: #cebaa6;
 }
 
-.feg #video-controls > .progress > .progress-bar[value] {
+.feg .video-controls > .progress > .progress-bar[value] {
   background-color: #4b3a2a;
 }
 
@@ -2930,7 +2930,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #D2C6BA;
 }
 
-.feg > #video-top > .top {
+.feg > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: -178px 0px;
   width: 178px;
@@ -2942,28 +2942,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.hyd #video-components {
+.hyd .video-components {
   border: 1px solid #B2D8F0;
 }
 
-.hyd #video-top {
+.hyd .video-top {
   background: #2A9CE6;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .hyd #video-top {
+  .hyd .video-top {
     background: rgba(42, 156, 230, 0.8);
   }
 }
 
-.hyd #video-tag > #loading, .hyd #video-tag > #error {
+.hyd .video-tag > #loading, .hyd .video-tag > #error {
   background: #2A9CE6;
 }
 
@@ -2976,56 +2976,56 @@ $color-painel: #2c2c2c;*/
   color: #2A9CE6;
 }
 
-.hyd #video-controls {
+.hyd .video-controls {
   background: #2A9CE6;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .hyd #video-controls {
+  .hyd .video-controls {
     background: rgba(42, 156, 230, 0.8);
   }
 }
 
-.hyd #video-controls > {
+.hyd .video-controls > {
   /* [IE 9] */
 }
 
-.hyd #video-controls > [class|=fi], .hyd #video-controls > #group-playback > [class|=fi] {
+.hyd .video-controls > [class|=fi], .hyd .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #B2D8F0;
 }
 
-.hyd #video-controls > [class$=disable] {
+.hyd .video-controls > [class$=disable] {
   color: #1572af;
 }
 
-.hyd #video-controls > .fi-next.show {
+.hyd .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #B2D8F0;
   -moz-box-shadow: 0px 0px 10px 4px #B2D8F0;
   box-shadow: 0px 0px 4px 4px #B2D8F0;
 }
 
-.hyd #video-controls > progress {
+.hyd .video-controls > progress {
   background-color: #9cd1f3;
 }
 
-.hyd #video-controls > progress::-webkit-progress-bar {
+.hyd .video-controls > progress::-webkit-progress-bar {
   background-color: #9cd1f3;
 }
 
-.hyd #video-controls > progress::-webkit-progress-value {
+.hyd .video-controls > progress::-webkit-progress-value {
   background-color: #0f5481;
 }
 
-.hyd #video-controls > progress::-moz-progress-bar {
+.hyd .video-controls > progress::-moz-progress-bar {
   background-color: #0f5481;
 }
 
-.hyd #video-controls > .progress {
+.hyd .video-controls > .progress {
   background: #9cd1f3;
 }
 
-.hyd #video-controls > .progress > .progress-bar[value] {
+.hyd .video-controls > .progress > .progress-bar[value] {
   background-color: #0f5481;
 }
 
@@ -3071,7 +3071,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #B2D8F0;
 }
 
-.hyd > #video-top > .top {
+.hyd > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: -178px -42px;
   width: 178px;
@@ -3083,28 +3083,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.iaq #video-components {
+.iaq .video-components {
   border: 1px solid #B2D8F0;
 }
 
-.iaq #video-top {
+.iaq .video-top {
   background: #7EC3F0;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .iaq #video-top {
+  .iaq .video-top {
     background: rgba(126, 195, 240, 0.8);
   }
 }
 
-.iaq #video-tag > #loading, .iaq #video-tag > #error {
+.iaq .video-tag > #loading, .iaq .video-tag > #error {
   background: #7EC3F0;
 }
 
@@ -3117,56 +3117,56 @@ $color-painel: #2c2c2c;*/
   color: #7EC3F0;
 }
 
-.iaq #video-controls {
+.iaq .video-controls {
   background: #7EC3F0;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .iaq #video-controls {
+  .iaq .video-controls {
     background: rgba(126, 195, 240, 0.8);
   }
 }
 
-.iaq #video-controls > {
+.iaq .video-controls > {
   /* [IE 9] */
 }
 
-.iaq #video-controls > [class|=fi], .iaq #video-controls > #group-playback > [class|=fi] {
+.iaq .video-controls > [class|=fi], .iaq .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #B2D8F0;
 }
 
-.iaq #video-controls > [class$=disable] {
+.iaq .video-controls > [class$=disable] {
   color: #39a3e8;
 }
 
-.iaq #video-controls > .fi-next.show {
+.iaq .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #B2D8F0;
   -moz-box-shadow: 0px 0px 10px 4px #B2D8F0;
   box-shadow: 0px 0px 4px 4px #B2D8F0;
 }
 
-.iaq #video-controls > progress {
+.iaq .video-controls > progress {
   background-color: #f0f8fd;
 }
 
-.iaq #video-controls > progress::-webkit-progress-bar {
+.iaq .video-controls > progress::-webkit-progress-bar {
   background-color: #f0f8fd;
 }
 
-.iaq #video-controls > progress::-webkit-progress-value {
+.iaq .video-controls > progress::-webkit-progress-value {
   background-color: #198bd6;
 }
 
-.iaq #video-controls > progress::-moz-progress-bar {
+.iaq .video-controls > progress::-moz-progress-bar {
   background-color: #198bd6;
 }
 
-.iaq #video-controls > .progress {
+.iaq .video-controls > .progress {
   background: #f0f8fd;
 }
 
-.iaq #video-controls > .progress > .progress-bar[value] {
+.iaq .video-controls > .progress > .progress-bar[value] {
   background-color: #198bd6;
 }
 
@@ -3212,7 +3212,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #B2D8F0;
 }
 
-.iaq > #video-top > .top {
+.iaq > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: -178px -84px;
   width: 178px;
@@ -3224,28 +3224,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.ier #video-components {
+.ier .video-components {
   border: 1px solid #F0E4B2;
 }
 
-.ier #video-top {
+.ier .video-top {
   background: #f3dc7f;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .ier #video-top {
+  .ier .video-top {
     background: rgba(243, 220, 127, 0.8);
   }
 }
 
-.ier #video-tag > #loading, .ier #video-tag > #error {
+.ier .video-tag > #loading, .ier .video-tag > #error {
   background: #f3dc7f;
 }
 
@@ -3258,56 +3258,56 @@ $color-painel: #2c2c2c;*/
   color: #f3dc7f;
 }
 
-.ier #video-controls {
+.ier .video-controls {
   background: #f3dc7f;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .ier #video-controls {
+  .ier .video-controls {
     background: rgba(243, 220, 127, 0.8);
   }
 }
 
-.ier #video-controls > {
+.ier .video-controls > {
   /* [IE 9] */
 }
 
-.ier #video-controls > [class|=fi], .ier #video-controls > #group-playback > [class|=fi] {
+.ier .video-controls > [class|=fi], .ier .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #F0E4B2;
 }
 
-.ier #video-controls > [class$=disable] {
+.ier .video-controls > [class$=disable] {
   color: #ecc939;
 }
 
-.ier #video-controls > .fi-next.show {
+.ier .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #F0E4B2;
   -moz-box-shadow: 0px 0px 10px 4px #F0E4B2;
   box-shadow: 0px 0px 4px 4px #F0E4B2;
 }
 
-.ier #video-controls > progress {
+.ier .video-controls > progress {
   background-color: #fefcf4;
 }
 
-.ier #video-controls > progress::-webkit-progress-bar {
+.ier .video-controls > progress::-webkit-progress-bar {
   background-color: #fefcf4;
 }
 
-.ier #video-controls > progress::-webkit-progress-value {
+.ier .video-controls > progress::-webkit-progress-value {
   background-color: #deb615;
 }
 
-.ier #video-controls > progress::-moz-progress-bar {
+.ier .video-controls > progress::-moz-progress-bar {
   background-color: #deb615;
 }
 
-.ier #video-controls > .progress {
+.ier .video-controls > .progress {
   background: #fefcf4;
 }
 
-.ier #video-controls > .progress > .progress-bar[value] {
+.ier .video-controls > .progress > .progress-bar[value] {
   background-color: #deb615;
 }
 
@@ -3353,7 +3353,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #F0E4B2;
 }
 
-.ier > #video-top > .top {
+.ier > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: -178px -126px;
   width: 178px;
@@ -3365,28 +3365,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.lum #video-components {
+.lum .video-components {
   border: 1px solid #F0E4B2;
 }
 
-.lum #video-top {
+.lum .video-top {
   background: #ECC52A;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .lum #video-top {
+  .lum .video-top {
     background: rgba(236, 197, 42, 0.8);
   }
 }
 
-.lum #video-tag > #loading, .lum #video-tag > #error {
+.lum .video-tag > #loading, .lum .video-tag > #error {
   background: #ECC52A;
 }
 
@@ -3399,56 +3399,56 @@ $color-painel: #2c2c2c;*/
   color: #ECC52A;
 }
 
-.lum #video-controls {
+.lum .video-controls {
   background: #ECC52A;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .lum #video-controls {
+  .lum .video-controls {
     background: rgba(236, 197, 42, 0.8);
   }
 }
 
-.lum #video-controls > {
+.lum .video-controls > {
   /* [IE 9] */
 }
 
-.lum #video-controls > [class|=fi], .lum #video-controls > #group-playback > [class|=fi] {
+.lum .video-controls > [class|=fi], .lum .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #F0E4B2;
 }
 
-.lum #video-controls > [class$=disable] {
+.lum .video-controls > [class$=disable] {
   color: #b99711;
 }
 
-.lum #video-controls > .fi-next.show {
+.lum .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #F0E4B2;
   -moz-box-shadow: 0px 0px 10px 4px #F0E4B2;
   box-shadow: 0px 0px 4px 4px #F0E4B2;
 }
 
-.lum #video-controls > progress {
+.lum .video-controls > progress {
   background-color: #f6e59f;
 }
 
-.lum #video-controls > progress::-webkit-progress-bar {
+.lum .video-controls > progress::-webkit-progress-bar {
   background-color: #f6e59f;
 }
 
-.lum #video-controls > progress::-webkit-progress-value {
+.lum .video-controls > progress::-webkit-progress-value {
   background-color: #8a710c;
 }
 
-.lum #video-controls > progress::-moz-progress-bar {
+.lum .video-controls > progress::-moz-progress-bar {
   background-color: #8a710c;
 }
 
-.lum #video-controls > .progress {
+.lum .video-controls > .progress {
   background: #f6e59f;
 }
 
-.lum #video-controls > .progress > .progress-bar[value] {
+.lum .video-controls > .progress > .progress-bar[value] {
   background-color: #8a710c;
 }
 
@@ -3494,7 +3494,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #F0E4B2;
 }
 
-.lum > #video-top > .top {
+.lum > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: 0px 0px;
   width: 178px;
@@ -3506,28 +3506,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.pda #video-components {
+.pda .video-components {
   border: 1px solid #F0E4B2;
 }
 
-.pda #video-top {
+.pda .video-top {
   background: #f3dc7f;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .pda #video-top {
+  .pda .video-top {
     background: rgba(243, 220, 127, 0.8);
   }
 }
 
-.pda #video-tag > #loading, .pda #video-tag > #error {
+.pda .video-tag > #loading, .pda .video-tag > #error {
   background: #f3dc7f;
 }
 
@@ -3540,56 +3540,56 @@ $color-painel: #2c2c2c;*/
   color: #f3dc7f;
 }
 
-.pda #video-controls {
+.pda .video-controls {
   background: #f3dc7f;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .pda #video-controls {
+  .pda .video-controls {
     background: rgba(243, 220, 127, 0.8);
   }
 }
 
-.pda #video-controls > {
+.pda .video-controls > {
   /* [IE 9] */
 }
 
-.pda #video-controls > [class|=fi], .pda #video-controls > #group-playback > [class|=fi] {
+.pda .video-controls > [class|=fi], .pda .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #F0E4B2;
 }
 
-.pda #video-controls > [class$=disable] {
+.pda .video-controls > [class$=disable] {
   color: #ecc939;
 }
 
-.pda #video-controls > .fi-next.show {
+.pda .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #F0E4B2;
   -moz-box-shadow: 0px 0px 10px 4px #F0E4B2;
   box-shadow: 0px 0px 4px 4px #F0E4B2;
 }
 
-.pda #video-controls > progress {
+.pda .video-controls > progress {
   background-color: #fefcf4;
 }
 
-.pda #video-controls > progress::-webkit-progress-bar {
+.pda .video-controls > progress::-webkit-progress-bar {
   background-color: #fefcf4;
 }
 
-.pda #video-controls > progress::-webkit-progress-value {
+.pda .video-controls > progress::-webkit-progress-value {
   background-color: #deb615;
 }
 
-.pda #video-controls > progress::-moz-progress-bar {
+.pda .video-controls > progress::-moz-progress-bar {
   background-color: #deb615;
 }
 
-.pda #video-controls > .progress {
+.pda .video-controls > .progress {
   background: #fefcf4;
 }
 
-.pda #video-controls > .progress > .progress-bar[value] {
+.pda .video-controls > .progress > .progress-bar[value] {
   background-color: #deb615;
 }
 
@@ -3635,7 +3635,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #F0E4B2;
 }
 
-.pda > #video-top > .top {
+.pda > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: -178px -168px;
   width: 178px;
@@ -3647,28 +3647,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.pmf #video-components {
+.pmf .video-components {
   border: 1px solid #D2C6BA;
 }
 
-.pmf #video-top {
+.pmf .video-top {
   background: #9D7A57;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .pmf #video-top {
+  .pmf .video-top {
     background: rgba(157, 122, 87, 0.8);
   }
 }
 
-.pmf #video-tag > #loading, .pmf #video-tag > #error {
+.pmf .video-tag > #loading, .pmf .video-tag > #error {
   background: #9D7A57;
 }
 
@@ -3681,56 +3681,56 @@ $color-painel: #2c2c2c;*/
   color: #9D7A57;
 }
 
-.pmf #video-controls {
+.pmf .video-controls {
   background: #9D7A57;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .pmf #video-controls {
+  .pmf .video-controls {
     background: rgba(157, 122, 87, 0.8);
   }
 }
 
-.pmf #video-controls > {
+.pmf .video-controls > {
   /* [IE 9] */
 }
 
-.pmf #video-controls > [class|=fi], .pmf #video-controls > #group-playback > [class|=fi] {
+.pmf .video-controls > [class|=fi], .pmf .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #D2C6BA;
 }
 
-.pmf #video-controls > [class$=disable] {
+.pmf .video-controls > [class$=disable] {
   color: #6c543c;
 }
 
-.pmf #video-controls > .fi-next.show {
+.pmf .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #D2C6BA;
   -moz-box-shadow: 0px 0px 10px 4px #D2C6BA;
   box-shadow: 0px 0px 4px 4px #D2C6BA;
 }
 
-.pmf #video-controls > progress {
+.pmf .video-controls > progress {
   background-color: #cebaa6;
 }
 
-.pmf #video-controls > progress::-webkit-progress-bar {
+.pmf .video-controls > progress::-webkit-progress-bar {
   background-color: #cebaa6;
 }
 
-.pmf #video-controls > progress::-webkit-progress-value {
+.pmf .video-controls > progress::-webkit-progress-value {
   background-color: #4b3a2a;
 }
 
-.pmf #video-controls > progress::-moz-progress-bar {
+.pmf .video-controls > progress::-moz-progress-bar {
   background-color: #4b3a2a;
 }
 
-.pmf #video-controls > .progress {
+.pmf .video-controls > .progress {
   background: #cebaa6;
 }
 
-.pmf #video-controls > .progress > .progress-bar[value] {
+.pmf .video-controls > .progress > .progress-bar[value] {
   background-color: #4b3a2a;
 }
 
@@ -3776,7 +3776,7 @@ $color-painel: #2c2c2c;*/
   border: 1px solid #D2C6BA;
 }
 
-.pmf > #video-top > .top {
+.pmf > .video-top > .top {
   background-image: url(../images/sprite.png);
   background-position: 0px -210px;
   width: 178px;
@@ -3785,28 +3785,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-.series #video-components {
+.series .video-components {
   border: 1px solid #5D5D5D;
 }
 
-.series #video-top {
+.series .video-top {
   background: #46759D;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .series #video-top {
+  .series .video-top {
     background: rgba(70, 117, 157, 0.8);
   }
 }
 
-.series #video-tag > #loading, .series #video-tag > #error {
+.series .video-tag > #loading, .series .video-tag > #error {
   background: #46759D;
 }
 
@@ -3819,56 +3819,56 @@ $color-painel: #2c2c2c;*/
   color: #46759D;
 }
 
-.series #video-controls {
+.series .video-controls {
   background: #46759D;
 }
 
 @media only screen and (max-device-height: 664px) {
-  .series #video-controls {
+  .series .video-controls {
     background: rgba(70, 117, 157, 0.8);
   }
 }
 
-.series #video-controls > {
+.series .video-controls > {
   /* [IE 9] */
 }
 
-.series #video-controls > [class|=fi], .series #video-controls > #group-playback > [class|=fi] {
+.series .video-controls > [class|=fi], .series .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-.series #video-controls > [class$=disable] {
+.series .video-controls > [class$=disable] {
   color: #2e4e68;
 }
 
-.series #video-controls > .fi-next.show {
+.series .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-.series #video-controls > progress {
+.series .video-controls > progress {
   background-color: #93b4cf;
 }
 
-.series #video-controls > progress::-webkit-progress-bar {
+.series .video-controls > progress::-webkit-progress-bar {
   background-color: #93b4cf;
 }
 
-.series #video-controls > progress::-webkit-progress-value {
+.series .video-controls > progress::-webkit-progress-value {
   background-color: #1f3345;
 }
 
-.series #video-controls > progress::-moz-progress-bar {
+.series .video-controls > progress::-moz-progress-bar {
   background-color: #1f3345;
 }
 
-.series #video-controls > .progress {
+.series .video-controls > .progress {
   background: #93b4cf;
 }
 
-.series #video-controls > .progress > .progress-bar[value] {
+.series .video-controls > .progress > .progress-bar[value] {
   background-color: #1f3345;
 }
 
@@ -3916,28 +3916,28 @@ $color-painel: #2c2c2c;*/
 
 /* PALETA DE CORES PLAYER */
 /* BAR (progress:background-color) */
-/* TOPO DO PLAYER (#video-top:background) */
+/* TOPO DO PLAYER (.video-top:background) */
 /* BORDAS (#video-components:border) */
 /* PAINEL DE CONTROLE (#video-controls:background) */
 /*$color-bar: #828282; // #424242
 $color-top: #383838;
 $color-border: #5D5D5D;
 $color-painel: #2c2c2c;*/
-style #video-components {
+style .video-components {
   border: 1px solid #5D5D5D;
 }
 
-style #video-top {
+style .video-top {
   background: #383838;
 }
 
 @media only screen and (max-device-height: 664px) {
-  style #video-top {
+  style .video-top {
     background: rgba(56, 56, 56, 0.8);
   }
 }
 
-style #video-tag > #loading, style #video-tag > #error {
+style .video-tag > #loading, style .video-tag > #error {
   background: #2c2c2c;
 }
 
@@ -3950,56 +3950,56 @@ style .bt-close > .fi-x {
   color: #383838;
 }
 
-style #video-controls {
+style .video-controls {
   background: #2c2c2c;
 }
 
 @media only screen and (max-device-height: 664px) {
-  style #video-controls {
+  style .video-controls {
     background: rgba(44, 44, 44, 0.8);
   }
 }
 
-style #video-controls > {
+style .video-controls > {
   /* [IE 9] */
 }
 
-style #video-controls > [class|=fi], style #video-controls > #group-playback > [class|=fi] {
+style .video-controls > [class|=fi], style .video-controls > #group-playback > [class|=fi] {
   border: 1px solid #5D5D5D;
 }
 
-style #video-controls > [class$=disable] {
+style .video-controls > [class$=disable] {
   color: #060606;
 }
 
-style #video-controls > .fi-next.show {
+style .video-controls > .fi-next.show {
   border-radius: 50px;
   -webkit-box-shadow: 0px 0px 13px 6px #5D5D5D;
   -moz-box-shadow: 0px 0px 10px 4px #5D5D5D;
   box-shadow: 0px 0px 4px 4px #5D5D5D;
 }
 
-style #video-controls > progress {
+style .video-controls > progress {
   background-color: #6c6c6c;
 }
 
-style #video-controls > progress::-webkit-progress-bar {
+style .video-controls > progress::-webkit-progress-bar {
   background-color: #6c6c6c;
 }
 
-style #video-controls > progress::-webkit-progress-value {
+style .video-controls > progress::-webkit-progress-value {
   background-color: black;
 }
 
-style #video-controls > progress::-moz-progress-bar {
+style .video-controls > progress::-moz-progress-bar {
   background-color: black;
 }
 
-style #video-controls > .progress {
+style .video-controls > .progress {
   background: #6c6c6c;
 }
 
-style #video-controls > .progress > .progress-bar[value] {
+style .video-controls > .progress > .progress-bar[value] {
   background-color: black;
 }
 
