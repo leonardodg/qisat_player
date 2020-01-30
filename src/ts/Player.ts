@@ -1372,26 +1372,28 @@ export default class Player {
 			}
 
 			if (src == undefined) {
-				if (nivel + pos) {
-					slides = this.listPlay['aula'][this.options.aula]['item'][unidade]['subItem'][nivel + pos];
+				var item = this.listPlay['aula'][this.options.aula]['item'];
+				slides = undefined;
+				if (nivel + pos > -1 && item[unidade]['subItem'][nivel + pos] != undefined) {
+					slides = item[unidade]['subItem'][nivel + pos];
 					if (alterVideo) {
 						this.carregarGeraLog(unidade + '.' + (nivel + pos));
 						this.options.unid = unidade + '.' + (nivel + pos);
 					}
-				} else {
-					slides = this.listPlay['aula'][this.options.aula]['item'][unidade];
+				} else if (unidade + pos > -1 && item[unidade + pos] != undefined) {
+					slides = item[unidade + pos];
+					if (alterVideo) {
+						this.carregarGeraLog((unidade + pos) + '.' + nivel);
+						this.options.unid = (unidade + pos).toString();
+					}
+				} else if (pos == 0) {
+					slides = item[unidade];
 					if (alterVideo) {
 						this.carregarGeraLog(unidade.toString());
 						this.options.unid = unidade.toString();
 					}
 				}
-				if (slides == undefined) {
-					slides = this.listPlay['aula'][this.options.aula]['item'][unidade + pos];
-					if (alterVideo) {
-						this.carregarGeraLog((unidade + pos).toString());
-						this.options.unid = (unidade + pos).toString();
-					}
-				}
+
 				if (slides != undefined) {
 					src = slides['slides'];
 					if (alterVideo)
