@@ -77,7 +77,7 @@ export default class Player {
 			startDefa: '/lib/QiSatPlayer3/backend/getUrl.php', // Gerar Link do video
 			defa: '/lib/QiSatPlayer3/backend/defavid.php', // Default Filename defavid.php in getUrl.php
 			local: '/lib/QiSatPlayer3/dist/samples/files/',
-			images: '/lib/QiSatPlayer3/dist/images'
+			images: '/lib/QiSatPlayer3/dist/images/'
 			
 			//  url.local: 
 			//		 ATENÇÃO: teste basic use path absoluto de onde fica os arquivos,
@@ -160,7 +160,7 @@ export default class Player {
 		this.buttonSvg = "";
 		xhReq.setContentType('text/plain');
 		xhReq.setResponseType('text');
-		xhReq.get(this.options.url.images + '/button.svg').success(data => {
+		xhReq.get(this.options.url.images + 'button.svg').success(data => {
 			this._self.buttonSvg = data;
 		});
 	}
@@ -1372,28 +1372,26 @@ export default class Player {
 			}
 
 			if (src == undefined) {
-				var item = this.listPlay['aula'][this.options.aula]['item'];
-				slides = undefined;
-				if (nivel + pos > -1 && item[unidade]['subItem'][nivel + pos] != undefined) {
-					slides = item[unidade]['subItem'][nivel + pos];
+				if (nivel + pos) {
+					slides = this.listPlay['aula'][this.options.aula]['item'][unidade]['subItem'][nivel + pos];
 					if (alterVideo) {
 						this.carregarGeraLog(unidade + '.' + (nivel + pos));
 						this.options.unid = unidade + '.' + (nivel + pos);
 					}
-				} else if (unidade + pos > -1 && item[unidade + pos] != undefined) {
-					slides = item[unidade + pos];
-					if (alterVideo) {
-						this.carregarGeraLog((unidade + pos) + '.' + nivel);
-						this.options.unid = (unidade + pos).toString();
-					}
-				} else if (pos == 0) {
-					slides = item[unidade];
+				} else {
+					slides = this.listPlay['aula'][this.options.aula]['item'][unidade];
 					if (alterVideo) {
 						this.carregarGeraLog(unidade.toString());
 						this.options.unid = unidade.toString();
 					}
 				}
-
+				if (slides == undefined) {
+					slides = this.listPlay['aula'][this.options.aula]['item'][unidade + pos];
+					if (alterVideo) {
+						this.carregarGeraLog((unidade + pos).toString());
+						this.options.unid = (unidade + pos).toString();
+					}
+				}
 				if (slides != undefined) {
 					src = slides['slides'];
 					if (alterVideo)
