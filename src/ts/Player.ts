@@ -873,13 +873,13 @@ export default class Player {
 
 	carregarGeraLog(unid: string) {
 		let idN = window.location.href.indexOf("?") !== -1 ? "&" : "?";
-		let nivel = this.options.unid.indexOf(".") > 0 ? this.options.unid.substring(this.options.unid.indexOf(".")) : '0';
+		let nivel = this.options.unid.indexOf(".") > 0 ? this.options.unid.substring(this.options.unid.indexOf(".")+1) : '0';
 		let payload: String = "conteudoAnterior=un" +
 			(this.options.unid.indexOf(".") > 0 ? this.options.unid.replace(".", "_") : this.options.unid + "_0") +
 			".html&conteudo=un" + (unid.indexOf(".") > 0 ? unid.replace(".", "_") : unid + "_0") +
 			".html&url=" + window.location.href + idN +
 			'idN=' + this.options.aula +
-			'&unidade=' + this.options.unid +
+			'&unidade=' + (this.options.unid.indexOf(".") == -1 ? this.options.unid : this.options.unid.substring(0,this.options.unid.indexOf("."))) +
 			'&nivel=' + nivel +
 			'&aula=Aula%20' + this.options.aula;
 
@@ -996,7 +996,9 @@ export default class Player {
 		};
 		for (let i = 0; i < this.listPlay['aula'][this.options.aula]['item'].length; i++) {
 			let unidade = this.listPlay['aula'][this.options.aula]['item'][i];
-
+			if(unidade == undefined){
+				continue;
+			}
 			let liView = document.createElement("div");
 			liView.classList.add(CONFIG.CLASS_ACTION);
 			liView.classList.add(CONFIG.CLASS_VIEW);
@@ -1372,11 +1374,18 @@ export default class Player {
 			}
 
 			if (src == undefined) {
-				if (nivel + pos) {
-					slides = this.listPlay['aula'][this.options.aula]['item'][unidade]['subItem'][nivel + pos];
+				var item = this.listPlay['aula'][this.options.aula]['item'];
+				if (pos && item[unidade]['subItem'][nivel + pos]) {
+					slides = item[unidade]['subItem'][nivel + pos];
 					if (alterVideo) {
 						this.carregarGeraLog(unidade + '.' + (nivel + pos));
 						this.options.unid = unidade + '.' + (nivel + pos);
+					}
+				} else if (pos && item[unidade + pos]) {
+					slides = item[unidade + pos];
+					if (alterVideo) {
+						this.carregarGeraLog((unidade + pos).toString());
+						this.options.unid = (unidade + pos).toString();
 					}
 				} else {
 					slides = this.listPlay['aula'][this.options.aula]['item'][unidade];
@@ -1385,13 +1394,7 @@ export default class Player {
 						this.options.unid = unidade.toString();
 					}
 				}
-				if (slides == undefined) {
-					slides = this.listPlay['aula'][this.options.aula]['item'][unidade + pos];
-					if (alterVideo) {
-						this.carregarGeraLog((unidade + pos).toString());
-						this.options.unid = (unidade + pos).toString();
-					}
-				}
+				
 				if (slides != undefined) {
 					src = slides['slides'];
 					if (alterVideo)
