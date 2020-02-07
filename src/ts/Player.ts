@@ -432,6 +432,7 @@ export default class Player {
 
 		let video = <HTMLVideoElement>document.getElementById(CONFIG.ID_VIDEO);
 		video.classList.add(CONFIG.CLASS_HIDE);
+		video.innerHTML = "";
 		video.load();
 
 		let btPlay = <HTMLElement>document.getElementById(CONFIG.ID_PLAY);
