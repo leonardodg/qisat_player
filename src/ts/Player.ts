@@ -193,35 +193,35 @@ export default class Player {
 		canvas.width = _self.options.canvas.width;
 		canvas.height = _self.options.canvas.height;
 
-		let altura = videoTop.clientHeight + _self.options.video.height + videoControls.clientHeight;
-		if (fullScreen && fullScreen.checked || 
-		(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && altura > window.outerHeight)){
+		let altura = videoTop.clientHeight + _self.options.video.height + videoControls.clientHeight,
+		mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+		if ((fullScreen && fullScreen.checked) || (mobile && altura > window.outerHeight)){
 			if(fullScreen && fullScreen.checked)
 				videoPlayer.classList.add(CONFIG.CLASS_FULLSCREEN);
 
 			let proporcaoVideo = _self.options.video.width / _self.options.video.height;
 			let proporcaoDisplay = window.innerWidth / (window.innerHeight - videoTop.clientHeight - videoControls.clientHeight);
-			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			if( mobile ) {
 				if(altura > window.innerHeight){
 					proporcaoDisplay = window.outerWidth / (window.outerHeight - videoTop.clientHeight - videoControls.clientHeight);
 				}
 			}
-			
+			console.log(proporcaoDisplay >= proporcaoVideo);
 			if(proporcaoDisplay >= proporcaoVideo){
-				if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && altura > window.innerHeight) {
+				if( mobile && altura > window.innerHeight) {
 					video.height = canvas.height = window.outerHeight;
 				} else {
 					video.height = canvas.height = window.innerHeight - videoTop.clientHeight - videoControls.clientHeight;
 				}
 				videoTag.style['height'] = video.height + "px";
-				//let width = video.height * 16 / 9;
 				let width = video.height * proporcaoVideo;
 				video.width = canvas.width = width;
 				videoPlayer.style['width'] = (width < video.clientWidth ? video.clientWidth: width) + "px";
 				videoTop.style['width'] = videoTag.style['width'] = 
 				videoControls.style['width'] = width + "px";
 			}else{
-				if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && altura > window.innerHeight) {
+				if( mobile && altura > window.innerHeight) {
 					if(window.outerWidth){
 						video.width = canvas.width = window.outerWidth > _self.options.video.width ? _self.options.video.width : window.outerWidth;
 					}else{
@@ -249,7 +249,7 @@ export default class Player {
 			
 			menuAction.style['marginTop'] = (video.height / 2 - menuAction.clientHeight) + "px";
 			menuList.style['maxHeight'] = menuList.style['height'] = (video.clientHeight + 1)+"px";
-			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+			if( mobile ) {
 				menuList.style['overflowX'] = "hidden";
 				menuList.style['overflowY'] = "auto";
 				if(proporcaoDisplay >= proporcaoVideo && altura > window.innerHeight){
@@ -258,11 +258,13 @@ export default class Player {
 				}
 			}
 
+			videoPlayer.style['margin'] = "0 " + ((window.innerWidth - videoTag.clientWidth) / 2) + "px";
+
 		} else {
 			videoPlayer.classList.remove(CONFIG.CLASS_FULLSCREEN);
 		}
 
-		if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		if( mobile ) {
 			videoTop.style['minWidth'] = videoTag.style['minWidth'] = videoControls.style['minWidth'] = 
 			video.style['minWidth'] = canvas.style['minWidth']  = "0px";
 
@@ -271,8 +273,7 @@ export default class Player {
 		}
 
 		let graph = document.getElementById(CONFIG.ID_GRAPH);
-		if (graph && (fullScreen && fullScreen.checked || 
-		(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)))){
+		if ( graph && ((fullScreen && fullScreen.checked) || mobile )){
 			graph.style['left'] = (video.width/2-30) + "px";
 			graph.style['top'] = (video.height/2-60) + "px";
 		}
@@ -610,6 +611,7 @@ export default class Player {
 		let canvas = document.createElement("canvas");
 		canvas.id = CONFIG.ID_CANVAS;
 		var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+		
 		if (isMobile) {
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;
@@ -1450,7 +1452,7 @@ export default class Player {
 				//context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
 				let left = _self.options.canvas.width - _self.options.canvas.imgWidth,
 					top = _self.options.canvas.height - _self.options.canvas.imgHeight;
-				context.drawImage(img, left, top, canvas.clientWidth - left, canvas.clientHeight);
+				context.drawImage(img, left, top, canvas.width, canvas.height);
 			} else {//if (video.played.length) {
 				/**
 				 * Barra diagonal com a chave
