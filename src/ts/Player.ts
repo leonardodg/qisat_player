@@ -207,7 +207,7 @@ export default class Player {
 					proporcaoDisplay = window.outerWidth / (window.outerHeight - videoTop.clientHeight - videoControls.clientHeight);
 				}
 			}
-			console.log(proporcaoDisplay >= proporcaoVideo);
+			
 			if(proporcaoDisplay >= proporcaoVideo){
 				if( mobile && altura > window.innerHeight) {
 					video.height = canvas.height = window.outerHeight;
@@ -258,11 +258,12 @@ export default class Player {
 				}
 			}
 
-			videoPlayer.style['margin'] = "0 " + ((window.innerWidth - videoTag.clientWidth) / 2) + "px";
-
 		} else {
 			videoPlayer.classList.remove(CONFIG.CLASS_FULLSCREEN);
 		}
+
+		videoPlayer.style['margin'] = "0 " + ((window.innerWidth - videoTag.clientWidth) / 2) + "px";
+		video.style['margin'] = canvas.style['margin'] = "0 " + ((videoTag.clientWidth - canvas.clientWidth) / 2) + "px";
 
 		if( mobile ) {
 			videoTop.style['minWidth'] = videoTag.style['minWidth'] = videoControls.style['minWidth'] = 
@@ -1449,10 +1450,10 @@ export default class Player {
 
 			context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 			if (video.classList.contains(CONFIG.CLASS_HIDE)) {
-				//context.drawImage(img, 75, 0, _self.options.canvas.imgWidth, _self.options.canvas.imgHeight);
-				let left = _self.options.canvas.width - _self.options.canvas.imgWidth,
+				/*let left = _self.options.canvas.width - _self.options.canvas.imgWidth,
 					top = _self.options.canvas.height - _self.options.canvas.imgHeight;
-				context.drawImage(img, left, top, canvas.width, canvas.height);
+				context.drawImage(img, left, top, _self.options.canvas.width, _self.options.canvas.height);*/
+				context.drawImage(img, 0, 0, canvas.width, canvas.height);
 			} else {//if (video.played.length) {
 				/**
 				 * Barra diagonal com a chave
