@@ -724,6 +724,7 @@ export default class Player {
 				video.pause();
 			} else {
 				if (this.classList.contains(CONFIG.CLASS_REFRESH)) {
+					_self.setSource();
 					video.currentTime = 0;
 					_self.lightBoxClear();
 				}
