@@ -577,9 +577,9 @@ body {
 	#subVideos-List {
 		@include font-main;
 		margin: 13px 0 0 15px;
-		padding: 0 0 0 6px;
+		padding: 0 6px;
 		height: 18px;
-		width: 82px;
+		/*width: 82px;*/
 		float: left;
 		display: block;
 		background: transparent;
@@ -600,11 +600,11 @@ body {
 	
 	#video-time {
 		@include font-main;
-		padding: 0 0 0 8px;
+		padding: 0 8px;
 		margin-top: 13px;
 		margin-left: 10px;
 		height: 18px;
-		width: 84px;
+		/*width: 84px;*/
 		background: transparent;
 		border-radius: 50px;
 		border: 1px solid $color-border;
