@@ -1451,10 +1451,18 @@ export default class Player {
 
 			context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 			if (video.classList.contains(CONFIG.CLASS_HIDE)) {
-				/*let left = _self.options.canvas.width - _self.options.canvas.imgWidth,
-					top = _self.options.canvas.height - _self.options.canvas.imgHeight;
-				context.drawImage(img, left, top, _self.options.canvas.width, _self.options.canvas.height);*/
-				context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+				if(canvas.width / img.width > canvas.height / img.height){
+					img.width *= canvas.height / img.height;
+					img.height = canvas.height;
+				}else{
+					img.height *= canvas.width / img.width;
+					img.width = canvas.width;
+				}
+
+				let left = canvas.width - img.width,
+					top = canvas.height - img.height;
+				context.drawImage(img, left/2, top/2, img.width, img.height);
 			} else {//if (video.played.length) {
 				/**
 				 * Barra diagonal com a chave
