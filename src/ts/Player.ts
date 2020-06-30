@@ -479,21 +479,30 @@ export default class Player {
 						lightbox.style[posIndex[2]] = posVal[2];
 						lightbox.style[posIndex[3]] = posVal[3];
 
+						if(element2['img'][0]['title'] != undefined){
+							let tooltip = document.createElement("span");
+							tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+							tooltip.textContent = element2['img'][0]['title'];
+							lightbox.appendChild(tooltip);
+						}
+
 						let count = 0;
 						element2['img'].forEach(element3 => {
-							let aLightbox = document.createElement("a");
-							aLightbox.href = _self.options.url.path + element3['src'];
-							aLightbox.dataset['lightbox'] = element + '-' + count++;
+							if(element3['src'] != undefined){
+								let aLightbox = document.createElement("a");
+								aLightbox.href = _self.options.url.path + element3['src'];
+								aLightbox.dataset['lightbox'] = element + '-' + count++;
 
-							let imgLightbox = document.createElement("img");
-							imgLightbox.src = '#';
-							for (let index = 0; index < posIndex.length; index++) {
-								if (posIndex[index] == 'width' || posIndex[index] == 'height')
-									imgLightbox.style[posIndex[index]] = posVal[index];
+								let imgLightbox = document.createElement("img");
+								imgLightbox.src = '#';
+								for (let index = 0; index < posIndex.length; index++) {
+									if (posIndex[index] == 'width' || posIndex[index] == 'height')
+										imgLightbox.style[posIndex[index]] = posVal[index];
+								}
+								imgLightbox.style['opacity'] = '0';
+								aLightbox.appendChild(imgLightbox);
+								lightbox.appendChild(aLightbox);
 							}
-							imgLightbox.style['opacity'] = '0';
-							aLightbox.appendChild(imgLightbox);
-							lightbox.appendChild(aLightbox);
 						});
 
 						videoTag.insertBefore(lightbox, btClose.nextSibling);
