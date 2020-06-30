@@ -78,6 +78,7 @@ export const CLASS_BNT_CLASS = "btnClass";
 export const CLASS_BUTTON = "buttonSVG";
 export const CLASS_FULLSCREEN = "fullScreen";
 export const ID_FULLSCREEN = "fullScreen";
+export const CLASS_TOOLTIP = "tooltiptext";
 
 export const VIDEOTYPES = {
     'mp4': 'video/mp4',

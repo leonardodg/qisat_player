@@ -442,6 +442,8 @@ export default class Player {
 		btPlay.classList.remove(CONFIG.CLASS_PAUSE);
 		btPlay.classList.add(CONFIG.CLASS_REFRESH);
 
+		btPlay.getElementsByClassName(CONFIG.CLASS_TOOLTIP)[0].textContent = "Rever";
+
 		let btClose = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_BT_CLOSE)[0];
 		btClose.classList.add(CONFIG.CLASS_HIDE);
 
@@ -693,6 +695,12 @@ export default class Player {
 				_self.setSource(false);
 		});
 		this.btEstilo(btPrevious);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Voltar";
+		btPrevious.appendChild(tooltip);
+
 		return btPrevious;
 	}
 
@@ -721,6 +729,9 @@ export default class Player {
 			if (this.classList.contains(CONFIG.CLASS_PAUSE)) {
 				this.classList.remove(CONFIG.CLASS_PAUSE);
 				this.classList.add(CONFIG.CLASS_PLAY);
+
+				this.getElementsByClassName(CONFIG.CLASS_TOOLTIP)[0].textContent = "Continuar";
+
 				video.pause();
 			} else {
 				if (this.classList.contains(CONFIG.CLASS_REFRESH)) {
@@ -735,6 +746,8 @@ export default class Player {
 					this.classList.remove(CONFIG.CLASS_REFRESH);
 					this.classList.remove(CONFIG.CLASS_PLAY);
 					this.classList.add(CONFIG.CLASS_PAUSE);
+
+					this.getElementsByClassName(CONFIG.CLASS_TOOLTIP)[0].textContent = "Pausar";
 				}
 				let subMenu = <HTMLDivElement>document.getElementById(CONFIG.ID_SUBMENU);
 				subMenu.classList.add(CONFIG.CLASS_HIDE);
@@ -745,6 +758,12 @@ export default class Player {
 		};
 		btPlay.addEventListener('click', btPlay.click);
 		this.btEstilo(btPlay);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Iniciar";
+		btPlay.appendChild(tooltip);
+
 		return btPlay;
 	}
 
@@ -758,6 +777,12 @@ export default class Player {
 				_self.setSource(true);
 		});
 		this.btEstilo(btNext);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Próximo";
+		btNext.appendChild(tooltip);
+
 		return btNext;
 	}
 
@@ -776,6 +801,12 @@ export default class Player {
 			}
 		});
 		this.btEstilo(btVolume);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Volume";
+		btVolume.appendChild(tooltip);
+
 		return btVolume;
 	}
 
@@ -799,6 +830,7 @@ export default class Player {
 				volume.classList.add(CONFIG.CLASS_VOLUME_NONE);
 			}
 		});
+
 		return btVolumeBar;
 	}
 
