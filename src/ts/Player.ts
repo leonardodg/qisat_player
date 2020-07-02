@@ -491,7 +491,7 @@ export default class Player {
 							if(element3['src'] != undefined){
 								let aLightbox = document.createElement("a");
 								aLightbox.href = _self.options.url.path + element3['src'];
-								aLightbox.dataset['lightbox'] = element + '-' + count++;
+								aLightbox.dataset['lightbox'] = element2['group'] != undefined ? element2['group'] : element + '-' + count++;
 
 								let imgLightbox = document.createElement("img");
 								imgLightbox.src = '#';
