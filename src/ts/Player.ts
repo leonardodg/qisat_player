@@ -187,6 +187,8 @@ export default class Player {
 		videoControls.style['width'] = null;
 		videoPlayer.style['width'] = null;
 		menuAction.style['marginTop'] = null;
+
+		if(canvas.dataset['height'] == undefined) canvas.dataset['height'] = canvas.clientHeight.toString(); // Armazenando altura original do canvas
 		
 		video.width = _self.options.video.width;
 		video.height = _self.options.video.height;
@@ -261,6 +263,26 @@ export default class Player {
 		} else {
 			videoPlayer.classList.remove(CONFIG.CLASS_FULLSCREEN);
 		}
+
+
+		// Calculando proporção de aumento/diminuição do canvas para redimensionar proporcionalmente as imagens pós video
+		let proporcaoHeight = canvas.clientHeight / parseInt(canvas.dataset['height']); 
+		if(canvas.clientHeight < parseInt(canvas.style.minHeight.replace('px',''))){
+			proporcaoHeight = parseInt(canvas.style.minHeight.replace('px','')) / parseInt(canvas.dataset['height']); 
+		}
+		let btnClass = document.getElementsByClassName(CONFIG.CLASS_LIGHTBOX+" "+CONFIG.CLASS_BNT_CLASS) as HTMLCollectionOf<HTMLDivElement>;
+		Array.from(btnClass).forEach((el) => {
+			if(el.dataset['top']    == undefined) el.dataset['top']    = el.style.top.replace('px','');
+			if(el.dataset['left']   == undefined) el.dataset['left']   = el.style.left.replace('px','');
+			if(el.dataset['width']  == undefined) el.dataset['width']  = el.style.width.replace('px','');
+			if(el.dataset['height'] == undefined) el.dataset['height'] = el.style.height.replace('px','');
+
+			el.style.top    = (parseInt(el.dataset['top'])    * proporcaoHeight) + 'px'; 
+			el.style.left   = (parseInt(el.dataset['left'])   * proporcaoHeight) + 'px';
+			el.style.width  = (parseInt(el.dataset['width'])  * proporcaoHeight) + 'px';
+			el.style.height = (parseInt(el.dataset['height']) * proporcaoHeight) + 'px';
+		});
+
 
 		videoPlayer.style['margin'] = "0 " + ((window.innerWidth - videoTag.clientWidth) / 2) + "px";
 		video.style['margin'] = canvas.style['margin'] = "0 " + ((videoTag.clientWidth - canvas.clientWidth) / 2) + "px";
@@ -553,6 +575,7 @@ export default class Player {
 					});
 			});
 		}
+		_self.resize(_self);
 	}
 
 	setBtClose() {
