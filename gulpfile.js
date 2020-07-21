@@ -121,8 +121,8 @@ function buildJs() {
                 console.log(error.message);
                 this.emit('end');
             })
-            .pipe(streamify(uglify()))
             .pipe(source("index.js"))
+            .pipe(streamify(uglify()))
             .pipe(gulp.dest(config.path.build.local));
 
     }else{
@@ -156,7 +156,7 @@ gulp.task('build-images', function () {
 });
 
 /* Function Default */
-return gulp.task('build', gulp.series('build-fonts', 'build-sprite', 'build-styles', 'build-images', 'build-js'));
+gulp.task('build', gulp.series('build-fonts', 'build-sprite', 'build-styles', 'build-images', 'build-js'));
 gulp.task('default', gulp.series('build'), function () {
     watch([config.path.src.sass + '**/*.scss', config.path.src.ts + '**/*.ts'],
         gulp.series('build-styles', 'build-js'));
