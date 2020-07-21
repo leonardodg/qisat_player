@@ -1,6 +1,13 @@
 .sass-cache
 .vscode
+package-lock.json
 node_modules/
 dist/samples/
 dist/index.html
+dist/
+dist/*
+dist/**
+dist/*.*
+dist/**/*
+dist/**/*.*
 index.html

@@ -15,6 +15,8 @@ var babelify = require('babelify');
 var source = require("vinyl-source-stream");
 var tsify = require("tsify");
 var watchify = require("watchify");
+var uglify = require('gulp-uglify');
+var streamify = require('gulp-streamify');
 
 // Config para rodar desativar validação de certificado ao roda gulp localhost
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
@@ -110,7 +112,21 @@ var watchedBrowserify =
     );
 
 function buildJs() {
-    return watchedBrowserify
+
+    if (is_production()){
+
+        return watchedBrowserify
+            .bundle()
+            .on('error', function (error) {
+                console.log(error.message);
+                this.emit('end');
+            })
+            .pipe(streamify(uglify()))
+            .pipe(source("index.js"))
+            .pipe(gulp.dest(config.path.build.local));
+
+    }else{
+        return watchedBrowserify
         .bundle()
         .on('error', function (error) {
             console.log(error.message);
@@ -118,6 +134,7 @@ function buildJs() {
         })
         .pipe(source("index.js"))
         .pipe(gulp.dest(config.path.build.local));
+    }
 }
 gulp.task('build-js', buildJs);
 watchedBrowserify.on("update", buildJs);
@@ -139,7 +156,7 @@ gulp.task('build-images', function () {
 });
 
 /* Function Default */
-gulp.task('build', gulp.series('build-fonts', 'build-sprite', 'build-styles', 'build-images', 'build-js'));
+return gulp.task('build', gulp.series('build-fonts', 'build-sprite', 'build-styles', 'build-images', 'build-js'));
 gulp.task('default', gulp.series('build'), function () {
     watch([config.path.src.sass + '**/*.scss', config.path.src.ts + '**/*.ts'],
         gulp.series('build-styles', 'build-js'));
