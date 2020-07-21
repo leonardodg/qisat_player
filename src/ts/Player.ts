@@ -187,6 +187,8 @@ export default class Player {
 		videoControls.style['width'] = null;
 		videoPlayer.style['width'] = null;
 		menuAction.style['marginTop'] = null;
+
+		if(canvas.dataset['height'] == undefined) canvas.dataset['height'] = canvas.clientHeight.toString(); // Armazenando altura original do canvas
 		
 		video.width = _self.options.video.width;
 		video.height = _self.options.video.height;
@@ -261,6 +263,26 @@ export default class Player {
 		} else {
 			videoPlayer.classList.remove(CONFIG.CLASS_FULLSCREEN);
 		}
+
+
+		// Calculando proporção de aumento/diminuição do canvas para redimensionar proporcionalmente as imagens pós video
+		let proporcaoHeight = canvas.clientHeight / parseInt(canvas.dataset['height']); 
+		if(canvas.clientHeight < parseInt(canvas.style.minHeight.replace('px',''))){
+			proporcaoHeight = parseInt(canvas.style.minHeight.replace('px','')) / parseInt(canvas.dataset['height']); 
+		}
+		let btnClass = document.getElementsByClassName(CONFIG.CLASS_LIGHTBOX+" "+CONFIG.CLASS_BNT_CLASS) as HTMLCollectionOf<HTMLDivElement>;
+		Array.from(btnClass).forEach((el) => {
+			if(el.dataset['top']    == undefined) el.dataset['top']    = el.style.top.replace('px','');
+			if(el.dataset['left']   == undefined) el.dataset['left']   = el.style.left.replace('px','');
+			if(el.dataset['width']  == undefined) el.dataset['width']  = el.style.width.replace('px','');
+			if(el.dataset['height'] == undefined) el.dataset['height'] = el.style.height.replace('px','');
+
+			el.style.top    = (parseInt(el.dataset['top'])    * proporcaoHeight) + 'px'; 
+			el.style.left   = (parseInt(el.dataset['left'])   * proporcaoHeight) + 'px';
+			el.style.width  = (parseInt(el.dataset['width'])  * proporcaoHeight) + 'px';
+			el.style.height = (parseInt(el.dataset['height']) * proporcaoHeight) + 'px';
+		});
+
 
 		videoPlayer.style['margin'] = "0 " + ((window.innerWidth - videoTag.clientWidth) / 2) + "px";
 		video.style['margin'] = canvas.style['margin'] = "0 " + ((videoTag.clientWidth - canvas.clientWidth) / 2) + "px";
@@ -442,6 +464,8 @@ export default class Player {
 		btPlay.classList.remove(CONFIG.CLASS_PAUSE);
 		btPlay.classList.add(CONFIG.CLASS_REFRESH);
 
+		btPlay.getElementsByClassName(CONFIG.CLASS_TOOLTIP)[0].textContent = "Rever";
+
 		let btClose = <HTMLDivElement>document.getElementsByClassName(CONFIG.CLASS_BT_CLOSE)[0];
 		btClose.classList.add(CONFIG.CLASS_HIDE);
 
@@ -477,21 +501,30 @@ export default class Player {
 						lightbox.style[posIndex[2]] = posVal[2];
 						lightbox.style[posIndex[3]] = posVal[3];
 
+						if(element2['img'][0]['title'] != undefined){
+							let tooltip = document.createElement("span");
+							tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+							tooltip.textContent = element2['img'][0]['title'];
+							lightbox.appendChild(tooltip);
+						}
+
 						let count = 0;
 						element2['img'].forEach(element3 => {
-							let aLightbox = document.createElement("a");
-							aLightbox.href = _self.options.url.path + element3['src'];
-							aLightbox.dataset['lightbox'] = element + '-' + count++;
+							if(element3['src'] != undefined){
+								let aLightbox = document.createElement("a");
+								aLightbox.href = _self.options.url.path + element3['src'];
+								aLightbox.dataset['lightbox'] = element2['group'] != undefined ? element2['group'] : element + '-' + count++;
 
-							let imgLightbox = document.createElement("img");
-							imgLightbox.src = '#';
-							for (let index = 0; index < posIndex.length; index++) {
-								if (posIndex[index] == 'width' || posIndex[index] == 'height')
-									imgLightbox.style[posIndex[index]] = posVal[index];
+								let imgLightbox = document.createElement("img");
+								imgLightbox.src = '#';
+								for (let index = 0; index < posIndex.length; index++) {
+									if (posIndex[index] == 'width' || posIndex[index] == 'height')
+										imgLightbox.style[posIndex[index]] = posVal[index];
+								}
+								imgLightbox.style['opacity'] = '0';
+								aLightbox.appendChild(imgLightbox);
+								lightbox.appendChild(aLightbox);
 							}
-							imgLightbox.style['opacity'] = '0';
-							aLightbox.appendChild(imgLightbox);
-							lightbox.appendChild(aLightbox);
 						});
 
 						videoTag.insertBefore(lightbox, btClose.nextSibling);
@@ -542,6 +575,7 @@ export default class Player {
 					});
 			});
 		}
+		_self.resize(_self);
 	}
 
 	setBtClose() {
@@ -693,6 +727,12 @@ export default class Player {
 				_self.setSource(false);
 		});
 		this.btEstilo(btPrevious);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Voltar";
+		btPrevious.appendChild(tooltip);
+
 		return btPrevious;
 	}
 
@@ -721,6 +761,9 @@ export default class Player {
 			if (this.classList.contains(CONFIG.CLASS_PAUSE)) {
 				this.classList.remove(CONFIG.CLASS_PAUSE);
 				this.classList.add(CONFIG.CLASS_PLAY);
+
+				this.getElementsByClassName(CONFIG.CLASS_TOOLTIP)[0].textContent = "Continuar";
+
 				video.pause();
 			} else {
 				if (this.classList.contains(CONFIG.CLASS_REFRESH)) {
@@ -735,6 +778,8 @@ export default class Player {
 					this.classList.remove(CONFIG.CLASS_REFRESH);
 					this.classList.remove(CONFIG.CLASS_PLAY);
 					this.classList.add(CONFIG.CLASS_PAUSE);
+
+					this.getElementsByClassName(CONFIG.CLASS_TOOLTIP)[0].textContent = "Pausar";
 				}
 				let subMenu = <HTMLDivElement>document.getElementById(CONFIG.ID_SUBMENU);
 				subMenu.classList.add(CONFIG.CLASS_HIDE);
@@ -745,6 +790,12 @@ export default class Player {
 		};
 		btPlay.addEventListener('click', btPlay.click);
 		this.btEstilo(btPlay);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Iniciar";
+		btPlay.appendChild(tooltip);
+
 		return btPlay;
 	}
 
@@ -758,6 +809,12 @@ export default class Player {
 				_self.setSource(true);
 		});
 		this.btEstilo(btNext);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Próximo";
+		btNext.appendChild(tooltip);
+
 		return btNext;
 	}
 
@@ -776,6 +833,12 @@ export default class Player {
 			}
 		});
 		this.btEstilo(btVolume);
+
+		let tooltip = document.createElement("span");
+		tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+		tooltip.textContent = "Volume";
+		btVolume.appendChild(tooltip);
+
 		return btVolume;
 	}
 
@@ -799,6 +862,7 @@ export default class Player {
 				volume.classList.add(CONFIG.CLASS_VOLUME_NONE);
 			}
 		});
+
 		return btVolumeBar;
 	}
 

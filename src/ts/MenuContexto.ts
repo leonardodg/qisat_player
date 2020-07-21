@@ -81,7 +81,7 @@ export default class MenuContexto {
 			btWidget.classList.add(CONFIG.CLASS_WIDGET);
 			btWidget.addEventListener('click', function () {
 				let subMenu = document.getElementById(CONFIG.ID_SUBMENU);
-				if (subMenu.classList.contains(CONFIG.CLASS_HIDE)) {
+				/*if (subMenu.classList.contains(CONFIG.CLASS_HIDE)) {
 					var degrees = 1;
 					this.dataset['interval'] = setInterval(function () {
 						if (navigator.userAgent.match("Chrome"))
@@ -99,7 +99,7 @@ export default class MenuContexto {
 					}, 15).toString();
 				} else {
 					clearInterval(parseInt(this.dataset['interval']));
-				}
+				}*/
 				subMenu.classList.toggle(CONFIG.CLASS_HIDE);
 			});
 
@@ -113,6 +113,11 @@ export default class MenuContexto {
 					subMenu.classList.add(CONFIG.CLASS_HIDE);
 				}
 			});
+
+			let tooltip = document.createElement("span");
+			tooltip.classList.add(CONFIG.CLASS_TOOLTIP);
+			tooltip.textContent = "Configurações";
+			btWidget.appendChild(tooltip);
 
 			this.player.btEstilo(btWidget);
 			videoControls.appendChild(btWidget);
