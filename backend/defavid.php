@@ -1,7 +1,7 @@
 <?php
 
-// ini_set('session.cookie_domain', '.qisat.com.br');
-ini_set('session.cookie_domain', '.dev.com.br');
+$pos = strpos($_SERVER['SERVER_NAME'], ".");
+ini_set('session.cookie_domain', substr($_SERVER['SERVER_NAME'], $pos));
 
 if(array_key_exists('HTTP_ORIGIN', $_SERVER)){
 	header('Access-Control-Allow-Origin: '.$_SERVER['HTTP_ORIGIN']); 
@@ -25,7 +25,7 @@ if(file_exists($_SERVER['DOCUMENT_ROOT'].'/config.php')){
     global $CFG;
 }else if(isset($sid)){
     session_id($sid);
-    session_start();
+    session_start(['cookie_secure' => true]);
 }else{
     die('SEM SESSION!');
 }
