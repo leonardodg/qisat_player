@@ -19,8 +19,6 @@
  *
  */
 
-// ini_set('session.cookie_domain', '.qisat.com.br');
-ini_set('session.cookie_domain', '.dev.com.br');
 $moodle = false;
 
 if(array_key_exists('HTTP_ORIGIN', $_SERVER)){
@@ -49,7 +47,7 @@ if(array_key_exists('REQUEST_METHOD', $_SERVER)){
 
 		if(array_key_exists('url', $_REQUEST)){
 			$url = $_REQUEST['url'];
-			if(!empty($url)){
+			if(!empty($url) && isset($CFG)){
 				$url = substr($url, 0, strripos($url, '/')+1);
 			}
 		}
