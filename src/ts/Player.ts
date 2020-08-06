@@ -963,7 +963,8 @@ export default class Player {
 		xhReq.get(this.options.url.infoUser)
 			.success(data => {
 				if (data && data != '') {
-					this.options.chave = data.split('<br>')[2].substr(8);
+					data = JSON.parse(data);
+					this.options.chave = data.username;
 				}
 			});
 	}
