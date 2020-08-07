@@ -964,7 +964,7 @@ export default class Player {
 			.success(data => {
 				if (data && data != '') {
 					data = JSON.parse(data);
-					this.options.chave = data.username;
+					this.options.chave = data.idnumber;
 				}
 			});
 	}
@@ -1532,7 +1532,7 @@ export default class Player {
 				/**
 				 * Barra diagonal com a chave
 				 */
-				if (_self.options.mascara && _self.options.chave.length) {
+				if (_self.options.mascara && _self.options.chave && _self.options.chave.length) {
 					context.fillStyle = "rgba(120,120,120,0.1)";
 					context.beginPath();
 

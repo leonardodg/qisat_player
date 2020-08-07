@@ -1,0 +1,12 @@
+/* PALETA DE CORES PLAYER */
+$style: '.univali';
+
+@import "../components/template";
+
+#{$style} > .video-top > .top {
+    @include sprite($cabecalho_univali);
+}
+
+#{$style} > .video-top > .logo {
+    @include sprite($logo-univali);
+}
