@@ -30,7 +30,7 @@ export default class Player {
 		controls: true,
 		slides: true,
 		legenda: false,
-		chave: "000000",
+		chave: undefined, // idnumber
 		mascara: true,
 		geraLog: true,
 		autoplay: true,
@@ -72,7 +72,7 @@ export default class Player {
 		url: {
 
 			path: '',
-			infoUser: '/lib/QiSatPlayer3/backend/getinfouser.php', // Dados de Identificação do Usuário
+			//infoUser: '/lib/QiSatPlayer3/backend/getinfouser.php', // Dados de Identificação do Usuário
 			geraLog: '/lib/QiSatPlayer3/backend/geraLog.php', // Log de Acesso Moodle
 			startDefa: '/lib/QiSatPlayer3/backend/getUrl.php', // Gerar Link do video
 			defa: '/lib/QiSatPlayer3/backend/defavid.php', // Default Filename defavid.php in getUrl.php
@@ -100,9 +100,17 @@ export default class Player {
 		}*/
 	};
 
-	constructor(opDefault: string | any[][]) {
+	getParamsMap = function () {
+		var params = window.location.search.split("&");
+		var paramsMap = {};
+		params.forEach(function (p) {
+			var v = p.split("=");
+			paramsMap[v[0]]=decodeURIComponent(v[1]);
+		});
+		return paramsMap;
+	};
 
-		// let videoPlayer = document.getElementById(this.options.id);
+	constructor(opDefault: string | any[][]) {
 
 		if (typeof opDefault === 'object') {
 			opDefault = opDefault;
@@ -116,6 +124,18 @@ export default class Player {
 			}
 		} else if (typeof opDefault === 'string') {
 			this.options.class = opDefault;
+		}
+
+		this.options.chave = sessionStorage.getItem('idnumber');
+		if (typeof this.options.chave === 'undefined') {
+			this.options.chave = this.getParamsMap()['idnumber'];
+			if (typeof this.options.chave !== 'undefined') 
+				sessionStorage.setItem('idnumber', this.options.chave);
+			else {
+				this.options.chave = this.getParamsMap()['?idnumber'];
+				if (typeof this.options.chave !== 'undefined') 
+					sessionStorage.setItem('idnumber', this.options.chave);
+			}
 		}
 
 		let videoPlayer = <HTMLDivElement>document.getElementsByClassName(this.options.class)[0];
@@ -147,7 +167,7 @@ export default class Player {
 		window.addEventListener("resize", this.resize.bind(null, this));
 		window.addEventListener("orientationchange", this.resize.bind(null, this));
 
-		this.carregarInfoUser();
+		//this.carregarInfoUser();
 		this.carregarXML();
 
 		try {
@@ -241,10 +261,13 @@ export default class Player {
 				video.height = canvas.height = height;
 				videoTag.style['height'] = height + "px";
 			}
-
+/*
 			let selector = CONFIG.CLASS + CONFIG.CLASS_VIDEO_CONTAINER +" "+ CONFIG.CLASS + CONFIG.CLASS_VIDEO_TOP +" > "+ CONFIG.CLASS + CONFIG.CLASS_TITLE +" > "+ CONFIG.CLASS;
 			let marginLeftCurso = parseInt(_self.getStyleBySelector(selector+CONFIG.CLASS_CURSO_TEXT).marginLeft);
 			let marginLeftAula = parseInt(_self.getStyleBySelector(selector+CONFIG.CLASS_AULA_TEXT).marginLeft);
+*/			
+			var marginLeftCurso = -30;
+			var marginLeftAula = -20;
 
 			titleCurso.style['maxWidth'] = (videoTop.clientWidth - top.clientWidth - logo.clientWidth - marginLeftCurso) + "px";
 			titleAula.style['maxWidth'] = (videoTop.clientWidth - top.clientWidth - logo.clientWidth - marginLeftAula) + "px";
@@ -957,7 +980,10 @@ export default class Player {
 		xhReq.post(this.options.url.geraLog, payload);
 	}
 
-	carregarInfoUser() {
+	/**
+	 * Função em desuso
+	 * 
+	 * carregarInfoUser() {
 		xhReq.setContentType('text/plain');
 		xhReq.setResponseType('text');
 		xhReq.get(this.options.url.infoUser)
@@ -967,7 +993,7 @@ export default class Player {
 					this.options.chave = data.idnumber;
 				}
 			});
-	}
+	}*/
 
 	carregarXML() {
 		let _self = this;
