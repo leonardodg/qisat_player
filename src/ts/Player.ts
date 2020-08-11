@@ -127,13 +127,13 @@ export default class Player {
 		}
 
 		this.options.chave = sessionStorage.getItem('idnumber');
-		if (typeof this.options.chave === 'undefined') {
+		if (typeof this.options.chave === 'undefined' || this.options.chave == null) {
 			this.options.chave = this.getParamsMap()['idnumber'];
-			if (typeof this.options.chave !== 'undefined') 
+			if (typeof this.options.chave !== 'undefined' && this.options.chave != null) 
 				sessionStorage.setItem('idnumber', this.options.chave);
 			else {
 				this.options.chave = this.getParamsMap()['?idnumber'];
-				if (typeof this.options.chave !== 'undefined') 
+				if (typeof this.options.chave !== 'undefined' && this.options.chave != null) 
 					sessionStorage.setItem('idnumber', this.options.chave);
 			}
 		}
