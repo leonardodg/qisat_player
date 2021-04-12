@@ -76,7 +76,7 @@ if (isset($_SERVER['HTTP_RANGE'])) {
     if(!$ranges[1]) $ranges[1] = $size - 1;
     if($ranges[0] == $ranges[1]) $ranges[0] = 65536;
     // Send the content type header
-    header('Content-type: application/octet-stream'); // The MIME type of the file, this should be replaced with your own.
+    header('Content-type: video/mp4'); // The MIME type of the file, this should be replaced with your own.
     header('Accept-Ranges: bytes'); // Suporte a solicitações parciais
     // Send the appropriate headers
     header('HTTP/1.1 206 Partial Content');

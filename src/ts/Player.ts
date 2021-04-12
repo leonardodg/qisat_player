@@ -1318,32 +1318,20 @@ export default class Player {
 				}, false);
 
 				xhReq.onload = function () {
-					let reader = new FileReader();
-					reader.onloadend = function () {
-						let result = reader.result.toString();
-						let byteCharacters = atob(result.slice(result.indexOf(',') + 1));
-						let byteNumbers = new Array(byteCharacters.length);
-						for (let i = 0; i < byteCharacters.length; i++) {
-							byteNumbers[i] = byteCharacters.charCodeAt(i);
-						}
-						let byteArray = new Uint8Array(byteNumbers);
-						let t = type.pop();
-						if (t.indexOf(';') > 0)
-							t = t.substr(0, t.indexOf(';'));
-						let blob = new Blob([byteArray], { type: t });
-						let sourceElem = document.createElement("source");
-						sourceElem.src = URL.createObjectURL(blob);
-						sourceElem.type = t;
-						video.appendChild(sourceElem);
-						ctx.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
-						loading.parentNode.removeChild(loading);
-						_self.loadVideo(video);
-					};
-					reader.readAsDataURL(xhReq.response);
-
-					if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) 
-						_self.resize(_self);
+					var t = type.pop();
+					
+					var sourceElem = document.createElement("source");
+					sourceElem.src = URL.createObjectURL(xhReq.response);
+					sourceElem.type = t;
+					video.appendChild(sourceElem);
+					ctx.clearRect(0, 0, _self.options.video.width, _self.options.video.height);
+					loading.parentNode.removeChild(loading);
+		
+					_self.loadVideo(video);
+			
+					if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) _self.resize(_self);
 				};
+
 				xhReq.open('GET', result[result.length - 1]);
 				if (result[result.length - 1].indexOf('defavid') !== -1) {
 					xhReq.setRequestHeader("Range", "bytes=0-");
